@@ -5,6 +5,8 @@ import java.util.Date;
 public class UserBase {
     private Integer id;
 
+    private String userId;
+
     private String userAccount;
 
     private String userPassword;
@@ -12,6 +14,14 @@ public class UserBase {
     private Date createTime;
 
     private Date updateTime;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public Integer getId() {
         return id;

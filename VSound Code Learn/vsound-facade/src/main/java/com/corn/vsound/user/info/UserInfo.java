@@ -24,8 +24,6 @@ public class UserInfo extends Base {
      * */
     private String userAccount;
 
-    private String token;
-
     public String getUserId() {
         return userId;
     }
@@ -42,11 +40,11 @@ public class UserInfo extends Base {
         this.userName = userName;
     }
 
-    public String getToken() {
-        return token;
+    public String getUserAccount() {
+        return userAccount;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setUserAccount(String userAccount) {
+        this.userAccount = userAccount;
     }
 }

@@ -1,0 +1,4 @@
+app:
+  jdbc:
+    mapping:
+      path: mapping/**.xml
