@@ -1,0 +1,8 @@
+app:
+  jdbc:
+    url: jdbc:mysql://localhost:3306/vsound_code?characterEncoding=UTF-8
+    password: root
+    userName: root
+    driver: com.mysql.jdbc.Driver
+    dbcp2:
+      validation-query-timeout: 5000
