@@ -7,6 +7,7 @@ import com.corn.vsound.dao.mapper.UserBaseMapper;
 import com.corn.vsound.user.info.UserInfo;
 import com.corn.vsound.user.login.UserLoginOrder;
 import com.corn.vsound.user.login.UserLoginResult;
+import com.google.gson.Gson;
 import io.netty.util.internal.ObjectUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class UserLoginDelegate extends AbstractBizService<UserLoginOrder, UserLo
 
             UserInfo userInfo = new UserInfo();
             BeanUtils.copyProperties(userBase,userInfo);
-
+            result.setUserInfo(userInfo);
         }else{
             throw new BizError("用户登录失败!");
         }

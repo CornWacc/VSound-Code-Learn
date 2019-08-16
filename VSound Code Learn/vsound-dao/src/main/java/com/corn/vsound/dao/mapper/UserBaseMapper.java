@@ -21,8 +21,7 @@ public interface UserBaseMapper {
     /**
      * 用于用户登录
      * */
-    @Select("select * from user_base where user_account = #{userAccount} and user_password = #{userPassword}")
-    @ResultMap("BaseResultMap")
+    @Select("select ub.user_account as userAccount,ub.user_id as userId,ui.user_name as userName,ui.user_avatar as userAvatar from user_base ub left join user_info ui on ub.user_id = ui.user_id where ub.user_account = #{userAccount} and ub.user_password = #{userPassword}")
     UserBase findUserByUserAccountAndUserPassword(@Param("userAccount")String userAccount,
                                                   @Param("userPassword")String userPassword);
 }

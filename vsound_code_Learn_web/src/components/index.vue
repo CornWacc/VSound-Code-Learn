@@ -55,6 +55,7 @@
 <style scoped>
 
   .container{
+    text-align: center;
     width: 100%;
     height: 100%;
     background: linear-gradient(#F8F8FF,#BBFFFF);
@@ -94,6 +95,8 @@
     background: linear-gradient(to bottom right,#BBFFFF,#FFFFF0);
     border: 1px solid rgba(0,0,0,0.1);
     box-shadow: 4px 4px 4px rgba(0,0,0,0.1);
+    margin-left: auto;
+    margin-right: auto;
   }
   .el-form /deep/ .el-input__inner{
     border-radius: 20px !important;

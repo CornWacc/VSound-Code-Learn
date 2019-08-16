@@ -11,6 +11,10 @@ public class UserBase {
 
     private String userPassword;
 
+    private String userName;
+
+    private String userAvatar;
+
     private Date createTime;
 
     private Date updateTime;
@@ -61,5 +65,21 @@ public class UserBase {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserAvatar() {
+        return userAvatar;
+    }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
     }
 }

@@ -9,7 +9,7 @@ import com.corn.vsound.user.login.UserLoginResult;
  * @author yyc
  * @apiNote 用户业务外部接口
  * */
-public interface UserFacade {
+public interface UserFacade{
 
     /**
      * 用户登录
