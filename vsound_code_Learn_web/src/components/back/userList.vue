@@ -8,34 +8,41 @@
         <el-table-column
           align="center"
           type="index"
-          width="180px">
+          width="300px"
+          min-width="180px">
         </el-table-column>
         <el-table-column
           align="center"
           prop="userId"
           label="用户id"
-          width="180">
+          width="300px"
+          min-width="180px">
         </el-table-column>
         <el-table-column
           align="center"
           prop="userAccount"
           label="用户账号"
-          width="180">
+          width="300px"
+          min-width="180px">
         </el-table-column>
         <el-table-column
           align="center"
           prop="userName"
           label="用户名称"
-          width="180">
+          width="300px"
+          min-width="180px">
         </el-table-column>
         <el-table-column
           align="center"
           prop="userAvatar"
-          label="用户头像">
+          label="用户头像"
+          width="300px"
+          min-width="180px">
         </el-table-column>
         <el-table-column
           align="center"
-          label="操作">
+          label="操作"
+          width="160">
           <template slot-scope="scope">
             <el-button
               size="mini"
