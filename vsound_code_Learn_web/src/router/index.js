@@ -6,6 +6,7 @@ import backStage from '@/components/back/backStage'
 import userList from '@/components/back/userList'
 import projectList from '@/components/back/projectList'
 import projectCategory from '@/components/back/projectCategory'
+import projectinfo from '@/components/projectinfo'
 Vue.use(Router)
 
 export default new Router({
@@ -41,6 +42,11 @@ export default new Router({
           component: projectCategory,
         },
       ]
-    }
+    },
+    {
+      path: '/projectinfo',
+      name: 'projectinfo',
+      component : projectinfo
+    },
   ]
 })

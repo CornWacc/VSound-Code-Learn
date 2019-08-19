@@ -24,14 +24,14 @@
     </el-header>
     <el-main id="main">
       <el-row :gutter="24">
-        <el-col :span="8" v-for="item in projects" :key="item.projectId">
+        <el-col :span="8" v-for="item in projectList" :key="item.projectId">
           <el-card class="project">
             <div class="project_header">
               <span class="project_header_projectName">{{item.projectName}}</span>
-              <el-tag class="project_header_type" v-if="item.type != null">{{item.type}}</el-tag>
+              <el-tag class="project_header_type" v-if="item.projectType != null">{{item.projectType}}</el-tag>
             </div>
             <div class="project_body">
-              {{item.content}}
+              {{item.remark}}
             </div>
           </el-card>
         </el-col>
@@ -75,11 +75,11 @@
         hideRequiredAsterisk:true,
         searchInput:"",
         disableDialog:false,
-        projects: [{
+        projectList: [{
           projectId: "123",
           projectName: "SpringBeans",
-          type: "Spring",
-          content: ""
+          projectType: "Spring",
+          remark: ""
         }],
         addProjectForm:{
           projectName:"",
@@ -90,19 +90,29 @@
         },
         rules:{
           projectName:[{
-            required:true,message:"用户登录账号不能为空",trigger:"blur"
+            required:true,message:"项目名称不能为空",trigger:"blur"
           }],
           projectType:[{
-            required:true,message:"用户登录密码不能为空",trigger:"blur"
+            required:true,message:"项目类型不能为空",trigger:"blur"
           }],
           projectAffiliation:[{
-            required:true,message:"用户登录名称不能为空",trigger:"blur"
+            required:true,message:"项目所属框架不能为空",trigger:"blur"
           }],
           usePosition:[{
-            required:true,message:"用户登录名称不能为空",trigger:"blur"
+            required:true,message:"项目可用范围不能为空",trigger:"blur"
           }],
         }
       }
+    },
+    mounted(){
+      this.$axios({
+        url:"http://localhost:9055/base/project/projectListQuery",
+        method:"get"
+      }).then(res =>{
+        if(res.data.status = "SUCCESS"){
+          this.projectList = res.data.object.projectInfoList
+        }
+      })
     },
     methods:{
       handleCommand(c){
@@ -134,9 +144,17 @@
         }).then(res =>{
           if(res.data.status == "SUCCESS"){
             this.disableDialog = false
+            this.$axios({
+              url:"http://localhost:9055/base/project/projectListQuery",
+              method:"get"
+            }).then(res =>{
+              if(res.data.status = "SUCCESS"){
+                this.projectList = res.data.object.projectInfoList
+              }
+            })
           }
         })
-      }
+      },
     }
   }
 </script>
