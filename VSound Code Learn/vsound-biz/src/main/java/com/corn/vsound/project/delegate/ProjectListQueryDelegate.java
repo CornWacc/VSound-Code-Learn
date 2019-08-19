@@ -39,6 +39,7 @@ public class ProjectListQueryDelegate extends AbstractBizService<ProjectListQuer
         if(!ObjectUtils.isEmpty(projectBaseList)){
             List<ProjectInfo> projectInfos = new ArrayList<>();
             for(ProjectBase projectBase : projectBaseList){
+                System.out.println(projectBase);
                 ProjectInfo info = new ProjectInfo();
                 BeanUtils.copyProperties(projectBase,info);
                 projectInfos.add(info);

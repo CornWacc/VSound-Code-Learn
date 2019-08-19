@@ -1,8 +1,10 @@
 package com.corn.vsound.dao.entity;
 
+import com.corn.boot.base.Base;
+
 import java.util.Date;
 
-public class ProjectBase {
+public class ProjectBase extends Base {
     private Integer id;
 
     private String projectId;
