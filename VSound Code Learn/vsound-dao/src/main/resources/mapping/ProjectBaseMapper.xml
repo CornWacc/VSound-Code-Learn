@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.corn.vsound.dao.mapper.ProjectBaseMapper" >
+  <resultMap id="BaseResultMap" type="com.corn.vsound.dao.entity.ProjectBase" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="project_id" property="projectId" jdbcType="VARCHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="project_affiliation" property="projectAffiliation" jdbcType="VARCHAR" />
+    <result column="project_type" property="projectType" jdbcType="VARCHAR" />
+    <result column="use_position" property="usePosition" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="gather_class_count" property="gatherClassCount" jdbcType="INTEGER" />
+    <result column="gather_interface_count" property="gatherInterfaceCount" jdbcType="INTEGER" />
+    <result column="create_user_id" property="createUserId" jdbcType="VARCHAR" />
+    <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, project_id, project_name, project_affiliation, project_type, use_position, remark, 
+    gather_class_count, gather_interface_count, create_user_id, create_user_name, create_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from project_base
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from project_base
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.corn.vsound.dao.entity.ProjectBase" >
+    insert into project_base (id, project_id, project_name, 
+      project_affiliation, project_type, use_position, 
+      remark, gather_class_count, gather_interface_count, 
+      create_user_id, create_user_name, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{projectId,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, 
+      #{projectAffiliation,jdbcType=VARCHAR}, #{projectType,jdbcType=VARCHAR}, #{usePosition,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{gatherClassCount,jdbcType=INTEGER}, #{gatherInterfaceCount,jdbcType=INTEGER}, 
+      #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.corn.vsound.dao.entity.ProjectBase" >
+    insert into project_base
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="projectId != null" >
+        project_id,
+      </if>
+      <if test="projectName != null" >
+        project_name,
+      </if>
+      <if test="projectAffiliation != null" >
+        project_affiliation,
+      </if>
+      <if test="projectType != null" >
+        project_type,
+      </if>
+      <if test="usePosition != null" >
+        use_position,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="gatherClassCount != null" >
+        gather_class_count,
+      </if>
+      <if test="gatherInterfaceCount != null" >
+        gather_interface_count,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createUserName != null" >
+        create_user_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="projectId != null" >
+        #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectAffiliation != null" >
+        #{projectAffiliation,jdbcType=VARCHAR},
+      </if>
+      <if test="projectType != null" >
+        #{projectType,jdbcType=VARCHAR},
+      </if>
+      <if test="usePosition != null" >
+        #{usePosition,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherClassCount != null" >
+        #{gatherClassCount,jdbcType=INTEGER},
+      </if>
+      <if test="gatherInterfaceCount != null" >
+        #{gatherInterfaceCount,jdbcType=INTEGER},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null" >
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.corn.vsound.dao.entity.ProjectBase" >
+    update project_base
+    <set >
+      <if test="projectId != null" >
+        project_id = #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null" >
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectAffiliation != null" >
+        project_affiliation = #{projectAffiliation,jdbcType=VARCHAR},
+      </if>
+      <if test="projectType != null" >
+        project_type = #{projectType,jdbcType=VARCHAR},
+      </if>
+      <if test="usePosition != null" >
+        use_position = #{usePosition,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherClassCount != null" >
+        gather_class_count = #{gatherClassCount,jdbcType=INTEGER},
+      </if>
+      <if test="gatherInterfaceCount != null" >
+        gather_interface_count = #{gatherInterfaceCount,jdbcType=INTEGER},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null" >
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.corn.vsound.dao.entity.ProjectBase" >
+    update project_base
+    set project_id = #{projectId,jdbcType=VARCHAR},
+      project_name = #{projectName,jdbcType=VARCHAR},
+      project_affiliation = #{projectAffiliation,jdbcType=VARCHAR},
+      project_type = #{projectType,jdbcType=VARCHAR},
+      use_position = #{usePosition,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      gather_class_count = #{gatherClassCount,jdbcType=INTEGER},
+      gather_interface_count = #{gatherInterfaceCount,jdbcType=INTEGER},
+      create_user_id = #{createUserId,jdbcType=VARCHAR},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

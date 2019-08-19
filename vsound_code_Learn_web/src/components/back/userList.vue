@@ -38,6 +38,18 @@
           label="用户头像"
           width="300px"
           min-width="180px">
+          <template slot-scope="scope">
+            <el-popover
+              placement="bottom"
+              width="300"
+              trigger="hover">
+              <el-image
+                style="width:100%; height: 100%"
+                :src="scope.row.userAvatar"
+                :fit="fit"></el-image>
+              <el-button slot="reference" type="small">查看</el-button>
+            </el-popover>
+          </template>
         </el-table-column>
         <el-table-column
           align="center"
@@ -97,6 +109,7 @@
     data() {
       return{
         dialogIsShow:true,
+        fit:"cover",
         tableData:[{
           userId:"1",
           userName:"1",
@@ -122,6 +135,16 @@
           }]
         }
       }
+    },
+    mounted(){
+      this.$axios({
+        url:"http://localhost:9055/base/user/userListQuery",
+        method:"Get",
+      }).then(res =>{
+        if(res.data.status = "SUCCESS"){
+          this.tableData = res.data.object.userInfoList
+        }
+      })
     },
     methods: {
 
