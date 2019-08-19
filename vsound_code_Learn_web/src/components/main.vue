@@ -1,7 +1,8 @@
 <template>
   <el-container class="container">
     <el-header class="header">
-      <el-row style="float:right;width: 400px;margin-top: 10px">
+      <el-button @click="addNewProject" round type="small" style="margin-top: 14px;width: 80px">新 增</el-button>
+      <el-row style="float:right;width: 400px;margin-top: 10px;">
         <el-col :span="12">
           <div class="header_search">
             <el-input v-model="searchInput" suffix-icon="el-icon-search" class="header_search_input" placeholder="搜索想看的源码解析"></el-input>
@@ -9,11 +10,12 @@
         </el-col>
         <el-col :span="8">
           <div class="header_user">
-            <el-dropdown>
+            <el-dropdown  @command="handleCommand">
               <el-avatar></el-avatar>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="userInfo">个人资料</el-dropdown-item>
                 <el-dropdown-item command="backStage">后台管理</el-dropdown-item>
+                <el-dropdown-item command="loginOut">退出登录</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </div>
@@ -35,6 +37,33 @@
         </el-col>
       </el-row>
     </el-main>
+    <el-dialog
+      title="源码研究新增"
+      :visible.sync="disableDialog"
+      width="30%"
+      :before-close="handleClose">
+      <el-form ref="addProjectForm" :model="addProjectForm" :rules="rules" :hide-required-asterisk="hideRequiredAsterisk" style="margin-left: 40px;">
+        <el-form-item label="源码项目名称:" prop="projectName">
+          <el-input v-model="addProjectForm.projectName"></el-input>
+        </el-form-item>
+        <el-form-item label="源码项目类型:" prop="projectType">
+          <el-input v-model="addProjectForm.projectType"></el-input>
+        </el-form-item>
+        <el-form-item label="源码所属框架:" prop="projectAffiliation">
+          <el-input v-model="addProjectForm.projectAffiliation"></el-input>
+        </el-form-item>
+        <el-form-item label="源码适用范围:" prop="usePosition">
+          <el-input v-model="addProjectForm.usePosition"></el-input>
+        </el-form-item>
+        <el-form-item label="源码项目简介:" prop="remark">
+          <el-input type="textarea" v-model="addProjectForm.remark" maxlength="30"  show-word-limit></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="handleClose">取 消</el-button>
+    <el-button type="primary" @click="addProject()">确 定</el-button>
+  </span>
+    </el-dialog>
   </el-container>
 </template>
 
@@ -43,13 +72,70 @@
     name: "Main",
     data() {
       return {
+        hideRequiredAsterisk:true,
         searchInput:"",
+        disableDialog:false,
         projects: [{
           projectId: "123",
           projectName: "SpringBeans",
           type: "Spring",
           content: ""
-        }]
+        }],
+        addProjectForm:{
+          projectName:"",
+          projectType:"",
+          projectAffiliation:"",
+          usePosition:"",
+          remark:""
+        },
+        rules:{
+          projectName:[{
+            required:true,message:"用户登录账号不能为空",trigger:"blur"
+          }],
+          projectType:[{
+            required:true,message:"用户登录密码不能为空",trigger:"blur"
+          }],
+          projectAffiliation:[{
+            required:true,message:"用户登录名称不能为空",trigger:"blur"
+          }],
+          usePosition:[{
+            required:true,message:"用户登录名称不能为空",trigger:"blur"
+          }],
+        }
+      }
+    },
+    methods:{
+      handleCommand(c){
+        console.log(c);
+        if(c === "userInfo"){
+
+        }else if(c === "backStage"){
+          this.$router.push("/backStage")
+        }else{
+          this.$router.push("/")
+        }
+      },
+      addNewProject(){
+        this.disableDialog = true
+      },
+      /**
+       * 对话框关闭
+       * */
+      handleClose(done) {
+        this.disableDialog = false
+        this.$refs['addProjectForm'].resetFields()
+        done;
+      },
+      addProject(){
+        this.$axios({
+          url:"http://localhost:9055/base/project/projectAdd",
+          data:this.addProjectForm,
+          method:"Post"
+        }).then(res =>{
+          if(res.data.status == "SUCCESS"){
+            this.disableDialog = false
+          }
+        })
       }
     }
   }
@@ -69,7 +155,7 @@
   }
 
   .header_search_input {
-    width: 240px;
+    width: 240px !important;
     float: right;
   }
 
@@ -106,5 +192,8 @@
 
   .project_header_type {
     float: right;
+  }
+  .el-input{
+    width: 70%;
   }
 </style>

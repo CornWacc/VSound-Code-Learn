@@ -15,7 +15,7 @@
           <el-menu-item index="3-1"><router-link to="/backStage/projectList" tag="div">源码列表</router-link></el-menu-item>
           <el-menu-item index="3-2"><router-link to="/backStage/projectCategory" tag="div">源码分类</router-link></el-menu-item>
         </el-submenu>
-        <el-button class="to_main_button">回到主页</el-button>
+        <el-button class="to_main_button" @click="goMain">回到主页</el-button>
       </el-menu>
 
     </el-aside>
@@ -30,6 +30,11 @@
     name: "backStage",
     data() {
       return {}
+    },
+    methods:{
+      goMain(){
+        this.$router.push("/main")
+      }
     }
   }
 </script>

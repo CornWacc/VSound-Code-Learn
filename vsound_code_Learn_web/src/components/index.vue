@@ -9,7 +9,7 @@
             <el-input class="login_model_account_input" placeholder="Username" v-model="loginForm.userAccount" style="width: 280px;"></el-input>
           </el-form-item>
           <el-form-item style="width: 70%;margin-left: auto;margin-right: auto;margin-top: 20px" prop="userPassword">
-            <el-input class="login_model_password_input" placeholder="Password" show-password v-model="loginForm.userPassword" style="width: 280px;"></el-input>
+            <el-input class="login_model_password_input" placeholder="Password" show-password v-model="loginForm.userPassword" @keydown.native.enter="doLogin" style="width: 280px;"></el-input>
           </el-form-item>
         </el-form>
         <el-button class="login_model_button" round @click="doLogin">登录</el-button>
@@ -42,7 +42,15 @@
           doLogin(){
             this.$refs["loginForm"].validate((valid) =>{
               if(valid){
-
+                this.$axios({
+                  url:"http://localhost:9055/base/user/userLogin",
+                  method:"post",
+                  data:this.loginForm
+                }).then(res =>{
+                  if(res.data.status == "SUCCESS"){
+                    this.$router.push('/main')
+                  }
+                })
               }else{
                 this.$message.error('请正确输入登录账号密码哟！')
               }

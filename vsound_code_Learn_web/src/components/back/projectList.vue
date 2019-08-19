@@ -102,6 +102,16 @@
             }]
           }
       },
+      mounted(){
+        this.$axios({
+          url:"http://localhost:9055/base/project/projectListQuery",
+          method:"get"
+        }).then(res =>{
+          if(res.data.status = "SUCCESS"){
+            this.projectList = res.data.object.projectInfoList
+          }
+        })
+      },
       methods:{
         goProject(row, column, event){
           console.log(row)
