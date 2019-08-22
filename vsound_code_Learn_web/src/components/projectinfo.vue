@@ -29,7 +29,7 @@
             </el-select>
           </el-col>
           <el-col :span="2" style="margin-left: 10px">
-            <el-button>查询</el-button>
+            <el-button @click="doSearch">查询</el-button>
           </el-col>
         </el-row>
         <el-table :data="tableData" style="margin-top: 10px">
@@ -49,10 +49,15 @@
             prop="codeLevel">
           </el-table-column>
           <el-table-column
+            label="简介"
+            align="center"
+            prop="codeRemark">
+          </el-table-column>
+          <el-table-column
             label="详情"
             align="center">
             <template slot-scope="scope">
-              <el-button size="mini">查看详情</el-button>
+              <el-button size="mini" @click="viewDetails(scope.row)">查看详情</el-button>
             </template>
           </el-table-column>
           <el-table-column
@@ -71,12 +76,12 @@
         :visible.sync="dialogVisible"
         width="30%"
         :before-close="handleClose">
-        <el-form ref="addCodeForm" :model="addCodeForm" :rules="rules"  style="margin-left: 10px;">
+        <el-form ref="addCodeForm" :model="addCodeForm" :rules="rules" style="margin-left: 10px;">
           <el-form-item label="源码项目名称:" prop="codeName">
             <el-input placeholder="请输入源码名称" v-model="addCodeForm.codeName" style="width: 220px"></el-input>
           </el-form-item>
           <el-form-item label="源码项目类型:" prop="codeType">
-            <el-select v-model="codeSearch.type" clearable style="width: 220px" placeholder="请选择源码类型">
+            <el-select v-model="addCodeForm.codeType" clearable style="width: 220px" placeholder="请选择源码类型">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -94,6 +99,34 @@
     <el-button type="primary" @click="sureAddCode">确 定</el-button>
   </span>
       </el-dialog>
+      <el-drawer
+        :title="drawerData.codeName"
+        :visible.sync="drawer"
+        :direction="direction"
+        :before-close="handleClose"
+        size="800px">
+        <div class="drawer_form_model">
+          <el-row>
+            <el-col :span="4"><span style="font-size: 18px">名称:</span></el-col>
+            <el-col :span="4"><span style="font-size: 14px">{{drawerData.codeName}}</span></el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="4"><span style="font-size: 18px">类型:</span></el-col>
+            <el-col :span="4"><span style="font-size: 14px">{{drawerData.codeType}}</span></el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="4"><span style="font-size: 18px">继承级别:</span></el-col>
+            <el-col :span="4"><span style="font-size: 14px">{{drawerData.codeLevel}}</span></el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="4"><span style="font-size: 18px">简介:</span></el-col>
+          </el-row>
+          <div class="drawer_form_model_remark">
+            {{drawerData.codeRemark}}
+          </div>
+
+        </div>
+      </el-drawer>
     </el-container>
   </el-container>
 </template>
@@ -103,30 +136,24 @@
     name: "projectinfo",
     data() {
       return {
+        drawer: false,
+        direction: 'rtl',
         projectForm: {
-          projectName: "Netty"
+          projectName: ""
         },
-        addCodeForm:{
-          codeName:"",
-          codeType:"",
-          codeLevel:"",
-          codeProgramId:""
+        addCodeForm: {
+          codeName: "",
+          codeType: "",
+          codeLevel: "",
+          codeProgram: ""
         },
-        rules:{
-
-        },
+        rules: {},
         codeSearch: {
           codeName: "",
           codeLevel: "",
           codeType: ""
         },
-        tableData: [
-          {
-            codeName: "BeanDefinition",
-            codeType: "Class",
-            codeLevel: "1"
-          }
-        ],
+        tableData: [],
         options: [
           {
             label: "Class",
@@ -145,15 +172,21 @@
             value: "ABSTRACT"
           }
         ],
-        dialogVisible:true
+        dialogVisible: false,
+        drawerData:{
+          codeName:"",
+          codeType:"",
+          codeLevel:"",
+          codeRemark:"",
+        }
       }
     },
-    mounted(){
+    mounted() {
       this.$axios({
-        url:"http://localhost:9055/base/code/codeInfoQuery?programId="+this.$route.query.projectId+"&keyWord="+"",
-        method:"Get"
-      }).then(res =>{
-        if(res.data.status == "SUCCESS"){
+        url: "http://localhost:9055/base/code/codeInfoQuery?programId=" + this.$route.query.projectId + "&keyWord=" + "",
+        method: "Get"
+      }).then(res => {
+        if (res.data.status == "SUCCESS") {
           this.projectForm.projectName = res.data.object.projectName
           this.tableData = res.data.object.codeInfoList
         }
@@ -167,17 +200,46 @@
         this.dialogVisible = true
       },
       handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
+        done()
       },
-      cancelDialog(){
+      cancelDialog() {
         this.dialogVisible = false
       },
-      sureAddCode(){
-
+      sureAddCode() {
+        this.addCodeForm.codeProgram = this.$route.query.projectId
+        this.$axios({
+          url: "http://localhost:9055/base/code/codeAdd",
+          data: this.addCodeForm,
+          method: "Post"
+        }).then(res => {
+          if (res.data.status == "SUCCESS") {
+            this.$message.success("新增成功")
+            this.dialogVisible = false
+            this.$axios({
+              url: "http://localhost:9055/base/code/codeInfoQuery?programId=" + this.$route.query.projectId + "&keyWord=" + "",
+              method: "Get"
+            }).then(res => {
+              if (res.data.status == "SUCCESS") {
+                this.tableData = res.data.object.codeInfoList
+              }
+            })
+          }
+        })
+      },
+      doSearch() {
+        this.$axios({
+          url: "http://localhost:9055/base/code/codeInfoQuery?programId=" + this.$route.query.projectId + "&codeName=" + this.codeSearch.codeName + "&codeType=" + this.codeSearch.codeType + "&codeLevel=" + this.codeSearch.codeLevel,
+          method: "get"
+        }).then(res => {
+          if (res.data.status = "SUCCESS") {
+            this.tableData = res.data.object.codeInfoList
+          }
+        })
+      },
+      viewDetails(row) {
+        console.log(row)
+        this.drawer = true
+        this.drawerData = row
       }
     }
   }
@@ -228,6 +290,21 @@
   .header_buttons {
     float: right;
     margin-top: 14px;
+    margin-right: 10px;
+  }
+
+  .drawer_form_model{
+    margin-left: 40px;
+  }
+  .drawer_form_model >>> .el-row{
+    margin-bottom: 20px;
+  }
+  .drawer_form_model_remark{
+    padding: 10px;
+    border: 1px solid rgba(0,0,0,0.1);
+    height: 400px;
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.1);
+    font-size: 14px;
     margin-right: 10px;
   }
 

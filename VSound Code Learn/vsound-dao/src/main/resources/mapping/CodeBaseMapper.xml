@@ -136,14 +136,21 @@
     ce.use_position usePosition,
     ce.code_remark codeRemark,
     ce.code_methods codeMethods,
-    ce.code_images codeImages
+    ce.code_images codeImages,
+    ce.out_side_url
     from code_base cb
     left join code_extra ce
     on cb.code_id = ce.code_id
     <where>
       cb.code_program = #{programId}
-      <if test="keyWord != null and keyWord != ''">
-        and code_name like concat('%',#{keyWord},'%')
+      <if test="codeName != null and codeName != ''">
+        and code_name like concat('%',#{codeName},'%')
+      </if>
+      <if test="codeType != null and codeType != ''">
+        and code_type = #{codeType}
+      </if>
+      <if test="codeLevel != null and codeLevel != ''">
+        and code_level = #{codeLevel}
       </if>
     </where>
   </select>

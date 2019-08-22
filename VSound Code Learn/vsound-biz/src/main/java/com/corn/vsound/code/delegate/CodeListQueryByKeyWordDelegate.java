@@ -46,7 +46,7 @@ public class CodeListQueryByKeyWordDelegate extends AbstractBizService<CodeListQ
            throw new BizError("对应项目查询失败");
         }
 
-        List<CodeDto> codeDtoList = codeBaseMapper.findCodeListByKeyWord(order.getProgramId(),order.getKeyWord());
+        List<CodeDto> codeDtoList = codeBaseMapper.findCodeListByKeyWord(order.getProgramId(),order.getCodeName(),order.getCodeLevel(),order.getCodeType());
         if(!ObjectUtils.isEmpty(codeDtoList)){
             List<CodeInfo> list = new ArrayList<>();
             for(CodeDto codeDto : codeDtoList){

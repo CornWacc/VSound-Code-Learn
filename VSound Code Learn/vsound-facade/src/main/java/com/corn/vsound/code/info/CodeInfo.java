@@ -28,6 +28,16 @@ public class CodeInfo extends Base {
 
     private String codeImages;
 
+    private String outSideUrl;
+
+    public String getOutSideUrl() {
+        return outSideUrl;
+    }
+
+    public void setOutSideUrl(String outSideUrl) {
+        this.outSideUrl = outSideUrl;
+    }
+
     public String getCodeId() {
         return codeId;
     }

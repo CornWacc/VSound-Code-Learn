@@ -12,7 +12,35 @@ public class CodeListQueryByKeyWordOrder extends BaseOrder {
 
     private String programId;
 
-    private String keyWord;
+    private String codeName;
+
+    private Integer codeLevel;
+
+    private String codeType;
+
+    public String getCodeName() {
+        return codeName;
+    }
+
+    public void setCodeName(String codeName) {
+        this.codeName = codeName;
+    }
+
+    public Integer getCodeLevel() {
+        return codeLevel;
+    }
+
+    public void setCodeLevel(Integer codeLevel) {
+        this.codeLevel = codeLevel;
+    }
+
+    public String getCodeType() {
+        return codeType;
+    }
+
+    public void setCodeType(String codeType) {
+        this.codeType = codeType;
+    }
 
     public String getProgramId() {
         return programId;
@@ -22,11 +50,4 @@ public class CodeListQueryByKeyWordOrder extends BaseOrder {
         this.programId = programId;
     }
 
-    public String getKeyWord() {
-        return keyWord;
-    }
-
-    public void setKeyWord(String keyWord) {
-        this.keyWord = keyWord;
-    }
 }

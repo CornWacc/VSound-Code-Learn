@@ -20,6 +20,8 @@ public interface CodeBaseMapper {
     int updateByPrimaryKey(CodeBase record);
 
     List<CodeDto> findCodeListByKeyWord(@Param("programId")String programId,
-                                        @Param("keyWord")String keyWord);
+                                        @Param("codeName")String codeName,
+                                        @Param("codeLevel")Integer codeLevel,
+                                        @Param("codeType")String codeType);
 
 }

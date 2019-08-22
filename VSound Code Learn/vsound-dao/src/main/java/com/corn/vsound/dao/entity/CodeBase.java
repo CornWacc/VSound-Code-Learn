@@ -1,8 +1,10 @@
 package com.corn.vsound.dao.entity;
 
+import com.corn.boot.base.Base;
+
 import java.util.Date;
 
-public class CodeBase {
+public class CodeBase extends Base {
     private Integer id;
 
     private String codeId;
@@ -15,9 +17,19 @@ public class CodeBase {
 
     private String codeProgram;
 
+    private String outSideUrl;
+
     private Date createTime;
 
     private Date updateTime;
+
+    public String getOutSideUrl() {
+        return outSideUrl;
+    }
+
+    public void setOutSideUrl(String outSideUrl) {
+        this.outSideUrl = outSideUrl;
+    }
 
     public Integer getId() {
         return id;
