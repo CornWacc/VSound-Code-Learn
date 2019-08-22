@@ -1,6 +1,7 @@
 package com.corn.vsound.dao.mapper;
 
 import com.corn.vsound.dao.entity.ProjectBase;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 
@@ -19,7 +20,9 @@ public interface ProjectBaseMapper {
 
     int updateByPrimaryKey(ProjectBase record);
 
-    @Select("select * from project_base")
+    List<ProjectBase> findProjectListByKeyWord(@Param("keyWord")String keyWord);
+
+    @Select("select * from project_base where project_id = #{projectId}")
     @ResultMap("BaseResultMap")
-    List<ProjectBase> findProjectList();
+    ProjectBase findProjectByProjectId(@Param("projectId")String projectId);
 }

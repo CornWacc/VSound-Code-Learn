@@ -10,7 +10,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
-import sun.java2d.cmm.Profile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +34,10 @@ public class ProjectListQueryDelegate extends AbstractBizService<ProjectListQuer
     @Override
     protected void appBiz(ProjectListQueryOrder order, ProjectListQueryResult result) {
 
-        List<ProjectBase> projectBaseList = projectBaseMapper.findProjectList();
+        List<ProjectBase> projectBaseList = projectBaseMapper.findProjectListByKeyWord(order.getKeyWord());
         if(!ObjectUtils.isEmpty(projectBaseList)){
             List<ProjectInfo> projectInfos = new ArrayList<>();
             for(ProjectBase projectBase : projectBaseList){
-                System.out.println(projectBase);
                 ProjectInfo info = new ProjectInfo();
                 BeanUtils.copyProperties(projectBase,info);
                 projectInfos.add(info);

@@ -186,4 +186,16 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="findProjectListByKeyWord" resultMap="BaseResultMap">
+    select * from project_base
+    <where>
+      <if test="keyWord != null and keyWord != ''">
+        project_name like concat('%',#{keyWord},'%')
+        or project_affiliation like concat('%',#{keyWord},'%')
+        or project_type like concat('%',#{keyWord},'%')
+      </if>
+    </where>
+
+  </select>
 </mapper>

@@ -8,4 +8,14 @@ import com.corn.boot.base.BaseOrder;
  * */
 public class ProjectListQueryOrder extends BaseOrder {
     private static final long serialVersionUID = 2137448373466286779L;
+
+    private String keyWord;
+
+    public String getKeyWord() {
+        return keyWord;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
+    }
 }

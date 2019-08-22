@@ -18,8 +18,9 @@ public class ProjectController {
     private ProjectFacade projectFacade;
 
     @GetMapping("/projectListQuery")
-    public JsonResult projectListQuery(){
+    public JsonResult projectListQuery(String keyWord){
         ProjectListQueryOrder order = new ProjectListQueryOrder();
+        order.setKeyWord(keyWord);
         order.setSerialNo("projectListQuery");
         ProjectListQueryResult result = projectFacade.projectListQuery(order);
         return new JsonResult(result);
