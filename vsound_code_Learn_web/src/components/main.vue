@@ -5,7 +5,9 @@
       <el-row style="float:right;width: 400px;margin-top: 10px;">
         <el-col :span="12">
           <div class="header_search">
-            <el-input v-model="searchInput" suffix-icon="el-icon-search" class="header_search_input" placeholder="搜索想看的源码解析"></el-input>
+            <el-input v-model="searchInput" class="header_search_input" placeholder="框架名称/类型/所属框架" @keyup.native.enter="doSearch">
+              <el-button slot="append" icon="el-icon-search" @click="doSearch"></el-button>
+            </el-input>
           </div>
         </el-col>
         <el-col :span="8">
@@ -27,7 +29,7 @@
         <el-col :span="8" v-for="item in projectList" :key="item.projectId">
           <el-card class="project">
             <div class="project_header">
-              <span class="project_header_projectName">{{item.projectName}}</span>
+              <span class="project_header_projectName" @click="goInfo(item.projectId)">{{item.projectName}}</span>
               <el-tag class="project_header_type" v-if="item.projectType != null">{{item.projectType}}</el-tag>
             </div>
             <div class="project_body">
@@ -155,6 +157,24 @@
           }
         })
       },
+      doSearch(){
+        this.$axios({
+          url:"http://localhost:9055/base/project/projectListQuery?keyWord="+this.searchInput,
+          method:"Get"
+        }).then(res =>{
+          if(res.data.status == "SUCCESS"){
+            this.projectList = res.data.object.projectInfoList
+          }
+        })
+      },
+      goInfo(projectId){
+        this.$router.push({
+          path:"/projectInfo",
+          query:{
+            projectId:projectId,
+          }
+        })
+      }
     }
   }
 </script>
@@ -173,7 +193,7 @@
   }
 
   .header_search_input {
-    width: 240px !important;
+    width: 290px !important;
     float: right;
   }
 
@@ -206,6 +226,7 @@
 
   .project_header_projectName {
     text-align: left;
+    cursor: pointer;
   }
 
   .project_header_type {
