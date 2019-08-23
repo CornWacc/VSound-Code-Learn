@@ -9,6 +9,7 @@ import com.corn.vsound.dao.entity.CodeBase;
 import com.corn.vsound.dao.entity.CodeExtra;
 import com.corn.vsound.dao.mapper.CodeBaseMapper;
 import com.corn.vsound.dao.mapper.CodeExtraMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,19 +39,24 @@ public class CodeAddDelegate extends AbstractBizService<CodeAddOrder, CodeAddRes
     @Override
     protected void appBiz(CodeAddOrder order, CodeAddResult result) {
 
-        String codeId = AppUtils.correspondingCreate("code");
-
         CodeBase codeBase = new CodeBase();
         BeanUtils.copyProperties(order,codeBase);
-        codeBase.setCodeId(codeId);
+
         codeBase.setCreateTime(new Date());
         System.out.println(codeBase);
 
-        codeBaseMapper.insertSelective(codeBase);
+        if(StringUtils.isNotBlank(order.getCodeId())){
+            String codeId = AppUtils.correspondingCreate("code");
+            codeBase.setCodeId(codeId);
+            codeBaseMapper.insertSelective(codeBase);
 
-        CodeExtra codeExtra = new CodeExtra();
-        codeExtra.setCodeId(codeId);
-        codeExtra.setCreateTime(new Date());
-        codeExtraMapper.insertSelective(codeExtra);
+            CodeExtra codeExtra = new CodeExtra();
+            codeExtra.setCodeId(codeId);
+            codeExtra.setCreateTime(new Date());
+            codeExtraMapper.insertSelective(codeExtra);
+        }else{
+
+            codeBaseMapper.updateByPrimaryKeySelective(codeBase);
+        }
     }
 }

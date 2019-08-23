@@ -6,6 +6,8 @@ import com.corn.boot.base.BaseOrder;
 public class CodeAddOrder extends BaseOrder {
     private static final long serialVersionUID = 3306504333834703257L;
 
+    private String codeId;
+
     private String codeName;
 
     private String codeType;
@@ -44,5 +46,13 @@ public class CodeAddOrder extends BaseOrder {
 
     public void setCodeProgram(String codeProgram) {
         this.codeProgram = codeProgram;
+    }
+
+    public String getCodeId() {
+        return codeId;
+    }
+
+    public void setCodeId(String codeId) {
+        this.codeId = codeId;
     }
 }

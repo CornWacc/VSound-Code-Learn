@@ -13,13 +13,13 @@
       <el-main class="main">
         <el-row>
           <el-col :span="2">
-            <el-input placeholder="请输入源码名称" v-model="codeSearch.codeName"></el-input>
+            <el-input placeholder="源码名称" v-model="codeSearch.codeName"></el-input>
           </el-col>
           <el-col :span="2" style="margin-left: 10px">
-            <el-input placeholder="请输入继承级别" v-model="codeSearch.codeLevel"></el-input>
+            <el-input placeholder="继承级别" v-model="codeSearch.codeLevel"></el-input>
           </el-col>
           <el-col :span="2" style="margin-left: 10px">
-            <el-select v-model="codeSearch.codeType" clearable>
+            <el-select v-model="codeSearch.codeType" clearable placeholder="类型">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -59,24 +59,24 @@
             label="操作"
             align="center">
             <template slot-scope="scope">
-              <el-button size="mini">编辑</el-button>
-              <el-button size="mini">删除</el-button>
+              <el-button size="mini" type="primary" @click="updateCode(scope.row)">编辑</el-button>
+              <el-button size="mini" @click="delCode(scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-main>
 
       <el-dialog
-        title="新增源码解释"
-        :visible.sync="dialogVisible"
+        :title="dialog.dialogTital"
+        :visible.sync="dialog.dialogVisible"
         width="30%"
         :before-close="handleClose">
-        <el-form ref="addCodeForm" :model="addCodeForm" :rules="rules" style="margin-left: 10px;">
+        <el-form ref="codeForm" :model="codeForm" :rules="rules" style="margin-left: 10px;">
           <el-form-item label="源码项目名称:" prop="codeName">
-            <el-input placeholder="请输入源码名称" v-model="addCodeForm.codeName" style="width: 220px"></el-input>
+            <el-input placeholder="请输入源码名称" v-model="codeForm.codeName" style="width: 220px"></el-input>
           </el-form-item>
           <el-form-item label="源码项目类型:" prop="codeType">
-            <el-select v-model="addCodeForm.codeType" clearable style="width: 220px" placeholder="请选择源码类型">
+            <el-select v-model="codeForm.codeType" clearable style="width: 220px" placeholder="请选择源码类型">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -86,7 +86,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="源码继承等级:" prop="codeLevel">
-            <el-input placeholder="请输入源码继承等级" v-model="addCodeForm.codeLevel" style="width: 220px"></el-input>
+            <el-input placeholder="请输入源码继承等级" v-model="codeForm.codeLevel" style="width: 220px"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
@@ -273,11 +273,13 @@
         projectForm: {
           projectName: ""
         },
-        addCodeForm: {
+        codeForm: {
           codeName: "",
           codeType: "",
           codeLevel: "",
-          codeProgram: ""
+          codeProgram: "",
+          codeId:"",
+          type: ""
         },
         rules: {},
         codeSearch: {
@@ -304,7 +306,10 @@
             value: "ABSTRACT"
           }
         ],
-        dialogVisible: false,
+        dialog:{
+          dialogTital:"",
+          dialogVisible:false
+        },
         drawerData: {
           codeName: "",
           codeType: "",
@@ -330,24 +335,35 @@
         this.$router.push("/main")
       },
       addNewCode() {
-        this.dialogVisible = true
+        this.dialog.dialogVisible = true
+        this.dialog.dialogTital = "新增源码"
+      },
+      updateCode(row){
+        this.dialog.dialogVisible = true
+        this.dialog.dialogTital = "编辑源码"
+        this.codeForm = row
       },
       handleClose(done) {
         done()
       },
       cancelDialog() {
-        this.dialogVisible = false
+        this.dialog.dialogVisible = false
       },
       sureAddCode() {
-        this.addCodeForm.codeProgram = this.$route.query.projectId
+        this.codeForm.codeProgram = this.$route.query.projectId
+        if(this.dialog.dialogTital == "编辑源码"){
+          this.codeForm.type = "update"
+        }else{
+          this.codeForm.type = "add"
+        }
         this.$axios({
           url: "http://localhost:9055/base/code/codeAdd",
-          data: this.addCodeForm,
+          data: this.codeForm,
           method: "Post"
         }).then(res => {
           if (res.data.status == "SUCCESS") {
-            this.$message.success("新增成功")
-            this.dialogVisible = false
+            this.$message.success("操作成功")
+            this.dialog.dialogVisible = false
             this.$axios({
               url: "http://localhost:9055/base/code/codeInfoQuery?programId=" + this.$route.query.projectId + "&keyWord=" + "",
               method: "Get"
@@ -391,6 +407,26 @@
         })
         console.log(row)
         this.drawerData = row
+      },
+      delCode(row) {
+        this.$axios({
+          url: "http://localhost:9055/base/code/delCode",
+          data: {
+            codeId: row.codeId,
+          },
+          method: "Post"
+        }).then(res => {
+          if (res.data.status == "SUCCESS") {
+            this.$axios({
+              url: "http://localhost:9055/base/code/codeInfoQuery?programId=" + this.$route.query.projectId + "&codeName=" + this.codeSearch.codeName + "&codeType=" + this.codeSearch.codeType + "&codeLevel=" + this.codeSearch.codeLevel,
+              method: "get"
+            }).then(res => {
+              if (res.data.status = "SUCCESS") {
+                this.tableData = res.data.object.codeInfoList
+              }
+            })
+          }
+        })
       }
     }
   }
