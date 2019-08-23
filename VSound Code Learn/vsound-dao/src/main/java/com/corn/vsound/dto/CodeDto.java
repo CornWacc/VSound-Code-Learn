@@ -18,11 +18,21 @@ public class CodeDto extends Base {
 
     private String codeRemark;
 
+    private String codeParameters;
+
     private String codeMethods;
 
     private String codeImages;
 
     private String outSideUrl;
+
+    public String getCodeParameters() {
+        return codeParameters;
+    }
+
+    public void setCodeParameters(String codeParameters) {
+        this.codeParameters = codeParameters;
+    }
 
     public String getOutSideUrl() {
         return outSideUrl;

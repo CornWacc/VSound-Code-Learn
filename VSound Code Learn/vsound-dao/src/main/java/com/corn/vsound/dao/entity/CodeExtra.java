@@ -13,6 +13,10 @@ public class CodeExtra {
 
     private String codeMethods;
 
+    private String codeParameters;
+
+    private String outSideUrl;
+
     private String codeImages;
 
     private Date createTime;
@@ -81,5 +85,21 @@ public class CodeExtra {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getCodeParameters() {
+        return codeParameters;
+    }
+
+    public void setCodeParameters(String codeParameters) {
+        this.codeParameters = codeParameters;
+    }
+
+    public String getOutSideUrl() {
+        return outSideUrl;
+    }
+
+    public void setOutSideUrl(String outSideUrl) {
+        this.outSideUrl = outSideUrl;
     }
 }

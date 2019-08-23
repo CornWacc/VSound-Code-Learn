@@ -136,8 +136,9 @@
     ce.use_position usePosition,
     ce.code_remark codeRemark,
     ce.code_methods codeMethods,
+    ce.code_parameters codeParameters,
     ce.code_images codeImages,
-    ce.out_side_url
+    ce.out_side_url outSideUrl
     from code_base cb
     left join code_extra ce
     on cb.code_id = ce.code_id

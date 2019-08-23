@@ -7,6 +7,8 @@
     <result column="use_position" property="usePosition" jdbcType="VARCHAR" />
     <result column="code_remark" property="codeRemark" jdbcType="VARCHAR" />
     <result column="code_methods" property="codeMethods" jdbcType="VARCHAR" />
+    <result column="code_parameters" property="codeParameters" jdbcType="VARCHAR" />
+    <result column="out_side_url" property="outSideUrl" jdbcType="VARCHAR" />
     <result column="code_images" property="codeImages" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -50,6 +52,12 @@
       <if test="codeMethods != null" >
         code_methods,
       </if>
+      <if test="codeParameter != null" >
+        code_parameter,
+      </if>
+      <if test="outSideUrl != null" >
+        out_side_url,
+      </if>
       <if test="codeImages != null" >
         code_images,
       </if>
@@ -76,6 +84,12 @@
       <if test="codeMethods != null" >
         #{codeMethods,jdbcType=VARCHAR},
       </if>
+      <if test="codeParameter != null" >
+        #{codeParameter,jdbcType=VARCHAR},
+      </if>
+      <if test="outSideUrl != null" >
+        #{outSideUrl,jdbcType=VARCHAR},
+      </if>
       <if test="codeImages != null" >
         #{codeImages,jdbcType=VARCHAR},
       </if>
@@ -90,9 +104,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.corn.vsound.dao.entity.CodeExtra" >
     update code_extra
     <set >
-      <if test="codeId != null" >
-        code_id = #{codeId,jdbcType=VARCHAR},
-      </if>
       <if test="usePosition != null" >
         use_position = #{usePosition,jdbcType=VARCHAR},
       </if>
@@ -102,17 +113,17 @@
       <if test="codeMethods != null" >
         code_methods = #{codeMethods,jdbcType=VARCHAR},
       </if>
+      <if test="codeParameters != null" >
+        code_parameters = #{codeParameters,jdbcType=VARCHAR},
+      </if>
+      <if test="outSideUrl != null" >
+        out_side_url = #{outSideUrl,jdbcType=VARCHAR},
+      </if>
       <if test="codeImages != null" >
         code_images = #{codeImages,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where code_id = #{codeId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.corn.vsound.dao.entity.CodeExtra" >
     update code_extra

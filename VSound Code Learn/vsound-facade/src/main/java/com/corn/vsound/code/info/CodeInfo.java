@@ -2,6 +2,8 @@ package com.corn.vsound.code.info;
 
 import com.corn.boot.base.Base;
 
+import java.util.List;
+
 
 /**
  * @author yyc
@@ -24,19 +26,14 @@ public class CodeInfo extends Base {
 
     private String codeRemark;
 
-    private String codeMethods;
+    private List<CodeMethodInfo> codeMethods;
 
-    private String codeImages;
+    private List<String> codeImages;
 
-    private String outSideUrl;
+    private List<CodeOutSideUrlInfo> outSideUrl;
 
-    public String getOutSideUrl() {
-        return outSideUrl;
-    }
+    private List<CodeParameterInfo> codeParameters;
 
-    public void setOutSideUrl(String outSideUrl) {
-        this.outSideUrl = outSideUrl;
-    }
 
     public String getCodeId() {
         return codeId;
@@ -94,19 +91,35 @@ public class CodeInfo extends Base {
         this.codeRemark = codeRemark;
     }
 
-    public String getCodeMethods() {
+    public List<CodeMethodInfo> getCodeMethods() {
         return codeMethods;
     }
 
-    public void setCodeMethods(String codeMethods) {
+    public void setCodeMethods(List<CodeMethodInfo> codeMethods) {
         this.codeMethods = codeMethods;
     }
 
-    public String getCodeImages() {
+    public List<String> getCodeImages() {
         return codeImages;
     }
 
-    public void setCodeImages(String codeImages) {
+    public void setCodeImages(List<String> codeImages) {
         this.codeImages = codeImages;
+    }
+
+    public List<CodeOutSideUrlInfo> getOutSideUrl() {
+        return outSideUrl;
+    }
+
+    public void setOutSideUrl(List<CodeOutSideUrlInfo> outSideUrl) {
+        this.outSideUrl = outSideUrl;
+    }
+
+    public List<CodeParameterInfo> getCodeParameters() {
+        return codeParameters;
+    }
+
+    public void setCodeParameters(List<CodeParameterInfo> codeParameters) {
+        this.codeParameters = codeParameters;
     }
 }
