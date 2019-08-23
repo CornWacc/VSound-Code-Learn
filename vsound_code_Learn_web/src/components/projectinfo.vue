@@ -49,11 +49,6 @@
             prop="codeLevel">
           </el-table-column>
           <el-table-column
-            label="简介"
-            align="center"
-            prop="codeRemark">
-          </el-table-column>
-          <el-table-column
             label="详情"
             align="center">
             <template slot-scope="scope">
@@ -104,27 +99,164 @@
         :visible.sync="drawer"
         :direction="direction"
         :before-close="handleClose"
-        size="800px">
-        <div class="drawer_form_model">
-          <el-row>
-            <el-col :span="4"><span style="font-size: 18px">名称:</span></el-col>
-            <el-col :span="4"><span style="font-size: 14px">{{drawerData.codeName}}</span></el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="4"><span style="font-size: 18px">类型:</span></el-col>
-            <el-col :span="4"><span style="font-size: 14px">{{drawerData.codeType}}</span></el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="4"><span style="font-size: 18px">继承级别:</span></el-col>
-            <el-col :span="4"><span style="font-size: 14px">{{drawerData.codeLevel}}</span></el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="4"><span style="font-size: 18px">简介:</span></el-col>
-          </el-row>
-          <div class="drawer_form_model_remark">
-            {{drawerData.codeRemark}}
+        size="800px"
+        class="drawer">
+        <div class="wrapper" ref="wrapper">
+          <div>
+            <div class="drawer_form_model">
+              <el-row>
+                <el-col :span="4"><span style="font-size: 18px">名称:</span></el-col>
+                <el-col :span="4"><span style="font-size: 14px">{{drawerData.codeName}}</span></el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="4"><span style="font-size: 18px">类型:</span></el-col>
+                <el-col :span="4"><span style="font-size: 14px">{{drawerData.codeType}}</span></el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="4"><span style="font-size: 18px">继承级别:</span></el-col>
+                <el-col :span="4"><span style="font-size: 14px">{{drawerData.codeLevel}}</span></el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="4"><span style="font-size: 18px;line-height: 40px">应用范围:</span></el-col>
+                <el-col :span="4">
+                  <span style="font-size: 14px" v-if="drawerData.usePosition != ''"></span>
+                  <el-input v-else placeholder="应用范围" class="drawer_form_model_useposition_input"></el-input>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="4"><span style="font-size: 18px">简介:</span></el-col>
+              </el-row>
+              <div class="drawer_form_model_remark">
+                {{drawerData.codeRemark}}
+              </div>
+              <div v-if="drawerData.codeType != 'ANNOTATION'">
+                <div
+                  style="margin-top: 20px;text-align: center;font-size: 22px;font-weight: bolder;margin-bottom: 10px">方
+                  法
+                </div>
+                <el-table :data="drawerData.codeMethods" class="code_methods_table" border>
+                  <el-table-column
+                    label="方法名称"
+                    align="center"
+                    prop="methodName">
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.methodName != 'null'">{{scope.row.methodName}}</span>
+                      <el-input placeholder="方法名称" v-if="scope.row.methodName == 'null'"></el-input>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="用法"
+                    align="center"
+                    prop="methodsUsage">
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.methodUsage != 'null'">{{scope.row.methodsUsage}}</span>
+                      <el-input placeholder="用法" v-if="scope.row.methodUsage == 'null'"></el-input>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="方法入参"
+                    align="center"
+                    prop="methodOrder">
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.methodOrder != 'null'">{{scope.row.methodOrder}}</span>
+                      <el-input placeholder="方法入参" v-if="scope.row.methodOrder == 'null'"></el-input>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="是否常用"
+                    align="center"
+                    prop="isCommonUse">
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.isCommonUse != 'null'">{{scope.row.isCommonUse}}</span>
+                      <el-input placeholder="是否常用" v-if="scope.row.isCommonUse == 'null'"></el-input>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="操作" align="center">
+                    <template slot-scope="scope">
+                      <el-button size="mini" type="primary" v-if="scope.row.type !== 'new'">编辑</el-button>
+                      <el-button size="mini" v-if="scope.row.type !== 'new'">删除</el-button>
+                      <el-button size="mini" v-if="scope.row.type == 'new'">保存</el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+              <div v-if="drawerData.codeType != 'INTERFACE'">
+                <div
+                  style="margin-top: 30px;text-align: center;font-size: 22px;font-weight: bolder;margin-bottom: 10px">
+                  参 数
+                </div>
+                <el-table :data="drawerData.codeParameters" class="outside_url_table" border>
+                  <el-table-column
+                    label="参数名称"
+                    align="center"
+                    prop="parameterName">
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.parameterName != 'null'">{{scope.row.parameterName}}</span>
+                      <el-input placeholder="参数名称" v-if="scope.row.parameterName == 'null'"></el-input>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="参数类型"
+                    align="center"
+                    prop="parameterType">
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.parameterType != 'null'">{{scope.row.methodOrder}}</span>
+                      <el-input placeholder="参数类型" v-if="scope.row.parameterType == 'null'"></el-input>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="参数解释"
+                    align="center"
+                    prop="parameterRemark">
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.parameterRemark != 'null'">{{scope.row.parameterRemark}}</span>
+                      <el-input placeholder="参数解释" v-if="scope.row.parameterRemark == 'null'"></el-input>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="操作" align="center">
+                    <template slot-scope="scope">
+                      <el-button size="mini" type="primary" v-if="scope.row.type !== 'new'">编辑</el-button>
+                      <el-button size="mini" v-if="scope.row.type !== 'new'">删除</el-button>
+                      <el-button size="mini" v-if="scope.row.type == 'new'">保存</el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+              <div>
+                <div
+                  style="margin-top: 30px;text-align: center;font-size: 22px;font-weight: bolder;margin-bottom: 10px">
+                  外部链接
+                </div>
+                <el-table :data="drawerData.outSideUrl" class="outside_url_table" border>
+                  <el-table-column
+                    label="链接注释"
+                    align="center"
+                    prop="outSideUrlRemark">
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.outSideUrlRemark != 'null'">{{scope.row.outSideUrlRemark}}</span>
+                      <el-input placeholder="链接注释" v-if="scope.row.outSideUrlRemark == 'null'"></el-input>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="路径"
+                    align="center"
+                    prop="outSideUrlPath">
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.outSideUrlPath != 'null'">{{scope.row.outSideUrlPath}}</span>
+                      <el-input placeholder="路径" v-if="scope.row.outSideUrlPath == 'null'"></el-input>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="操作" align="center">
+                    <template slot-scope="scope">
+                      <el-button size="mini" type="primary" v-if="scope.row.type !== 'new'">编辑</el-button>
+                      <el-button size="mini" v-if="scope.row.type !== 'new'">删除</el-button>
+                      <el-button size="mini" v-if="scope.row.type == 'new'">保存</el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+            </div>
           </div>
-
         </div>
       </el-drawer>
     </el-container>
@@ -173,12 +305,13 @@
           }
         ],
         dialogVisible: false,
-        drawerData:{
-          codeName:"",
-          codeType:"",
-          codeLevel:"",
-          codeRemark:"",
-        }
+        drawerData: {
+          codeName: "",
+          codeType: "",
+          codeLevel: "",
+          codeRemark: "",
+        },
+        codeMethods: [],
       }
     },
     mounted() {
@@ -237,8 +370,26 @@
         })
       },
       viewDetails(row) {
-        console.log(row)
         this.drawer = true
+        row.codeMethods.push({
+          methodName: "null",
+          methodUsage: "null",
+          methodOrder: "null",
+          isCommonUse: "null",
+          type: "new"
+        })
+        row.codeParameters.push({
+          parameterName: "null",
+          parameterType: "null",
+          parameterRemark: "null",
+          type: "new"
+        })
+        row.outSideUrl.push({
+          outSideUrlRemark: "null",
+          outSideUrlPath: "null",
+          type: "new"
+        })
+        console.log(row)
         this.drawerData = row
       }
     }
@@ -267,15 +418,6 @@
     line-height: 60px;
   }
 
-  .left_model {
-    border-right: none;
-  }
-
-  .left_model_menu {
-    height: 100% !important;
-    border-right: none;
-  }
-
   .el-collapse-item >>> .el-collapse-item__header {
     background-color: rgba(0, 0, 0, 0.0);
     border-bottom: none;
@@ -293,19 +435,37 @@
     margin-right: 10px;
   }
 
-  .drawer_form_model{
+  .drawer_form_model {
     margin-left: 40px;
   }
-  .drawer_form_model >>> .el-row{
+
+  .drawer_form_model >>> .el-row {
     margin-bottom: 20px;
   }
-  .drawer_form_model_remark{
+
+  .drawer_form_model_remark {
     padding: 10px;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     height: 400px;
-    box-shadow: 3px 3px 3px rgba(0,0,0,0.1);
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
     font-size: 14px;
     margin-right: 10px;
   }
+
+  .drawer_form_model_useposition_input >>> .el-input__inner {
+    border-right: none !important;
+    border-left: none !important;
+    border-top: none !important;
+    width: 250px;
+  }
+
+  .wrapper {
+    height: 100%;
+  }
+
+  .drawer /deep/ .el-drawer.rtl {
+    overflow: auto;
+  }
+
 
 </style>
