@@ -22,9 +22,9 @@
     from code_extra
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from code_extra
-    where id = #{id,jdbcType=INTEGER}
+    where code_id = #{codeId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.corn.vsound.dao.entity.CodeExtra" >
     insert into code_extra (id, code_id, use_position, 

@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface CodeBaseMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(String codeId);
 
     int insert(CodeBase record);
 

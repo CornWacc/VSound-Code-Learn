@@ -20,9 +20,9 @@
     from code_base
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from code_base
-    where id = #{id,jdbcType=INTEGER}
+    where code_id = #{codeId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.corn.vsound.dao.entity.CodeBase" >
     insert into code_base (id, code_id, code_name, 

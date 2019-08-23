@@ -3,7 +3,7 @@ package com.corn.vsound.dao.mapper;
 import com.corn.vsound.dao.entity.CodeExtra;
 
 public interface CodeExtraMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(String id);
 
     int insert(CodeExtra record);
 
