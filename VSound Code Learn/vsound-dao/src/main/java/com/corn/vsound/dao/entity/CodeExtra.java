@@ -13,11 +13,9 @@ public class CodeExtra {
 
     private String codeMethods;
 
-    private String codeParameters;
+    private String codeParameter;
 
     private String outSideUrl;
-
-    private String codeImages;
 
     private Date createTime;
 
@@ -63,14 +61,6 @@ public class CodeExtra {
         this.codeMethods = codeMethods == null ? null : codeMethods.trim();
     }
 
-    public String getCodeImages() {
-        return codeImages;
-    }
-
-    public void setCodeImages(String codeImages) {
-        this.codeImages = codeImages == null ? null : codeImages.trim();
-    }
-
     public Date getCreateTime() {
         return createTime;
     }
@@ -87,12 +77,12 @@ public class CodeExtra {
         this.updateTime = updateTime;
     }
 
-    public String getCodeParameters() {
-        return codeParameters;
+    public String getCodeParameter() {
+        return codeParameter;
     }
 
-    public void setCodeParameters(String codeParameters) {
-        this.codeParameters = codeParameters;
+    public void setCodeParameter(String codeParameter) {
+        this.codeParameter = codeParameter;
     }
 
     public String getOutSideUrl() {

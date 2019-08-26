@@ -9,12 +9,11 @@
     <result column="code_methods" property="codeMethods" jdbcType="VARCHAR" />
     <result column="code_parameters" property="codeParameters" jdbcType="VARCHAR" />
     <result column="out_side_url" property="outSideUrl" jdbcType="VARCHAR" />
-    <result column="code_images" property="codeImages" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, code_id, use_position, code_remark, code_methods, code_images, create_time, update_time
+    id, code_id, use_position, code_remark, code_methods, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -28,10 +27,10 @@
   </delete>
   <insert id="insert" parameterType="com.corn.vsound.dao.entity.CodeExtra" >
     insert into code_extra (id, code_id, use_position, 
-      code_remark, code_methods, code_images, 
+      code_remark, code_methods,
       create_time, update_time)
     values (#{id,jdbcType=INTEGER}, #{codeId,jdbcType=VARCHAR}, #{usePosition,jdbcType=VARCHAR}, 
-      #{codeRemark,jdbcType=VARCHAR}, #{codeMethods,jdbcType=VARCHAR}, #{codeImages,jdbcType=VARCHAR}, 
+      #{codeRemark,jdbcType=VARCHAR}, #{codeMethods,jdbcType=VARCHAR},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.corn.vsound.dao.entity.CodeExtra" >
@@ -57,9 +56,6 @@
       </if>
       <if test="outSideUrl != null" >
         out_side_url,
-      </if>
-      <if test="codeImages != null" >
-        code_images,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -90,9 +86,6 @@
       <if test="outSideUrl != null" >
         #{outSideUrl,jdbcType=VARCHAR},
       </if>
-      <if test="codeImages != null" >
-        #{codeImages,jdbcType=VARCHAR},
-      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -103,7 +96,7 @@
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.corn.vsound.dao.entity.CodeExtra" >
     update code_extra
-    <set >
+    <set>
       <if test="usePosition != null" >
         use_position = #{usePosition,jdbcType=VARCHAR},
       </if>
@@ -119,9 +112,6 @@
       <if test="outSideUrl != null" >
         out_side_url = #{outSideUrl,jdbcType=VARCHAR},
       </if>
-      <if test="codeImages != null" >
-        code_images = #{codeImages,jdbcType=VARCHAR},
-      </if>
     </set>
     where code_id = #{codeId,jdbcType=VARCHAR}
   </update>
@@ -131,7 +121,6 @@
       use_position = #{usePosition,jdbcType=VARCHAR},
       code_remark = #{codeRemark,jdbcType=VARCHAR},
       code_methods = #{codeMethods,jdbcType=VARCHAR},
-      code_images = #{codeImages,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

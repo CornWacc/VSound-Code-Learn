@@ -45,7 +45,7 @@ public class CodeAddDelegate extends AbstractBizService<CodeAddOrder, CodeAddRes
         codeBase.setCreateTime(new Date());
         System.out.println(codeBase);
 
-        if(StringUtils.isNotBlank(order.getCodeId())){
+        if(StringUtils.isBlank(order.getCodeId())){
             String codeId = AppUtils.correspondingCreate("code");
             codeBase.setCodeId(codeId);
             codeBaseMapper.insertSelective(codeBase);

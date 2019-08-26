@@ -78,10 +78,6 @@
         searchInput:"",
         disableDialog:false,
         projectList: [{
-          projectId: "123",
-          projectName: "SpringBeans",
-          projectType: "Spring",
-          remark: ""
         }],
         addProjectForm:{
           projectName:"",

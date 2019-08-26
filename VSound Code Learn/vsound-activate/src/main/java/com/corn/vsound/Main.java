@@ -8,7 +8,7 @@ import com.corn.boot.base.RunMain;
 /**
  * 启动类
  * */
-@Runner(port = "9055",active = "mac")
+@Runner(port = "9055",active = "windows")
 public class Main{
 
     public static void main(String[] args) {
