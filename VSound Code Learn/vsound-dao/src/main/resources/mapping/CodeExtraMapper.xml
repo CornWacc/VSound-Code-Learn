@@ -7,7 +7,7 @@
     <result column="use_position" property="usePosition" jdbcType="VARCHAR" />
     <result column="code_remark" property="codeRemark" jdbcType="VARCHAR" />
     <result column="code_methods" property="codeMethods" jdbcType="VARCHAR" />
-    <result column="code_parameters" property="codeParameters" jdbcType="VARCHAR" />
+    <result column="code_parameter" property="codeParameter" jdbcType="VARCHAR" />
     <result column="out_side_url" property="outSideUrl" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -106,8 +106,8 @@
       <if test="codeMethods != null" >
         code_methods = #{codeMethods,jdbcType=VARCHAR},
       </if>
-      <if test="codeParameters != null" >
-        code_parameters = #{codeParameters,jdbcType=VARCHAR},
+      <if test="codeParameter != null" >
+        code_parameter = #{codeParameter,jdbcType=VARCHAR},
       </if>
       <if test="outSideUrl != null" >
         out_side_url = #{outSideUrl,jdbcType=VARCHAR},

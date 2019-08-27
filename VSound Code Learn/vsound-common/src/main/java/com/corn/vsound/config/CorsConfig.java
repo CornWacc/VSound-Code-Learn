@@ -17,7 +17,7 @@ public class CorsConfig {
 
     @PostConstruct
     public void corsFilterReady() {
-        log.info("********** 过滤器加载完毕！ **********");
+        log.info("********** 跨域器加载完毕！ **********");
     }
 
 

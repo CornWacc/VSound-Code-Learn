@@ -60,7 +60,7 @@
             align="center">
             <template slot-scope="scope">
               <el-button size="mini" type="primary" @click="updateCode(scope.row)">编辑</el-button>
-              <el-button size="mini" @click="delCode(scope.row)">删除</el-button>
+              <el-button size="mini" type="danger" @click="delCode(scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -72,10 +72,10 @@
         width="30%"
         :before-close="handleClose">
         <el-form ref="codeForm" :model="codeForm" :rules="rules" style="margin-left: 10px;">
-          <el-form-item label="源码项目名称:" prop="codeName">
+          <el-form-item label="源码名称:" prop="codeName">
             <el-input placeholder="请输入源码名称" v-model="codeForm.codeName" style="width: 220px"></el-input>
           </el-form-item>
-          <el-form-item label="源码项目类型:" prop="codeType">
+          <el-form-item label="源码类型:" prop="codeType">
             <el-select v-model="codeForm.codeType" clearable style="width: 220px" placeholder="请选择源码类型">
               <el-option
                 v-for="item in options"
@@ -85,7 +85,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="源码继承等级:" prop="codeLevel">
+          <el-form-item label="继承等级:" prop="codeLevel">
             <el-input placeholder="请输入源码继承等级" v-model="codeForm.codeLevel" style="width: 220px"></el-input>
           </el-form-item>
         </el-form>
@@ -98,35 +98,32 @@
         :title="drawerData.codeName"
         :visible.sync="drawer"
         :direction="direction"
-        :before-close="handleClose"
+        :before-close="drawerHandleClose"
         size="850px"
         class="drawer">
         <div class="wrapper" ref="wrapper">
           <div>
             <div class="drawer_form_model">
               <el-row>
-                <el-col :span="4"><span style="font-size: 18px">名称:</span></el-col>
+                <el-col :span="4"><span style="font-size: 18px;font-weight: bolder">名称:</span></el-col>
                 <el-col :span="4"><span style="font-size: 14px">{{drawerData.codeName}}</span></el-col>
               </el-row>
               <el-row>
-                <el-col :span="4"><span style="font-size: 18px">类型:</span></el-col>
+                <el-col :span="4"><span style="font-size: 18px;font-weight: bolder">类型:</span></el-col>
                 <el-col :span="4"><span style="font-size: 14px">{{drawerData.codeType}}</span></el-col>
               </el-row>
               <el-row>
-                <el-col :span="4"><span style="font-size: 18px">继承级别:</span></el-col>
+                <el-col :span="4"><span style="font-size: 18px;font-weight: bolder">继承级别:</span></el-col>
                 <el-col :span="4"><span style="font-size: 14px">{{drawerData.codeLevel}}</span></el-col>
               </el-row>
               <el-row :gutter="24">
-                <el-col :span="4"><span style="font-size: 18px;line-height: 40px">应用范围:</span></el-col>
+                <el-col :span="4"><span style="font-size: 18px;line-height: 40px;font-weight: bolder">应用范围:</span>
+                </el-col>
                 <el-col :span="20">
-                  <span style="font-size: 14px"
-                        v-if="drawerData.usePosition != '' && drawerData.usePosition != null"></span>
-                  <el-row :gutter="24" v-else>
+                  <el-row :gutter="24">
                     <el-col :span="10">
-                      <el-input placeholder="应用范围" class="drawer_form_model_useposition_input"></el-input>
-                    </el-col>
-                    <el-col :span="10">
-                      <el-button size="mini" style="margin-top: 10px">保存</el-button>
+                      <el-input placeholder="应用范围" @change="drawerInputChange" v-model="drawerData.usePosition"
+                                class="drawer_form_model_useposition_input"></el-input>
                     </el-col>
                   </el-row>
                 </el-col>
@@ -134,9 +131,9 @@
               <el-row>
                 <el-col :span="4"><span style="font-size: 18px">简介:</span></el-col>
               </el-row>
-              <div class="drawer_form_model_remark">
-                {{drawerData.codeRemark}}
-              </div>
+              <el-input type="textarea" @change="drawerInputChange" :autosize="{minRows:16,maxRows:16}"
+                        class="drawer_form_model_remark" v-model="drawerData.codeRemark" maxlength="50" show-word-limit>
+              </el-input>
               <div v-if="drawerData.codeType != 'ANNOTATION'">
                 <el-row>
                   <el-col style="margin-top: 20px;text-align: center;font-size: 24px;font-weight: bolder;">
@@ -153,8 +150,9 @@
                     align="center"
                     prop="methodName">
                     <template slot-scope="scope">
-                      <span v-if="scope.row.methodName != 'null'">{{scope.row.methodName}}</span>
-                      <el-input placeholder="方法名称" v-model="codeParamAddForm.methodAddForm.methodName" v-if="scope.row.methodName == 'null'"></el-input>
+                      <el-input placeholder="方法名称" v-model="scope.row.methodName"
+                                v-if="scope.row.type == 'new'"></el-input>
+                      <span v-else>{{scope.row.methodName}}</span>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -162,17 +160,20 @@
                     align="center"
                     prop="methodsUsage">
                     <template slot-scope="scope">
-                      <span v-if="scope.row.methodUsage != 'null'">{{scope.row.methodsUsage}}</span>
-                      <el-input placeholder="用法" v-model="codeParamAddForm.methodAddForm.methodUsage" v-if="scope.row.methodUsage == 'null'"></el-input>
+                      <el-input placeholder="用法" v-model="scope.row.methodsUsage"
+                                v-if="scope.row.type == 'new'"></el-input>
+                      <span v-else>{{scope.row.methodsUsage}}</span>
                     </template>
+
                   </el-table-column>
                   <el-table-column
                     label="方法入参"
                     align="center"
                     prop="methodOrder">
                     <template slot-scope="scope">
-                      <span v-if="scope.row.methodOrder != 'null'">{{scope.row.methodOrder}}</span>
-                      <el-input placeholder="方法入参" v-model="codeParamAddForm.methodAddForm.methodOrder" v-if="scope.row.methodOrder == 'null'"></el-input>
+                      <el-input placeholder="方法入参" v-model="scope.row.methodOrder"
+                                v-if="scope.row.type == 'new'"></el-input>
+                      <span v-else>{{scope.row.methodOrder}}</span>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -180,16 +181,21 @@
                     align="center"
                     prop="isCommonUse">
                     <template slot-scope="scope">
-                      <span v-if="scope.row.isCommonUse != 'null'">{{scope.row.isCommonUse}}</span>
-                      <el-input placeholder="是否常用" v-model="codeParamAddForm.methodAddForm.isCommonUse" v-if="scope.row.isCommonUse == 'null'"></el-input>
+                      <el-input placeholder="是否常用" v-model="scope.row.isCommonUse"
+                                v-if="scope.row.type == 'new'"></el-input>
+                      <span v-else>{{scope.row.isCommonUse}}</span>
                     </template>
                   </el-table-column>
                   <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
                       <el-button size="mini" type="primary" v-if="scope.row.type !== 'new'">编辑</el-button>
                       <el-button size="mini" v-if="scope.row.type !== 'new'">删除</el-button>
-                      <el-button size="mini" v-if="scope.row.type == 'new'" type="primary">保存</el-button>
-                      <el-button size="mini" v-if="scope.row.type == 'new'" type="danger" @click="cancelNewParamInput(scope.$index,drawerData.codeMethods)">撤销</el-button>
+                      <el-button size="mini" v-if="scope.row.type == 'new'" type="primary"
+                                 @click="sureAddCodeParam(scope.row,type = 'method')">保存
+                      </el-button>
+                      <el-button size="mini" v-if="scope.row.type == 'new'" type="danger"
+                                 @click="cancelNewParamInput(scope.$index,drawerData.codeMethods)">撤销
+                      </el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -210,8 +216,9 @@
                     align="center"
                     prop="parameterName">
                     <template slot-scope="scope">
-                      <span v-if="scope.row.parameterName != 'null'">{{scope.row.parameterName}}</span>
-                      <el-input placeholder="参数名称" v-model="codeParamAddForm.paramAddForm.parameterName" v-if="scope.row.parameterName == 'null'"></el-input>
+                      <el-input placeholder="参数名称" v-model="scope.row.parameterName"
+                                v-if="scope.row.type == 'new'"></el-input>
+                      <span v-else>{{scope.row.parameterName}}</span>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -219,8 +226,9 @@
                     align="center"
                     prop="parameterType">
                     <template slot-scope="scope">
-                      <span v-if="scope.row.parameterType != 'null'">{{scope.row.methodOrder}}</span>
-                      <el-input placeholder="参数类型" v-model="codeParamAddForm.paramAddForm.parameterType" v-if="scope.row.parameterType == 'null'"></el-input>
+                      <el-input placeholder="参数类型" v-model="scope.row.parameterType"
+                                v-if="scope.row.type == 'new'"></el-input>
+                      <span v-else>{{scope.row.methodOrder}}</span>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -228,16 +236,21 @@
                     align="center"
                     prop="parameterRemark">
                     <template slot-scope="scope">
-                      <span v-if="scope.row.parameterRemark != 'null'">{{scope.row.parameterRemark}}</span>
-                      <el-input placeholder="参数解释" v-model="codeParamAddForm.paramAddForm.parameterRemark" v-if="scope.row.parameterRemark == 'null'"></el-input>
+                      <el-input placeholder="参数解释" v-model="scope.row.parameterRemark"
+                                v-if="scope.row.type == 'new'"></el-input>
+                      <span v-else>{{scope.row.parameterRemark}}</span>
                     </template>
                   </el-table-column>
                   <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
                       <el-button size="mini" type="primary" v-if="scope.row.type !== 'new'">编辑</el-button>
                       <el-button size="mini" v-if="scope.row.type !== 'new'">删除</el-button>
-                      <el-button size="mini" v-if="scope.row.type == 'new'" type="primary">保存</el-button>
-                      <el-button size="mini" v-if="scope.row.type == 'new'" type="danger" @click="cancelNewParamInput(scope.$index,drawerData.codeParameters)">撤销</el-button>
+                      <el-button size="mini" v-if="scope.row.type == 'new'" type="primary"
+                                 @click="sureAddCodeParam(scope.row,type = 'params')">保存
+                      </el-button>
+                      <el-button size="mini" v-if="scope.row.type == 'new'" type="danger"
+                                 @click="cancelNewParamInput(scope.$index,drawerData.codeParameters)">撤销
+                      </el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -258,8 +271,9 @@
                     align="center"
                     prop="outSideUrlRemark">
                     <template slot-scope="scope">
-                      <span v-if="scope.row.outSideUrlRemark != 'null'">{{scope.row.outSideUrlRemark}}</span>
-                      <el-input placeholder="链接注释" v-model="codeParamAddForm.urlAddForm.outSideUrlPath" v-if="scope.row.outSideUrlRemark == 'null'"></el-input>
+                      <el-input placeholder="链接注释" v-model="scope.row.outSideUrlPath"
+                                v-if="scope.row.type == 'new'"></el-input>
+                      <span v-else>{{scope.row.outSideUrlRemark}}</span>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -267,16 +281,21 @@
                     align="center"
                     prop="outSideUrlPath">
                     <template slot-scope="scope">
-                      <span v-if="scope.row.outSideUrlPath != 'null'">{{scope.row.outSideUrlPath}}</span>
-                      <el-input placeholder="路径" v-model="codeParamAddForm.urlAddForm.outSideUrlRemark" v-if="scope.row.outSideUrlPath == 'null'"></el-input>
+                      <el-input placeholder="路径" v-model="scope.row.outSideUrlRemark"
+                                v-if="scope.row.type == 'new'"></el-input>
+                      <span v-else>{{scope.row.outSideUrlPath}}</span>
                     </template>
                   </el-table-column>
                   <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
                       <el-button size="mini" type="primary" v-if="scope.row.type !== 'new'">编辑</el-button>
                       <el-button size="mini" v-if="scope.row.type !== 'new'">删除</el-button>
-                      <el-button size="mini" v-if="scope.row.type == 'new'" type="primary">保存</el-button>
-                      <el-button size="mini" v-if="scope.row.type == 'new'" type="danger" @click="cancelNewParamInput(scope.$index,drawerData.outSideUrl)">撤销</el-button>
+                      <el-button size="mini" v-if="scope.row.type == 'new'" type="primary"
+                                 @click="sureAddCodeParam(type = 'url')">保存
+                      </el-button>
+                      <el-button size="mini" v-if="scope.row.type == 'new'" type="danger"
+                                 @click="cancelNewParamInput(scope.$index,drawerData.outSideUrl)">撤销
+                      </el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -337,28 +356,40 @@
           dialogVisible: false
         },
         drawerData: {
+          codeId: "",
           codeName: "",
           codeType: "",
           codeLevel: "",
           codeRemark: "",
+          haveChange: false,
+          usePosition: ""
         },
-        codeParamAddForm:{
-          methodAddForm:{
+        codeParamAddForm: {
+          methodAddForm: {
             methodName: "",
             methodUsage: "",
             methodOrder: "",
             isCommonUse: "",
           },
-          paramAddForm:{
+          paramAddForm: {
             parameterName: "",
             parameterType: "",
             parameterRemark: "",
           },
-          urlAddForm:{
+          urlAddForm: {
             outSideUrlRemark: "",
             outSideUrlPath: "",
           }
-        }
+        },
+        codeUpdateForm: {
+          codeId: "",
+          codeName: "",
+          codeType: "",
+          codeLevel: 0,
+          codeRemark: "",
+          usePosition: "",
+          updateType: ""
+        },
       }
     },
     mounted() {
@@ -384,38 +415,56 @@
         this.dialog.dialogVisible = true
         this.dialog.dialogTital = "编辑源码"
         this.codeForm = row
+        this.codeUpdateForm = row
+        this.codeUpdateForm.updateType = "BASE"
       },
       handleClose(done) {
         done()
       },
+      drawerHandleClose(done) {
+        if (this.drawerData.haveChange == true) {
+          this.$confirm('该源码有文本已编辑, 是否保存?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.codeUpdateForm.updateType = "EXTRA"
+            this.codeUpdateForm = this.drawerData
+            this.codeUpdate()
+            done()
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '撤销保存!'
+            });
+          });
+        } else {
+          done()
+        }
+
+      },
       cancelDialog() {
+        this.doSearch()
         this.dialog.dialogVisible = false
       },
       sureAddCode() {
         this.codeForm.codeProgram = this.$route.query.projectId
         if (this.dialog.dialogTital == "编辑源码") {
-          this.codeForm.type = "update"
+          this.codeUpdate()
         } else {
-          this.codeForm.type = "add"
+          this.$axios({
+            url: "http://localhost:9055/base/code/codeAdd",
+            data: this.codeForm,
+            method: "Post"
+          }).then(res => {
+            if (res.data.status == "SUCCESS") {
+              this.$message.success("操作成功")
+              this.dialog.dialogVisible = false
+              this.doSearch()
+            }
+          })
         }
-        this.$axios({
-          url: "http://localhost:9055/base/code/codeAdd",
-          data: this.codeForm,
-          method: "Post"
-        }).then(res => {
-          if (res.data.status == "SUCCESS") {
-            this.$message.success("操作成功")
-            this.dialog.dialogVisible = false
-            this.$axios({
-              url: "http://localhost:9055/base/code/codeInfoQuery?programId=" + this.$route.query.projectId + "&keyWord=" + "",
-              method: "Get"
-            }).then(res => {
-              if (res.data.status == "SUCCESS") {
-                this.tableData = res.data.object.codeInfoList
-              }
-            })
-          }
-        })
+
       },
       doSearch() {
         this.$axios({
@@ -429,7 +478,6 @@
       },
       viewDetails(row) {
         this.drawer = true
-        console.log(row)
         this.drawerData = row
       },
       delCode(row) {
@@ -453,34 +501,77 @@
         })
       },
       addParameterInput(type) {
-        console.log(type)
         if (type == 'method') {
           this.drawerData.codeMethods.push({
-            methodName: "null",
-            methodUsage: "null",
-            methodOrder: "null",
-            isCommonUse: "null",
+            methodName: "",
+            methodUsage: "",
+            methodOrder: "",
+            isCommonUse: "",
             type: "new"
           })
         } else if (type == 'parameter') {
           this.drawerData.codeParameters.push({
-            parameterName: "null",
-            parameterType: "null",
-            parameterRemark: "null",
+            parameterName: "",
+            parameterType: "",
+            parameterRemark: "",
             type: "new"
           })
         } else if (type == 'url') {
           this.drawerData.outSideUrl.push({
-            outSideUrlRemark: "null",
-            outSideUrlPath: "null",
+            outSideUrlRemark: "",
+            outSideUrlPath: "",
             type: "new"
           })
+          this.haveUrlAdd = true
         }
       },
-      cancelNewParamInput(index,tableDate){
-        tableDate.splice(index,1)
+      cancelNewParamInput(index, tableDate) {
+        tableDate.splice(index, 1)
+      },
+      drawerInputChange() {
+        this.drawerData.haveChange = true
+      },
+      codeUpdate() {
+        this.$axios({
+          url: "http://localhost:9055/base/code/codeUpdate",
+          data: this.codeUpdateForm,
+          method: "Post"
+        }).then(res => {
+          if (res.data.status == "SUCCESS") {
+            this.$message({
+              type: 'success',
+              message: '保存成功!'
+            });
+            this.dialog.dialogVisible = false
+            this.doSearch()
+          } else {
+            this.$message({
+              type: 'error',
+              message: '保存失败!' + res.data.msg + "!"
+            });
+          }
+        })
+      },
+      sureAddCodeParam(row,type) {
+        this.$axios({
+          url:"http://localhost:9055/base/code/codeParamsAdd",
+          method:"Post",
+          data:{
+            codeId:this.drawerData.codeId,
+            codeMethodInfoList:this.drawerData.codeMethods,
+            codeOutSideUrlInfos:this.drawerData.outSideUrl,
+            codeParameterInfos:this.drawerData.codeParameters,
+            type:type
+          }
+        }).then(res =>{
+          if(res.data.status == "SUCCESS"){
+            console.log(res)
+            this.drawerData.codeMethods = res.data.object.codeMethodInfoList
+          }
+        })
       }
     }
+
   }
 </script>
 
@@ -534,11 +625,9 @@
 
   .drawer_form_model_remark {
     padding: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    /*border: 1px solid rgba(0, 0, 0, 0.1);*/
     height: 400px;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
     font-size: 14px;
-    margin-right: 10px;
   }
 
   .drawer_form_model_useposition_input >>> .el-input__inner {
@@ -554,6 +643,9 @@
 
   .drawer /deep/ .el-drawer.rtl {
     overflow: auto;
+  }
+  .outside_url_table{
+    margin-bottom: 20px;
   }
 
 

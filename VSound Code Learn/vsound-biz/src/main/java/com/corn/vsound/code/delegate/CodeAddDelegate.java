@@ -40,23 +40,19 @@ public class CodeAddDelegate extends AbstractBizService<CodeAddOrder, CodeAddRes
     protected void appBiz(CodeAddOrder order, CodeAddResult result) {
 
         CodeBase codeBase = new CodeBase();
-        BeanUtils.copyProperties(order,codeBase);
+        BeanUtils.copyProperties(order, codeBase);
 
         codeBase.setCreateTime(new Date());
         System.out.println(codeBase);
 
-        if(StringUtils.isBlank(order.getCodeId())){
-            String codeId = AppUtils.correspondingCreate("code");
-            codeBase.setCodeId(codeId);
-            codeBaseMapper.insertSelective(codeBase);
+        String codeId = AppUtils.correspondingCreate("code");
+        codeBase.setCodeId(codeId);
+        codeBaseMapper.insertSelective(codeBase);
 
-            CodeExtra codeExtra = new CodeExtra();
-            codeExtra.setCodeId(codeId);
-            codeExtra.setCreateTime(new Date());
-            codeExtraMapper.insertSelective(codeExtra);
-        }else{
+        CodeExtra codeExtra = new CodeExtra();
+        codeExtra.setCodeId(codeId);
+        codeExtra.setCreateTime(new Date());
+        codeExtraMapper.insertSelective(codeExtra);
 
-            codeBaseMapper.updateByPrimaryKeySelective(codeBase);
-        }
     }
 }

@@ -1,8 +1,10 @@
 package com.corn.vsound.dao.entity;
 
+import com.corn.boot.base.Base;
+
 import java.util.Date;
 
-public class CodeExtra {
+public class CodeExtra extends Base {
     private Integer id;
 
     private String codeId;

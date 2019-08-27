@@ -90,9 +90,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.corn.vsound.dao.entity.CodeBase" >
     update code_base
     <set >
-      <if test="codeId != null" >
-        code_id = #{codeId,jdbcType=VARCHAR},
-      </if>
       <if test="codeName != null" >
         code_name = #{codeName,jdbcType=VARCHAR},
       </if>
@@ -112,7 +109,7 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where code_id = #{codeId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.corn.vsound.dao.entity.CodeBase" >
     update code_base
