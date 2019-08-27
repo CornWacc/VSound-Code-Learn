@@ -11,11 +11,44 @@
  Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 19/08/2019 18:20:00
+ Date: 27/08/2019 17:27:47
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for code_base
+-- ----------------------------
+DROP TABLE IF EXISTS `code_base`;
+CREATE TABLE `code_base` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `code_id` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '源码id',
+  `code_name` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '源码名称',
+  `code_type` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '源码类型',
+  `code_level` int(255) NOT NULL COMMENT '源码等级',
+  `code_program` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '源码所属框架Id',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='源码内容';
+
+-- ----------------------------
+-- Table structure for code_extra
+-- ----------------------------
+DROP TABLE IF EXISTS `code_extra`;
+CREATE TABLE `code_extra` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code_id` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '源码id',
+  `use_position` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '适用范围',
+  `code_remark` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '简介',
+  `code_methods` varchar(9999) COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '方法列表',
+  `code_parameter` varchar(255) COLLATE utf8mb4_bin DEFAULT '' COMMENT '参数列表',
+  `out_side_url` varchar(255) COLLATE utf8mb4_bin DEFAULT '' COMMENT '外链列表',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- ----------------------------
 -- Table structure for project_base
