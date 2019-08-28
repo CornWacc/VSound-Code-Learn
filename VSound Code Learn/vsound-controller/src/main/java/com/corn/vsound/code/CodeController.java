@@ -2,14 +2,14 @@ package com.corn.vsound.code;
 
 import com.corn.boot.base.JsonResult;
 import com.corn.boot.util.AppUtils;
-import com.corn.vsound.code.codeparam.CodeParamsAddOrder;
-import com.corn.vsound.code.codeparam.CodeParamsAddResult;
 import com.corn.vsound.code.create.CodeAddOrder;
 import com.corn.vsound.code.create.CodeAddResult;
 import com.corn.vsound.code.del.CodeDelOrder;
 import com.corn.vsound.code.del.CodeDelResult;
 import com.corn.vsound.code.list.CodeListQueryByKeyWordOrder;
 import com.corn.vsound.code.list.CodeListQueryByKeyWordResult;
+import com.corn.vsound.code.method.CodeMethodCUDOrder;
+import com.corn.vsound.code.method.CodeMethodCUDResult;
 import com.corn.vsound.code.update.CodeUpdateOrder;
 import com.corn.vsound.code.update.CodeUpdateResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +50,10 @@ public class CodeController  {
         return new JsonResult(result);
     }
 
-    @PostMapping("codeParamsAdd")
-    public JsonResult codeParamsAdd(@RequestBody CodeParamsAddOrder order){
+    @PostMapping("codeMethodCUD")
+    public JsonResult codeParamsAdd(@RequestBody CodeMethodCUDOrder order){
         order.setSerialNo(AppUtils.appCode("codeParamsAdd"));
-        CodeParamsAddResult result = codeFacade.codeParamsAdd(order);
+        CodeMethodCUDResult result = codeFacade.codeMethodCUD(order);
         return new JsonResult(result);
     }
 }

@@ -65,35 +65,6 @@
           </el-table-column>
         </el-table>
       </el-main>
-
-      <el-dialog
-        :title="dialog.dialogTital"
-        :visible.sync="dialog.dialogVisible"
-        width="30%"
-        :before-close="handleClose">
-        <el-form ref="codeForm" :model="codeForm" :rules="rules" style="margin-left: 10px;">
-          <el-form-item label="源码名称:" prop="codeName">
-            <el-input placeholder="请输入源码名称" v-model="codeForm.codeName" style="width: 220px"></el-input>
-          </el-form-item>
-          <el-form-item label="源码类型:" prop="codeType">
-            <el-select v-model="codeForm.codeType" clearable style="width: 220px" placeholder="请选择源码类型">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="继承等级:" prop="codeLevel">
-            <el-input placeholder="请输入源码继承等级" v-model="codeForm.codeLevel" style="width: 220px"></el-input>
-          </el-form-item>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
-    <el-button @click="cancelDialog">取 消</el-button>
-    <el-button type="primary" @click="sureAddCode">确 定</el-button>
-  </span>
-      </el-dialog>
       <el-drawer
         :title="drawerData.codeName"
         :visible.sync="drawer"
@@ -206,10 +177,14 @@
                   </el-table-column>
                   <el-table-column label="操作" align="center" style="text-align: center">
                     <template slot-scope="scope">
-                      <el-button size="mini" type="primary" v-if="scope.row.type !== 'new'">编辑</el-button>
-                      <el-button size="mini" v-if="scope.row.type !== 'new'">删除</el-button>
+                      <el-button size="mini" type="primary" v-if="scope.row.type !== 'new'"
+                                 @click="cudCodeMethod(scope.row,type = 'U')">编辑
+                      </el-button>
+                      <el-button size="mini" v-if="scope.row.type !== 'new'"
+                                 @click="cudCodeMethod(scope.row,type = 'D')">删除
+                      </el-button>
                       <el-button size="mini" v-if="scope.row.type == 'new'" type="primary"
-                                 @click="sureAddCodeParam(scope.row,type = 'method')">保存
+                                 @click="cudCodeMethod(scope.row,type = 'C')">保存
                       </el-button>
                       <el-button size="mini" v-if="scope.row.type == 'new'" type="danger"
                                  @click="cancelNewParamInput(scope.$index,drawerData.codeMethods)">撤销
@@ -325,7 +300,44 @@
         </div>
       </el-drawer>
     </el-container>
+    <el-dialog
+      :title="dialog.dialogTital"
+      :visible.sync="dialog.dialogVisible"
+      width="30%"
+      :before-close="handleClose">
+      <el-form ref="codeForm" :model="codeForm" :rules="rules" style="margin-left: 10px;" v-if="dialog.dialogType == 'code'">
+        <el-form-item label="源码名称:" prop="codeName">
+          <el-input placeholder="请输入源码名称" v-model="codeForm.codeName" style="width: 220px"></el-input>
+        </el-form-item>
+        <el-form-item label="源码类型:" prop="codeType">
+          <el-select v-model="codeForm.codeType" clearable style="width: 220px" placeholder="请选择源码类型">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="继承等级:" prop="codeLevel">
+          <el-input placeholder="请输入源码继承等级" v-model="codeForm.codeLevel" style="width: 220px"></el-input>
+        </el-form-item>
+      </el-form>
+      <el-form v-else-if="dialog.dialogType=='method'">
+        <el-form-item label="源码名称:" prop="codeName">
+          <el-input placeholder="请输入源码名称" v-model="codeForm.codeName" style="width: 220px"></el-input>
+        </el-form-item>
+      </el-form>
+      <el-form v-else-if="dialog.dialogType=='parameter'"></el-form>
+      <el-form v-else-if="dialog.dialogType=='url'"></el-form>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="cancelDialog">取 消</el-button>
+    <el-button type="primary" @click="sureAddCode">确 定</el-button>
+  </span>
+    </el-dialog>
   </el-container>
+
+
 </template>
 
 <script>
@@ -373,7 +385,8 @@
         ],
         dialog: {
           dialogTital: "",
-          dialogVisible: false
+          dialogVisible: false,
+          dialogType: "code"
         },
         drawerData: {
           codeId: "",
@@ -524,28 +537,15 @@
         })
       },
       addParameterInput(type) {
-        if (type == 'method') {
-          this.drawerData.codeMethods.push({
-            methodName: "",
-            methodUsage: "",
-            methodOrder: "",
-            isCommonUse: "",
-            type: "new"
-          })
-        } else if (type == 'parameter') {
-          this.drawerData.codeParameters.push({
-            parameterName: "",
-            parameterType: "",
-            parameterRemark: "",
-            type: "new"
-          })
-        } else if (type == 'url') {
-          this.drawerData.outSideUrl.push({
-            outSideUrlRemark: "",
-            outSideUrlPath: "",
-            type: "new"
-          })
+        this.dialog.dialogVisible = true
+        if(type == "method"){
+          this.dialog.dialogTital="方法新增"
+        }else if(type = "parameter"){
+          this.dialog.dialogTital="参数新增"
+        }else{
+          this.dialog.dialogTital="链接新增"
         }
+        this.dialog.dialogType = type
       },
       cancelNewParamInput(index, tableDate) {
         tableDate.splice(index, 1)
@@ -574,30 +574,27 @@
           }
         })
       },
-      sureAddCodeParam(row, type) {
-        var obj;
-        if (type == 'method') {
-          obj = {
-            methodName: row.methodName,
-
-          }
-        }
+      cudCodeMethod(row, type) {
         this.$axios({
-          url: "http://localhost:9055/base/code/codeParamsAdd",
-          method: "Post",
+          url: "http://localhost:9055/base/code/codeMethodCUD",
           data: {
+            type: type,
             codeId: this.drawerData.codeId,
-            info: obj,
-            type: type
-          }
+            methodId: row.methodId,
+            codeMethodInfo: row
+          },
+          method: "post"
         }).then(res => {
           if (res.data.status == "SUCCESS") {
-            console.log(res)
             this.drawerData.codeMethods = res.data.object.codeMethodInfoList
-            this.drawerData.codeParameters = res.data.object.codeParameterInfos
-            this.drawerData.outSideUrl = res.data.object.codeOutSideUrlInfos
           }
         })
+      },
+      sureAddCodeParameter(row) {
+
+      },
+      sureAddCodeUrl(row) {
+
       }
     }
 
