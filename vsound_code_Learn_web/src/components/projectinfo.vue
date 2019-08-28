@@ -134,6 +134,7 @@
               <el-input type="textarea" @change="drawerInputChange" :autosize="{minRows:16,maxRows:16}"
                         class="drawer_form_model_remark" v-model="drawerData.codeRemark" maxlength="50" show-word-limit>
               </el-input>
+
               <div v-if="drawerData.codeType != 'ANNOTATION'">
                 <el-row>
                   <el-col style="margin-top: 20px;text-align: center;font-size: 24px;font-weight: bolder;">
@@ -145,6 +146,33 @@
                   </el-col>
                 </el-row>
                 <el-table :data="drawerData.codeMethods" class="code_methods_table" border>
+                  <el-table-column type="expand">
+                    <template slot-scope="scope">
+                      <el-form label-position="left" inline class="code_methods_expand">
+                        <el-form-item label="方法名称：">
+                          <span>{{ scope.row.methodName }}</span>
+                        </el-form-item>
+                        <el-form-item label="方法用处：">
+                          <span>{{ scope.row.methodUsage }}</span>
+                        </el-form-item>
+                        <el-form-item label="方法理解：">
+                          <span>{{ scope.row.methodNotice }}</span>
+                        </el-form-item>
+                        <el-form-item label="方法入参：">
+                          <span>{{ scope.row.methodOrder }}</span>
+                        </el-form-item>
+                        <el-form-item label="方法出参：">
+                          <span>{{ scope.row.methodResult }}</span>
+                        </el-form-item>
+                        <el-form-item label="是否为静态方法：">
+                          <span>{{ scope.row.abstract }}</span>
+                        </el-form-item>
+                        <el-form-item label="是否常用：">
+                          <span>{{ scope.row.methodCommonUse }}</span>
+                        </el-form-item>
+                      </el-form>
+                    </template>
+                  </el-table-column>
                   <el-table-column
                     label="方法名称"
                     align="center"
@@ -156,37 +184,27 @@
                     </template>
                   </el-table-column>
                   <el-table-column
-                    label="用法"
+                    label="方法用处"
                     align="center"
                     prop="methodsUsage">
                     <template slot-scope="scope">
-                      <el-input placeholder="用法" v-model="scope.row.methodsUsage"
+                      <el-input placeholder="用法" v-model="scope.row.methodUsage"
                                 v-if="scope.row.type == 'new'"></el-input>
-                      <span v-else>{{scope.row.methodsUsage}}</span>
+                      <span v-else>{{scope.row.methodUsage}}</span>
                     </template>
 
-                  </el-table-column>
-                  <el-table-column
-                    label="方法入参"
-                    align="center"
-                    prop="methodOrder">
-                    <template slot-scope="scope">
-                      <el-input placeholder="方法入参" v-model="scope.row.methodOrder"
-                                v-if="scope.row.type == 'new'"></el-input>
-                      <span v-else>{{scope.row.methodOrder}}</span>
-                    </template>
                   </el-table-column>
                   <el-table-column
                     label="是否常用"
                     align="center"
                     prop="isCommonUse">
                     <template slot-scope="scope">
-                      <el-input placeholder="是否常用" v-model="scope.row.isCommonUse"
-                                v-if="scope.row.type == 'new'"></el-input>
-                      <span v-else>{{scope.row.isCommonUse}}</span>
+                      <el-switch v-model="scope.row.methodCommonUse" active-value="Y"
+                                 inactive-value="N" v-if="scope.row.type == 'new'"></el-switch>
+                      <span v-else>{{scope.row.methodCommonUse}}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column label="操作" align="center">
+                  <el-table-column label="操作" align="center" style="text-align: center">
                     <template slot-scope="scope">
                       <el-button size="mini" type="primary" v-if="scope.row.type !== 'new'">编辑</el-button>
                       <el-button size="mini" v-if="scope.row.type !== 'new'">删除</el-button>
@@ -200,6 +218,8 @@
                   </el-table-column>
                 </el-table>
               </div>
+
+
               <div v-if="drawerData.codeType != 'INTERFACE'">
                 <el-row>
                   <el-col style="margin-top: 20px;text-align: center;font-size: 24px;font-weight: bolder;">
@@ -228,7 +248,7 @@
                     <template slot-scope="scope">
                       <el-input placeholder="参数类型" v-model="scope.row.parameterType"
                                 v-if="scope.row.type == 'new'"></el-input>
-                      <span v-else>{{scope.row.methodOrder}}</span>
+                      <span v-else>{{scope.row.parameterType}}</span>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -291,7 +311,7 @@
                       <el-button size="mini" type="primary" v-if="scope.row.type !== 'new'">编辑</el-button>
                       <el-button size="mini" v-if="scope.row.type !== 'new'">删除</el-button>
                       <el-button size="mini" v-if="scope.row.type == 'new'" type="primary"
-                                 @click="sureAddCodeParam(type = 'url')">保存
+                                 @click="sureAddCodeParam(scope.row,type = 'url')">保存
                       </el-button>
                       <el-button size="mini" v-if="scope.row.type == 'new'" type="danger"
                                  @click="cancelNewParamInput(scope.$index,drawerData.outSideUrl)">撤销
@@ -398,8 +418,11 @@
         method: "Get"
       }).then(res => {
         if (res.data.status == "SUCCESS") {
+          console.log(res)
           this.projectForm.projectName = res.data.object.projectName
           this.tableData = res.data.object.codeInfoList
+        } else {
+          this.$message.error("查询失败!" + res.data.msg)
         }
       })
     },
@@ -522,7 +545,6 @@
             outSideUrlPath: "",
             type: "new"
           })
-          this.haveUrlAdd = true
         }
       },
       cancelNewParamInput(index, tableDate) {
@@ -552,21 +574,28 @@
           }
         })
       },
-      sureAddCodeParam(row,type) {
-        this.$axios({
-          url:"http://localhost:9055/base/code/codeParamsAdd",
-          method:"Post",
-          data:{
-            codeId:this.drawerData.codeId,
-            codeMethodInfoList:this.drawerData.codeMethods,
-            codeOutSideUrlInfos:this.drawerData.outSideUrl,
-            codeParameterInfos:this.drawerData.codeParameters,
-            type:type
+      sureAddCodeParam(row, type) {
+        var obj;
+        if (type == 'method') {
+          obj = {
+            methodName: row.methodName,
+
           }
-        }).then(res =>{
-          if(res.data.status == "SUCCESS"){
+        }
+        this.$axios({
+          url: "http://localhost:9055/base/code/codeParamsAdd",
+          method: "Post",
+          data: {
+            codeId: this.drawerData.codeId,
+            info: obj,
+            type: type
+          }
+        }).then(res => {
+          if (res.data.status == "SUCCESS") {
             console.log(res)
             this.drawerData.codeMethods = res.data.object.codeMethodInfoList
+            this.drawerData.codeParameters = res.data.object.codeParameterInfos
+            this.drawerData.outSideUrl = res.data.object.codeOutSideUrlInfos
           }
         })
       }
@@ -644,8 +673,28 @@
   .drawer /deep/ .el-drawer.rtl {
     overflow: auto;
   }
-  .outside_url_table{
+
+  .outside_url_table {
     margin-bottom: 20px;
+  }
+
+  .el-button + .el-button {
+    margin-left: 0px;
+  }
+
+  .code_methods_expand {
+    font-size: 0;
+  }
+
+  .code_methods_expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+
+  .code_methods_expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
   }
 
 

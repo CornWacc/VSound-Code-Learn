@@ -28,8 +28,6 @@ public class CodeInfo extends Base {
 
     private List<CodeMethodInfo> codeMethods;
 
-    private List<String> codeImages;
-
     private List<CodeOutSideUrlInfo> outSideUrl;
 
     private List<CodeParameterInfo> codeParameters;
@@ -97,14 +95,6 @@ public class CodeInfo extends Base {
 
     public void setCodeMethods(List<CodeMethodInfo> codeMethods) {
         this.codeMethods = codeMethods;
-    }
-
-    public List<String> getCodeImages() {
-        return codeImages;
-    }
-
-    public void setCodeImages(List<String> codeImages) {
-        this.codeImages = codeImages;
     }
 
     public List<CodeOutSideUrlInfo> getOutSideUrl() {

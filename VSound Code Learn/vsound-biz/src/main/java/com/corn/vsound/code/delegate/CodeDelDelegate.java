@@ -34,6 +34,6 @@ public class CodeDelDelegate extends AbstractBizService<CodeDelOrder, CodeDelRes
     protected void appBiz(CodeDelOrder order, CodeDelResult result) {
 
         codeBaseMapper.deleteByPrimaryKey(order.getCodeId());
-        codeExtraMapper.deleteByPrimaryKey(order.getCodeId());
+//        codeExtraMapper.deleteByPrimaryKey(order.getCodeId()); //todo 兼容新版本 表扩展后需要把源码下的所有方法/参数/链接删除
     }
 }

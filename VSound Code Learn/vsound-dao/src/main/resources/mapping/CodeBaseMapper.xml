@@ -109,7 +109,7 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where code_id = #{codeId,jdbcType=INTEGER}
+    where code_id = #{codeId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.corn.vsound.dao.entity.CodeBase" >
     update code_base
@@ -131,7 +131,7 @@
     cb.code_level codeLevel,
     cb.code_program codeProgram,
     ce.use_position usePosition,
-    ce.code_remark codeRemark,
+    ce.code_remark codeRemark
     from code_base cb
     left join code_extra ce on cb.code_id = ce.code_id
     <where>
