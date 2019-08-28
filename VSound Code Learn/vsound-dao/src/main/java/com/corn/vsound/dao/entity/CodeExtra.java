@@ -1,10 +1,8 @@
 package com.corn.vsound.dao.entity;
 
-import com.corn.boot.base.Base;
-
 import java.util.Date;
 
-public class CodeExtra extends Base {
+public class CodeExtra {
     private Integer id;
 
     private String codeId;
@@ -12,12 +10,6 @@ public class CodeExtra extends Base {
     private String usePosition;
 
     private String codeRemark;
-
-    private String codeMethods;
-
-    private String codeParameter;
-
-    private String outSideUrl;
 
     private Date createTime;
 
@@ -55,14 +47,6 @@ public class CodeExtra extends Base {
         this.codeRemark = codeRemark == null ? null : codeRemark.trim();
     }
 
-    public String getCodeMethods() {
-        return codeMethods;
-    }
-
-    public void setCodeMethods(String codeMethods) {
-        this.codeMethods = codeMethods == null ? null : codeMethods.trim();
-    }
-
     public Date getCreateTime() {
         return createTime;
     }
@@ -77,21 +61,5 @@ public class CodeExtra extends Base {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public String getCodeParameter() {
-        return codeParameter;
-    }
-
-    public void setCodeParameter(String codeParameter) {
-        this.codeParameter = codeParameter;
-    }
-
-    public String getOutSideUrl() {
-        return outSideUrl;
-    }
-
-    public void setOutSideUrl(String outSideUrl) {
-        this.outSideUrl = outSideUrl;
     }
 }

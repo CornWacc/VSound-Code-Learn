@@ -1,9 +1,9 @@
-package com.corn.vsound.code.info;
+package com.corn.vsound.dao.entity;
 
-import com.corn.boot.base.BaseOrder;
+import java.util.Date;
 
-public class CodeMethodInfo extends BaseOrder {
-    private static final long serialVersionUID = -5542726072191263929L;
+public class CodeMethod {
+    private Integer id;
 
     private String methodId;
 
@@ -23,12 +23,24 @@ public class CodeMethodInfo extends BaseOrder {
 
     private String fromCodeId;
 
+    private Date createTime;
+
+    private Date updateTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getMethodId() {
         return methodId;
     }
 
     public void setMethodId(String methodId) {
-        this.methodId = methodId;
+        this.methodId = methodId == null ? null : methodId.trim();
     }
 
     public String getMethodName() {
@@ -36,7 +48,7 @@ public class CodeMethodInfo extends BaseOrder {
     }
 
     public void setMethodName(String methodName) {
-        this.methodName = methodName;
+        this.methodName = methodName == null ? null : methodName.trim();
     }
 
     public String getMethodUsage() {
@@ -44,7 +56,7 @@ public class CodeMethodInfo extends BaseOrder {
     }
 
     public void setMethodUsage(String methodUsage) {
-        this.methodUsage = methodUsage;
+        this.methodUsage = methodUsage == null ? null : methodUsage.trim();
     }
 
     public String getMethodNotice() {
@@ -52,7 +64,7 @@ public class CodeMethodInfo extends BaseOrder {
     }
 
     public void setMethodNotice(String methodNotice) {
-        this.methodNotice = methodNotice;
+        this.methodNotice = methodNotice == null ? null : methodNotice.trim();
     }
 
     public String getMethodOrder() {
@@ -60,7 +72,7 @@ public class CodeMethodInfo extends BaseOrder {
     }
 
     public void setMethodOrder(String methodOrder) {
-        this.methodOrder = methodOrder;
+        this.methodOrder = methodOrder == null ? null : methodOrder.trim();
     }
 
     public String getMethodResult() {
@@ -68,7 +80,7 @@ public class CodeMethodInfo extends BaseOrder {
     }
 
     public void setMethodResult(String methodResult) {
-        this.methodResult = methodResult;
+        this.methodResult = methodResult == null ? null : methodResult.trim();
     }
 
     public String getIsAbstract() {
@@ -76,7 +88,7 @@ public class CodeMethodInfo extends BaseOrder {
     }
 
     public void setIsAbstract(String isAbstract) {
-        this.isAbstract = isAbstract;
+        this.isAbstract = isAbstract == null ? null : isAbstract.trim();
     }
 
     public String getMethodCommonUse() {
@@ -84,7 +96,7 @@ public class CodeMethodInfo extends BaseOrder {
     }
 
     public void setMethodCommonUse(String methodCommonUse) {
-        this.methodCommonUse = methodCommonUse;
+        this.methodCommonUse = methodCommonUse == null ? null : methodCommonUse.trim();
     }
 
     public String getFromCodeId() {
@@ -92,6 +104,22 @@ public class CodeMethodInfo extends BaseOrder {
     }
 
     public void setFromCodeId(String fromCodeId) {
-        this.fromCodeId = fromCodeId;
+        this.fromCodeId = fromCodeId == null ? null : fromCodeId.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

@@ -132,22 +132,18 @@
     cb.code_program codeProgram,
     ce.use_position usePosition,
     ce.code_remark codeRemark,
-    ce.code_methods codeMethods,
-    ce.code_parameter codeParameters,
-    ce.out_side_url outSideUrl
     from code_base cb
-    left join code_extra ce
-    on cb.code_id = ce.code_id
+    left join code_extra ce on cb.code_id = ce.code_id
     <where>
       cb.code_program = #{programId}
       <if test="codeName != null and codeName != ''">
-        and code_name like concat('%',#{codeName},'%')
+        and cb.code_name like concat('%',#{codeName},'%')
       </if>
       <if test="codeType != null and codeType != ''">
-        and code_type = #{codeType}
+        and cb.code_type = #{codeType}
       </if>
       <if test="codeLevel != null and codeLevel != ''">
-        and code_level = #{codeLevel}
+        and cb.code_level = #{codeLevel}
       </if>
     </where>
   </select>

@@ -5,23 +5,43 @@ import com.corn.boot.base.Base;
 public class CodeOutSideUrlInfo extends Base {
     private static final long serialVersionUID = 7715020662815255972L;
 
-    private String outSideUrlRemark;
+    private String urlId;
 
-    private String outSideUrlPath;
+    private String urlRemark;
 
-    public String getOutSideUrlRemark() {
-        return outSideUrlRemark;
+    private String fromCodeId;
+
+    private String urlPath;
+
+    public String getUrlId() {
+        return urlId;
     }
 
-    public void setOutSideUrlRemark(String outSideUrlRemark) {
-        this.outSideUrlRemark = outSideUrlRemark;
+    public void setUrlId(String urlId) {
+        this.urlId = urlId;
     }
 
-    public String getOutSideUrlPath() {
-        return outSideUrlPath;
+    public String getUrlRemark() {
+        return urlRemark;
     }
 
-    public void setOutSideUrlPath(String outSideUrlPath) {
-        this.outSideUrlPath = outSideUrlPath;
+    public void setUrlRemark(String urlRemark) {
+        this.urlRemark = urlRemark;
+    }
+
+    public String getFromCodeId() {
+        return fromCodeId;
+    }
+
+    public void setFromCodeId(String fromCodeId) {
+        this.fromCodeId = fromCodeId;
+    }
+
+    public String getUrlPath() {
+        return urlPath;
+    }
+
+    public void setUrlPath(String urlPath) {
+        this.urlPath = urlPath;
     }
 }

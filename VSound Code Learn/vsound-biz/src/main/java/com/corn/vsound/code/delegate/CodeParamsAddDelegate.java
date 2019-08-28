@@ -54,7 +54,7 @@ public class CodeParamsAddDelegate extends AbstractBizService<CodeParamsAddOrder
                 resJson = addMethodParam(order.getCodeMethodInfoList());
                 codeExtra.setCodeMethods(resJson);
                 break;
-            case "parameter":
+            case "params":
                 resJson = addParameter(order.getCodeParameterInfos());
                 codeExtra.setCodeParameter(resJson);
                 break;

@@ -37,9 +37,7 @@
                <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
         <!--<table tableName="update_user_record" enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-        <table tableName="code_base" enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-        <table tableName="code_extra" enableCountByExample="false" enableUpdateByExample="false"
+        <table tableName="code_parameter" enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
     </context>
 </generatorConfiguration>
