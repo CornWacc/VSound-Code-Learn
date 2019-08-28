@@ -174,4 +174,74 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <insert id="batchAddMethod">
+    insert into code_method
+    <foreach collection="methodInfos" item="item">
+      <trim prefix="(" suffix=")" suffixOverrides="," >
+        <if test="item.methodId != null" >
+          method_id,
+        </if>
+        <if test="item.methodName != null" >
+          method_name,
+        </if>
+        <if test="item.methodUsage != null" >
+          method_usage,
+        </if>
+        <if test="item.methodNotice != null" >
+          method_notice,
+        </if>
+        <if test="item.methodOrder != null" >
+          method_order,
+        </if>
+        <if test="item.methodResult != null" >
+          method_result,
+        </if>
+        <if test="item.isAbstract != null" >
+          is_abstract,
+        </if>
+        <if test="item.methodCommonUse != null" >
+          method_common_use,
+        </if>
+        <if test="item.fromCodeId != null" >
+          from_code_id,
+        </if>
+        <if test="item.createTime != null" >
+          create_time,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides="," >
+        <if test="item.methodId != null" >
+          #{item.methodId,jdbcType=VARCHAR},
+        </if>
+        <if test="item.methodName != null" >
+          #{item.methodName,jdbcType=VARCHAR},
+        </if>
+        <if test="item.methodUsage != null" >
+          #{item.methodUsage,jdbcType=VARCHAR},
+        </if>
+        <if test="item.methodNotice != null" >
+          #{item.methodNotice,jdbcType=VARCHAR},
+        </if>
+        <if test="item.methodOrder != null" >
+          #{item.methodOrder,jdbcType=VARCHAR},
+        </if>
+        <if test="item.methodResult != null" >
+          #{item.methodResult,jdbcType=VARCHAR},
+        </if>
+        <if test="item.isAbstract != null" >
+          #{item.isAbstract,jdbcType=VARCHAR},
+        </if>
+        <if test="item.methodCommonUse != null" >
+          #{item.methodCommonUse,jdbcType=VARCHAR},
+        </if>
+        <if test="item.fromCodeId != null" >
+          #{item.fromCodeId,jdbcType=VARCHAR},
+        </if>
+        <if test="item.createTime != null" >
+          #{item.createTime,jdbcType=TIMESTAMP},
+        </if>
+      </trim>
+    </foreach>
+  </insert>
 </mapper>

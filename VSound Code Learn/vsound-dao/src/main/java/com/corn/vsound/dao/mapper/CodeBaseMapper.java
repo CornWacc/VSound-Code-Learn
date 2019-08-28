@@ -3,6 +3,8 @@ package com.corn.vsound.dao.mapper;
 import com.corn.vsound.dao.entity.CodeBase;
 import com.corn.vsound.dto.CodeDto;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultMap;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -23,5 +25,9 @@ public interface CodeBaseMapper {
                                         @Param("codeName")String codeName,
                                         @Param("codeLevel")Integer codeLevel,
                                         @Param("codeType")String codeType);
+
+    @Select("Select * from code_base where code_id = #{codeId}")
+    @ResultMap("BaseResultMap")
+    CodeBase findCodeBaseByCodeId(@Param("codeId")String codeId);
 
 }

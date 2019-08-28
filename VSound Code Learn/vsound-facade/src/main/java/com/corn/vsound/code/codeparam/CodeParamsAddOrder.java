@@ -1,11 +1,7 @@
 package com.corn.vsound.code.codeparam;
 
 import com.corn.boot.base.BaseOrder;
-import com.corn.vsound.code.info.CodeMethodInfo;
-import com.corn.vsound.code.info.CodeOutSideUrlInfo;
-import com.corn.vsound.code.info.CodeParameterInfo;
 
-import java.util.List;
 
 
 /**
@@ -17,11 +13,7 @@ public class CodeParamsAddOrder extends BaseOrder {
 
     private String type;
 
-    private List<CodeMethodInfo> codeMethodInfoList;
-
-    private List<CodeOutSideUrlInfo> codeOutSideUrlInfos;
-
-    private List<CodeParameterInfo> codeParameterInfos;
+    private Object info;
 
     private String codeId;
 
@@ -41,27 +33,11 @@ public class CodeParamsAddOrder extends BaseOrder {
         this.type = type;
     }
 
-    public List<CodeMethodInfo> getCodeMethodInfoList() {
-        return codeMethodInfoList;
+    public Object getInfo() {
+        return info;
     }
 
-    public void setCodeMethodInfoList(List<CodeMethodInfo> codeMethodInfoList) {
-        this.codeMethodInfoList = codeMethodInfoList;
-    }
-
-    public List<CodeOutSideUrlInfo> getCodeOutSideUrlInfos() {
-        return codeOutSideUrlInfos;
-    }
-
-    public void setCodeOutSideUrlInfos(List<CodeOutSideUrlInfo> codeOutSideUrlInfos) {
-        this.codeOutSideUrlInfos = codeOutSideUrlInfos;
-    }
-
-    public List<CodeParameterInfo> getCodeParameterInfos() {
-        return codeParameterInfos;
-    }
-
-    public void setCodeParameterInfos(List<CodeParameterInfo> codeParameterInfos) {
-        this.codeParameterInfos = codeParameterInfos;
+    public void setInfo(Object info) {
+        this.info = info;
     }
 }

@@ -11,7 +11,7 @@
  Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 27/08/2019 17:27:47
+ Date: 28/08/2019 17:31:35
 */
 
 SET NAMES utf8mb4;
@@ -31,7 +31,7 @@ CREATE TABLE `code_base` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='源码内容';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='源码内容';
 
 -- ----------------------------
 -- Table structure for code_extra
@@ -42,13 +42,64 @@ CREATE TABLE `code_extra` (
   `code_id` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '源码id',
   `use_position` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '适用范围',
   `code_remark` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '简介',
-  `code_methods` varchar(9999) COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '方法列表',
-  `code_parameter` varchar(255) COLLATE utf8mb4_bin DEFAULT '' COMMENT '参数列表',
-  `out_side_url` varchar(255) COLLATE utf8mb4_bin DEFAULT '' COMMENT '外链列表',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='源码扩展表\n';
+
+-- ----------------------------
+-- Table structure for code_method
+-- ----------------------------
+DROP TABLE IF EXISTS `code_method`;
+CREATE TABLE `code_method` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `method_id` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '方法id',
+  `method_name` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '方法名称',
+  `method_usage` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '方法用法',
+  `method_notice` varchar(255) COLLATE utf8mb4_bin DEFAULT '' COMMENT '方法注意点',
+  `method_order` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '方法入参',
+  `method_result` varchar(255) COLLATE utf8mb4_bin DEFAULT '无' COMMENT '方法反参',
+  `is_abstract` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT 'N' COMMENT '是否为静态方法',
+  `method_common_use` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT 'Y' COMMENT '方法是否常用',
+  `from_code_id` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '所属源码id',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='源码方法\n';
+
+-- ----------------------------
+-- Table structure for code_out_side_url
+-- ----------------------------
+DROP TABLE IF EXISTS `code_out_side_url`;
+CREATE TABLE `code_out_side_url` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `url_id` int(11) NOT NULL COMMENT '链接id',
+  `url_remark` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '链接注释',
+  `url_path` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '链接地址',
+  `from_code_id` int(11) NOT NULL COMMENT '所属源码',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='源码外链\n';
+
+-- ----------------------------
+-- Table structure for code_parameter
+-- ----------------------------
+DROP TABLE IF EXISTS `code_parameter`;
+CREATE TABLE `code_parameter` (
+  `id` int(11) NOT NULL,
+  `parameter_id` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '参数id',
+  `parameter_name` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '参数名称',
+  `parameter_remark` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '参数注释',
+  `parameter_type` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '参数类型',
+  `is_final` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '是否为常量',
+  `is_autowire` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '是否注入',
+  `is_interface` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '是否为接口类型',
+  `from_code_id` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '所属源码',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='源码参数';
 
 -- ----------------------------
 -- Table structure for project_base
@@ -69,7 +120,7 @@ CREATE TABLE `project_base` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='项目基础信息';
 
 -- ----------------------------
 -- Table structure for user_base
