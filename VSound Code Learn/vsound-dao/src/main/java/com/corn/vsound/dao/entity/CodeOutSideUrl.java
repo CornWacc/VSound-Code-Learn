@@ -5,31 +5,23 @@ import java.util.Date;
 public class CodeOutSideUrl {
     private Integer id;
 
-    private Integer urlId;
+    private String urlId;
 
     private String urlRemark;
 
     private String urlPath;
 
-    private Integer fromCodeId;
+    private String fromCodeId;
 
     private Date createTime;
 
     private Date updateTime;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getUrlId() {
+    public String getUrlId() {
         return urlId;
     }
 
-    public void setUrlId(Integer urlId) {
+    public void setUrlId(String urlId) {
         this.urlId = urlId;
     }
 
@@ -38,7 +30,7 @@ public class CodeOutSideUrl {
     }
 
     public void setUrlRemark(String urlRemark) {
-        this.urlRemark = urlRemark == null ? null : urlRemark.trim();
+        this.urlRemark = urlRemark;
     }
 
     public String getUrlPath() {
@@ -46,14 +38,14 @@ public class CodeOutSideUrl {
     }
 
     public void setUrlPath(String urlPath) {
-        this.urlPath = urlPath == null ? null : urlPath.trim();
+        this.urlPath = urlPath;
     }
 
-    public Integer getFromCodeId() {
+    public String getFromCodeId() {
         return fromCodeId;
     }
 
-    public void setFromCodeId(Integer fromCodeId) {
+    public void setFromCodeId(String fromCodeId) {
         this.fromCodeId = fromCodeId;
     }
 

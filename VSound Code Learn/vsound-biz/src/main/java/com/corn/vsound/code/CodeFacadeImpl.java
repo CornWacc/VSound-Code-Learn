@@ -37,6 +37,12 @@ public class CodeFacadeImpl implements CodeFacade {
     @Autowired
     private CodeMethodCUDDelegate codeMethodCUDDelegate;
 
+    @Autowired
+    private CodeParameterCUDDelegate codeParameterCUDDelegate;
+
+    @Autowired
+    private CodeUrlCUDDelegate codeUrlCUDDelegate;
+
     @Override
     public CodeListQueryByKeyWordResult codeListQueryByKeyWord(CodeListQueryByKeyWordOrder order) {
         return codeListQueryByKeyWordDelegate.execute("源码列表查询",order);
@@ -59,12 +65,12 @@ public class CodeFacadeImpl implements CodeFacade {
 
     @Override
     public CodeParameterCUDResult codeParameterCUD(CodeParameterCUDOrder order) {
-        return null;
+        return codeParameterCUDDelegate.execute("源码参数增删改",order);
     }
 
     @Override
     public CodeUrlCUDResult codeUrlCUD(CodeUrlCUDOrder order) {
-        return null;
+        return codeUrlCUDDelegate.execute("源码链接增删改",order);
     }
 
     @Override

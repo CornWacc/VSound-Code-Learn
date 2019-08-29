@@ -5,6 +5,8 @@ import com.corn.vsound.code.info.CodeMethodInfo;
 
 public class CodeMethodCUDOrder extends BaseOrder {
 
+    private static final long serialVersionUID = 6741243849046526454L;
+
     private String type;
 
     private String codeId;

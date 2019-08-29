@@ -10,8 +10,12 @@ import com.corn.vsound.code.list.CodeListQueryByKeyWordOrder;
 import com.corn.vsound.code.list.CodeListQueryByKeyWordResult;
 import com.corn.vsound.code.method.CodeMethodCUDOrder;
 import com.corn.vsound.code.method.CodeMethodCUDResult;
+import com.corn.vsound.code.parameter.CodeParameterCUDOrder;
+import com.corn.vsound.code.parameter.CodeParameterCUDResult;
 import com.corn.vsound.code.update.CodeUpdateOrder;
 import com.corn.vsound.code.update.CodeUpdateResult;
+import com.corn.vsound.code.url.CodeUrlCUDOrder;
+import com.corn.vsound.code.url.CodeUrlCUDResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,9 +55,23 @@ public class CodeController  {
     }
 
     @PostMapping("codeMethodCUD")
-    public JsonResult codeParamsAdd(@RequestBody CodeMethodCUDOrder order){
-        order.setSerialNo(AppUtils.appCode("codeParamsAdd"));
+    public JsonResult codeMethodCUD(@RequestBody CodeMethodCUDOrder order){
+        order.setSerialNo(AppUtils.appCode("codeMethodCUD"));
         CodeMethodCUDResult result = codeFacade.codeMethodCUD(order);
+        return new JsonResult(result);
+    }
+
+    @PostMapping("codeParameterCUD")
+    public JsonResult codeParameterCUD(@RequestBody CodeParameterCUDOrder order){
+        order.setSerialNo(AppUtils.appCode("codeParameterCUD"));
+        CodeParameterCUDResult result = codeFacade.codeParameterCUD(order);
+        return new JsonResult(result);
+    }
+
+    @PostMapping("codeUrlCUD")
+    public JsonResult codeUrlCUD(@RequestBody CodeUrlCUDOrder order){
+        order.setSerialNo(AppUtils.appCode("codeUrlCUD"));
+        CodeUrlCUDResult result = codeFacade.codeUrlCUD(order);
         return new JsonResult(result);
     }
 }

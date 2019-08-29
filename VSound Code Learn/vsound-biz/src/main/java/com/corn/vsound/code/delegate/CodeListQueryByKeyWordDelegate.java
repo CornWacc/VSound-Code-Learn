@@ -11,6 +11,8 @@ import com.corn.vsound.code.info.CodeParameterInfo;
 import com.corn.vsound.code.list.CodeListQueryByKeyWordOrder;
 import com.corn.vsound.code.list.CodeListQueryByKeyWordResult;
 import com.corn.vsound.dao.entity.CodeMethod;
+import com.corn.vsound.dao.entity.CodeOutSideUrl;
+import com.corn.vsound.dao.entity.CodeParameter;
 import com.corn.vsound.dao.entity.ProjectBase;
 import com.corn.vsound.dao.mapper.*;
 import com.corn.vsound.dto.CodeDto;
@@ -66,6 +68,8 @@ public class CodeListQueryByKeyWordDelegate extends AbstractBizService<CodeListQ
                 CodeInfo codeInfo = new CodeInfo();
                 BeanUtils.copyProperties(codeDto,codeInfo);
                 codeInfo.setCodeMethods(getCodeMethodList(codeDto.getCodeId()));
+                codeInfo.setOutSideUrl(getCodeUrlList(codeDto.getCodeId()));
+                codeInfo.setCodeParameters(getCodeParameterList(codeDto.getCodeId()));
                 codeInfos.add(codeInfo);
             }
             result.setCodeInfoList(codeInfos);
@@ -90,10 +94,21 @@ public class CodeListQueryByKeyWordDelegate extends AbstractBizService<CodeListQ
 
     private List<CodeParameterInfo> getCodeParameterList(String codeId){
 
+        List<CodeParameter> codeParameters = codeParameterMapper.findParameterListByCodeId(codeId);
+        if(!ObjectUtils.isEmpty(codeParameters)){
+            List<CodeParameterInfo> codeParameterInfos = JSON.parseArray(JSON.toJSONString(codeParameters),CodeParameterInfo.class);
+            return codeParameterInfos;
+        }
         return new ArrayList<>();
     }
 
     private List<CodeOutSideUrlInfo> getCodeUrlList(String codeId){
+
+        List<CodeOutSideUrl> codeOutSideUrls = codeOutSideUrlMapper.findCodeOutSideUrlByCodeId(codeId);
+        if(!ObjectUtils.isEmpty(codeOutSideUrls)){
+            List<CodeOutSideUrlInfo> codeOutSideUrlInfos = JSON.parseArray(JSON.toJSONString(codeOutSideUrls),CodeOutSideUrlInfo.class);
+            return codeOutSideUrlInfos;
+        }
         return new ArrayList<>();
     }
 

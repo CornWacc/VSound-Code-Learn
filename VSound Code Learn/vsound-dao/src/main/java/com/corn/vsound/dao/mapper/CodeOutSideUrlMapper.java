@@ -1,6 +1,7 @@
 package com.corn.vsound.dao.mapper;
 
 import com.corn.vsound.dao.entity.CodeOutSideUrl;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
@@ -23,4 +24,7 @@ public interface CodeOutSideUrlMapper {
     @Select("select * from code_out_side_url where from_code_id = #{codeId}")
     @ResultMap("BaseResultMap")
     List<CodeOutSideUrl> findCodeOutSideUrlByCodeId(@Param("codeId")String codeId);
+
+    @Delete("delete from code_out_side_url where url_id = #{urlId}")
+    int deleteCodeUrlByUrlId(@Param("urlId")String urlId);
 }

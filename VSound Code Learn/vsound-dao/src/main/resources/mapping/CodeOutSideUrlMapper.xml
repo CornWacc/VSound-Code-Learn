@@ -3,10 +3,10 @@
 <mapper namespace="com.corn.vsound.dao.mapper.CodeOutSideUrlMapper" >
   <resultMap id="BaseResultMap" type="com.corn.vsound.dao.entity.CodeOutSideUrl" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="url_id" property="urlId" jdbcType="INTEGER" />
+    <result column="url_id" property="urlId" jdbcType="VARCHAR" />
     <result column="url_remark" property="urlRemark" jdbcType="VARCHAR" />
     <result column="url_path" property="urlPath" jdbcType="VARCHAR" />
-    <result column="from_code_id" property="fromCodeId" jdbcType="INTEGER" />
+    <result column="from_code_id" property="fromCodeId" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -61,7 +61,7 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="urlId != null" >
-        #{urlId,jdbcType=INTEGER},
+        #{urlId,jdbcType=VARCHAR},
       </if>
       <if test="urlRemark != null" >
         #{urlRemark,jdbcType=VARCHAR},
@@ -70,7 +70,7 @@
         #{urlPath,jdbcType=VARCHAR},
       </if>
       <if test="fromCodeId != null" >
-        #{fromCodeId,jdbcType=INTEGER},
+        #{fromCodeId,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -83,9 +83,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.corn.vsound.dao.entity.CodeOutSideUrl" >
     update code_out_side_url
     <set >
-      <if test="urlId != null" >
-        url_id = #{urlId,jdbcType=INTEGER},
-      </if>
       <if test="urlRemark != null" >
         url_remark = #{urlRemark,jdbcType=VARCHAR},
       </if>
@@ -93,7 +90,7 @@
         url_path = #{urlPath,jdbcType=VARCHAR},
       </if>
       <if test="fromCodeId != null" >
-        from_code_id = #{fromCodeId,jdbcType=INTEGER},
+        from_code_id = #{fromCodeId,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -102,7 +99,7 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where url_id = #{urlId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.corn.vsound.dao.entity.CodeOutSideUrl" >
     update code_out_side_url

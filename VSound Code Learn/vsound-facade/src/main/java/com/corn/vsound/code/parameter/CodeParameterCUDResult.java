@@ -7,6 +7,7 @@ import java.util.List;
 
 public class CodeParameterCUDResult extends BaseRes {
 
+    private static final long serialVersionUID = -2533221368896308161L;
     private List<CodeParameterInfo> codeParameterInfoList;
 
     public List<CodeParameterInfo> getCodeParameterInfoList() {
