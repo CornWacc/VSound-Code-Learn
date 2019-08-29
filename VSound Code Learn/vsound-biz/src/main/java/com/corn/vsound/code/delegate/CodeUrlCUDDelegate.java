@@ -13,6 +13,7 @@ import com.corn.vsound.dao.entity.CodeOutSideUrl;
 import com.corn.vsound.dao.mapper.CodeOutSideUrlMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -68,7 +69,6 @@ public class CodeUrlCUDDelegate extends AbstractBizService<CodeUrlCUDOrder, Code
 
     @Override
     public void del(String id) {
-
         codeOutSideUrlMapper.deleteCodeUrlByUrlId(id);
     }
 

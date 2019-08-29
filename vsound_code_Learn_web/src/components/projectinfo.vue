@@ -183,6 +183,30 @@
                   </el-col>
                 </el-row>
                 <el-table :data="drawerData.codeParameters" class="outside_url_table" border>
+                  <el-table-column type="expand">
+                    <template slot-scope="scope">
+                      <el-form label-position="left" inline class="code_methods_expand">
+                        <el-form-item label="参数名称：">
+                          <span>{{ scope.row.parameterName }}</span>
+                        </el-form-item>
+                        <el-form-item label="参数注释：">
+                          <span>{{ scope.row.parameterRemark }}</span>
+                        </el-form-item>
+                        <el-form-item label="参数类型：">
+                          <span>{{ scope.row.parameterType }}</span>
+                        </el-form-item>
+                        <el-form-item label="是否为常量：">
+                          <span>{{ scope.row.isFinal }}</span>
+                        </el-form-item>
+                        <el-form-item label="是否Autowire：">
+                          <span>{{ scope.row.isAutowire }}</span>
+                        </el-form-item>
+                        <el-form-item label="是否为接口：">
+                          <span>{{ scope.row.isInterface }}</span>
+                        </el-form-item>
+                      </el-form>
+                    </template>
+                  </el-table-column>
                   <el-table-column
                     label="参数名称"
                     align="center"
