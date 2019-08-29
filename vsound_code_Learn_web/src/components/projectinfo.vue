@@ -229,8 +229,8 @@
                   </el-table-column>
                   <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
-                      <el-button size="mini" type="primary" v-if="scope.row.type !== 'new'">编辑</el-button>
-                      <el-button size="mini" v-if="scope.row.type !== 'new'">删除</el-button>
+                      <el-button size="mini" type="primary" @click="sureCUDCodeUrl(scope.row,type='U')" v-if="scope.row.type !== 'new'">编辑</el-button>
+                      <el-button size="mini" @click="sureCUDCodeUrl(scope.row,type='D')" v-if="scope.row.type !== 'new'">删除</el-button>
                     </template>
                   </el-table-column>
                 </el-table>
