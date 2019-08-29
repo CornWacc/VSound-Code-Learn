@@ -487,9 +487,9 @@
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            this.codeUpdateForm.updateType = "EXTRA"
             this.codeUpdateForm = this.drawerData
-            this.codeUpdate()
+            this.codeUpdateForm.updateType = "EXTRA"
+            this.sureCUCode()
             done()
           }).catch(() => {
             this.$message({
@@ -585,7 +585,7 @@
        * */
       sureCUCode() {
         this.codeForm.codeProgram = this.$route.query.projectId
-        if (this.dialog.dialogTital == "编辑源码") {
+        if (this.dialog.dialogTital == "编辑源码" || this.codeUpdateForm.updateType == 'EXTRA') {
           this.$axios({
             url: "http://localhost:9055/base/code/codeUpdate",
             data: this.codeUpdateForm,
@@ -625,7 +625,6 @@
        * CUD源码方法
        * */
       sureCUDCodeMethod(row,type){
-
         if(row != null){
           this.CUDCodeMethodForm = row;
         }
@@ -639,13 +638,18 @@
             codeMethodInfo:this.CUDCodeMethodForm
           }
         }).then(res =>{
+          console.log(res.data.object)
           if(res.data.status == "SUCCESS"){
             this.$message.success("操作成功！")
-            this.$refs["CUDCodeMethodForm"].resetFields()
             this.dialog.dialogVisible = false
             this.drawerData.codeMethods = res.data.object.codeMethodInfoList
+
+            if(type == "C"){
+              this.$refs["CUDCodeMethodForm"].resetFields()
+            }
           }
         })
+
       },
 
       /**
@@ -667,11 +671,15 @@
         }).then(res =>{
           if(res.data.status == "SUCCESS"){
             this.$message.success("操作成功！")
-            this.$refs["CUDCodeParameterForm"].resetFields()
             this.dialog.dialogVisible = false
             this.drawerData.codeParameters = res.data.object.codeParameterInfoList
+
+            if(type == "C"){
+              this.$refs["CUDCodeParameterForm"].resetFields()
+            }
           }
         })
+
       },
 
       /**
@@ -693,11 +701,16 @@
         }).then(res =>{
           if(res.data.status == "SUCCESS"){
             this.$message.success("操作成功！")
-            this.$refs["CUDCodeUrlForm"].resetFields()
+
             this.dialog.dialogVisible = false
             this.drawerData.outSideUrl = res.data.object.codeOutSideUrlInfoList
+
+            if(type == "C"){
+              this.$refs["CUDCodeUrlForm"].resetFields()
+            }
           }
         })
+
       }
     }
 
