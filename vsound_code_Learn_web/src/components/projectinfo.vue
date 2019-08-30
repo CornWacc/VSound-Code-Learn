@@ -469,7 +469,7 @@
     },
     mounted() {
       this.$axios({
-        url: "http://119.3.219.207:9055/base/code/codeInfoQuery?programId=" + this.$route.query.projectId + "&keyWord=" + "",
+        url: "https://119.3.219.207:9055/base/code/codeInfoQuery?programId=" + this.$route.query.projectId + "&keyWord=" + "",
         method: "Get"
       }).then(res => {
         if (res.data.status == "SUCCESS") {
@@ -534,7 +534,7 @@
 
       doSearch() {
         this.$axios({
-          url: "http://119.3.219.207:9055/base/code/codeInfoQuery?programId=" + this.$route.query.projectId + "&codeName=" + this.codeSearch.codeName + "&codeType=" + this.codeSearch.codeType + "&codeLevel=" + this.codeSearch.codeLevel,
+          url: "https://119.3.219.207:9055/base/code/codeInfoQuery?programId=" + this.$route.query.projectId + "&codeName=" + this.codeSearch.codeName + "&codeType=" + this.codeSearch.codeType + "&codeLevel=" + this.codeSearch.codeLevel,
           method: "get"
         }).then(res => {
           if (res.data.status = "SUCCESS") {
@@ -551,7 +551,7 @@
 
       delCode(row) {
         this.$axios({
-          url: "http://119.3.219.207:9055/base/code/delCode",
+          url: "https://119.3.219.207:9055/base/code/delCode",
           data: {
             codeId: row.codeId,
           },
@@ -559,7 +559,7 @@
         }).then(res => {
           if (res.data.status == "SUCCESS") {
             this.$axios({
-              url: "http://119.3.219.207:9055/base/code/codeInfoQuery?programId=" + this.$route.query.projectId + "&codeName=" + this.codeSearch.codeName + "&codeType=" + this.codeSearch.codeType + "&codeLevel=" + this.codeSearch.codeLevel,
+              url: "https://119.3.219.207:9055/base/code/codeInfoQuery?programId=" + this.$route.query.projectId + "&codeName=" + this.codeSearch.codeName + "&codeType=" + this.codeSearch.codeType + "&codeLevel=" + this.codeSearch.codeLevel,
               method: "get"
             }).then(res => {
               if (res.data.status = "SUCCESS") {
@@ -611,7 +611,7 @@
         this.codeForm.codeProgram = this.$route.query.projectId
         if (this.dialog.dialogTital == "编辑源码" || this.codeUpdateForm.updateType == 'EXTRA') {
           this.$axios({
-            url: "http://119.3.219.207:9055/base/code/codeUpdate",
+            url: "https://119.3.219.207:9055/base/code/codeUpdate",
             data: this.codeUpdateForm,
             method: "Post"
           }).then(res => {
@@ -631,7 +631,7 @@
           })
         } else {
           this.$axios({
-            url: "http://119.3.219.207:9055/base/code/codeAdd",
+            url: "https://119.3.219.207:9055/base/code/codeAdd",
             data: this.codeForm,
             method: "Post"
           }).then(res => {
@@ -653,7 +653,7 @@
           this.CUDCodeMethodForm = row;
         }
         this.$axios({
-          url:"http://119.3.219.207:9055/base/code/codeMethodCUD",
+          url:"https://119.3.219.207:9055/base/code/codeMethodCUD",
           method:"Post",
           data:{
             type:type,
@@ -684,7 +684,7 @@
           this.CUDCodeParameterForm = row;
         }
         this.$axios({
-          url:"http://119.3.219.207:9055/base/code/codeParameterCUD",
+          url:"https://119.3.219.207:9055/base/code/codeParameterCUD",
           method:"Post",
           data:{
             type:type,
@@ -714,7 +714,7 @@
           this.CUDCodeUrlForm = row;
         }
         this.$axios({
-          url:"http://119.3.219.207:9055/base/code/codeUrlCUD",
+          url:"https://119.3.219.207:9055/base/code/codeUrlCUD",
           method:"Post",
           data:{
             type:type,

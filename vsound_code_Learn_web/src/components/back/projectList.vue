@@ -104,7 +104,7 @@
       },
       mounted(){
         this.$axios({
-          url:"http://119.3.219.207:9055/base/project/projectListQuery",
+          url:"https://119.3.219.207:9055/base/project/projectListQuery",
           method:"get"
         }).then(res =>{
           if(res.data.status = "SUCCESS"){
