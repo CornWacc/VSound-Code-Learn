@@ -43,7 +43,7 @@
             this.$refs["loginForm"].validate((valid) =>{
               if(valid){
                 this.$axios({
-                  url:"http://localhost:9055/base/user/userLogin",
+                  url:"http://127.0.0.1:9055/base/user/userLogin",
                   method:"post",
                   data:this.loginForm
                 }).then(res =>{

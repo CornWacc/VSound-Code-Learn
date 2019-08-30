@@ -104,7 +104,7 @@
     },
     mounted(){
       this.$axios({
-        url:"http://localhost:9055/base/project/projectListQuery",
+        url:"http://127.0.0.1:9055/base/project/projectListQuery",
         method:"get"
       }).then(res =>{
         if(res.data.status = "SUCCESS"){
@@ -136,14 +136,14 @@
       },
       addProject(){
         this.$axios({
-          url:"http://localhost:9055/base/project/projectAdd",
+          url:"http://127.0.0.1:9055/base/project/projectAdd",
           data:this.addProjectForm,
           method:"Post"
         }).then(res =>{
           if(res.data.status == "SUCCESS"){
             this.disableDialog = false
             this.$axios({
-              url:"http://localhost:9055/base/project/projectListQuery",
+              url:"http://127.0.0.1:9055/base/project/projectListQuery",
               method:"get"
             }).then(res =>{
               if(res.data.status = "SUCCESS"){
@@ -155,7 +155,7 @@
       },
       doSearch(){
         this.$axios({
-          url:"http://localhost:9055/base/project/projectListQuery?keyWord="+this.searchInput,
+          url:"http://127.0.0.1:9055/base/project/projectListQuery?keyWord="+this.searchInput,
           method:"Get"
         }).then(res =>{
           if(res.data.status == "SUCCESS"){

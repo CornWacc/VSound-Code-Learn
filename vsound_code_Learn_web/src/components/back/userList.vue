@@ -138,7 +138,7 @@
     },
     mounted(){
       this.$axios({
-        url:"http://localhost:9055/base/user/userListQuery",
+        url:"http://127.0.0.1:9055/base/user/userListQuery",
         method:"Get",
       }).then(res =>{
         if(res.data.status = "SUCCESS"){
