@@ -6,8 +6,6 @@
     <result column="code_id" property="codeId" jdbcType="VARCHAR" />
     <result column="use_position" property="usePosition" jdbcType="VARCHAR" />
     <result column="code_remark" property="codeRemark" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, code_id, use_position, code_remark, create_time, update_time
@@ -45,12 +43,6 @@
       <if test="codeRemark != null" >
         code_remark,
       </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -65,12 +57,6 @@
       <if test="codeRemark != null" >
         #{codeRemark,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.corn.vsound.dao.entity.CodeExtra" >
@@ -81,12 +67,6 @@
       </if>
       <if test="codeRemark != null" >
         code_remark = #{codeRemark,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where code_id = #{codeId,jdbcType=VARCHAR}

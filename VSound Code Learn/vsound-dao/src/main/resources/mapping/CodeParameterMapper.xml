@@ -11,8 +11,6 @@
     <result column="is_autowire" property="isAutowire" jdbcType="VARCHAR" />
     <result column="is_interface" property="isInterface" jdbcType="VARCHAR" />
     <result column="from_code_id" property="fromCodeId" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, parameter_id, parameter_name, parameter_remark, parameter_type, is_final, is_autowire, 
@@ -68,12 +66,6 @@
       <if test="fromCodeId != null" >
         from_code_id,
       </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -103,12 +95,6 @@
       <if test="fromCodeId != null" >
         #{fromCodeId,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.corn.vsound.dao.entity.CodeParameter" >
@@ -134,12 +120,6 @@
       </if>
       <if test="fromCodeId != null" >
         from_code_id = #{fromCodeId,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where parameter_id = #{parameterId,jdbcType=VARCHAR}

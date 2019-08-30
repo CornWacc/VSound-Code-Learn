@@ -12,8 +12,6 @@
     <result column="is_abstract" property="isAbstract" jdbcType="VARCHAR" />
     <result column="method_common_use" property="methodCommonUse" jdbcType="VARCHAR" />
     <result column="from_code_id" property="fromCodeId" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, method_id, method_name, method_usage, method_notice, method_order, method_result, 
@@ -74,12 +72,6 @@
       <if test="fromCodeId != null" >
         from_code_id,
       </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -112,12 +104,6 @@
       <if test="fromCodeId != null" >
         #{fromCodeId,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.corn.vsound.dao.entity.CodeMethod" >
@@ -149,12 +135,6 @@
       </if>
       <if test="fromCodeId != null" >
         from_code_id = #{fromCodeId,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -206,9 +186,6 @@
         <if test="item.fromCodeId != null" >
           from_code_id,
         </if>
-        <if test="item.createTime != null" >
-          create_time,
-        </if>
       </trim>
       <trim prefix="values (" suffix=")" suffixOverrides="," >
         <if test="item.methodId != null" >
@@ -237,9 +214,6 @@
         </if>
         <if test="item.fromCodeId != null" >
           #{item.fromCodeId,jdbcType=VARCHAR},
-        </if>
-        <if test="item.createTime != null" >
-          #{item.createTime,jdbcType=TIMESTAMP},
         </if>
       </trim>
     </foreach>
