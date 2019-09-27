@@ -6,10 +6,12 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios'
+import  Globel from './Globel'
 
 
 Vue.use(ElementUI)
 Vue.prototype.$axios = axios
+Vue.prototype.Globel = Globel
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

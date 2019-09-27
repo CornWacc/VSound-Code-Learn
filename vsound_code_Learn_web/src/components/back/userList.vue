@@ -108,14 +108,9 @@
     name: "userList",
     data() {
       return{
-        dialogIsShow:true,
+        dialogIsShow:false,
         fit:"cover",
-        tableData:[{
-          userId:"1",
-          userName:"1",
-          userAccount:"1",
-          userAvatar:"1"
-        }],
+        tableData:[],
         addUserForm:{
           imageUrl:"",
           userAccount:"",
@@ -138,7 +133,7 @@
     },
     mounted(){
       this.$axios({
-        url:"https://119.3.219.207:9055/base/user/userListQuery",
+        url:this.Globel.requestUrl+"/base/user/userListQuery",
         method:"Get",
       }).then(res =>{
         if(res.data.status = "SUCCESS"){
