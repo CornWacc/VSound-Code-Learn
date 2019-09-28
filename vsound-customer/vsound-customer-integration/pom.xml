@@ -11,5 +11,11 @@
 
     <artifactId>vsound-customer-integration</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.corn.vsound</groupId>
+            <artifactId>provider-user-biz</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

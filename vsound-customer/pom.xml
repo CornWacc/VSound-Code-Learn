@@ -11,8 +11,8 @@
     <modules>
         <module>vsound-customer-run</module>
         <module>vsound-customer-web</module>
-        <module>vsound-customer-integration</module>
         <module>vsound-customer-common</module>
+        <module>vsound-customer-integration</module>
     </modules>
 
     <parent>
@@ -29,11 +29,13 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+
         <dependency>
-            <groupId>com.alibaba.boot</groupId>
-            <artifactId>nacos-discovery-spring-boot-starter</artifactId>
-            <version>0.2.3</version>
+            <groupId>com.corn.base</groupId>
+            <artifactId>yyc-spring-boot-dubbo-starter</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
+
 
     </dependencies>
 </project>
