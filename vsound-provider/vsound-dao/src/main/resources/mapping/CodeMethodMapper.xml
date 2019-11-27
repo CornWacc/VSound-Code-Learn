@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.corn.vsound.dao.mapper.CodeMethodMapper">
+  <resultMap id="BaseResultMap" type="com.corn.vsound.dao.entity.CodeMethod">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="method_id" jdbcType="VARCHAR" property="methodId" />
+    <result column="method_name" jdbcType="VARCHAR" property="methodName" />
+    <result column="method_usage" jdbcType="VARCHAR" property="methodUsage" />
+    <result column="method_notice" jdbcType="VARCHAR" property="methodNotice" />
+    <result column="method_order" jdbcType="VARCHAR" property="methodOrder" />
+    <result column="method_result" jdbcType="VARCHAR" property="methodResult" />
+    <result column="is_abstract" jdbcType="VARCHAR" property="isAbstract" />
+    <result column="method_common_use" jdbcType="VARCHAR" property="methodCommonUse" />
+    <result column="from_code_id" jdbcType="VARCHAR" property="fromCodeId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, method_id, method_name, method_usage, method_notice, method_order, method_result, 
+    is_abstract, method_common_use, from_code_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from code_method
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from code_method
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.corn.vsound.dao.entity.CodeMethod">
+    insert into code_method (id, method_id, method_name, 
+      method_usage, method_notice, method_order, 
+      method_result, is_abstract, method_common_use, 
+      from_code_id)
+    values (#{id,jdbcType=INTEGER}, #{methodId,jdbcType=VARCHAR}, #{methodName,jdbcType=VARCHAR}, 
+      #{methodUsage,jdbcType=VARCHAR}, #{methodNotice,jdbcType=VARCHAR}, #{methodOrder,jdbcType=VARCHAR}, 
+      #{methodResult,jdbcType=VARCHAR}, #{isAbstract,jdbcType=VARCHAR}, #{methodCommonUse,jdbcType=VARCHAR}, 
+      #{fromCodeId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.corn.vsound.dao.entity.CodeMethod">
+    insert into code_method
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="methodId != null">
+        method_id,
+      </if>
+      <if test="methodName != null">
+        method_name,
+      </if>
+      <if test="methodUsage != null">
+        method_usage,
+      </if>
+      <if test="methodNotice != null">
+        method_notice,
+      </if>
+      <if test="methodOrder != null">
+        method_order,
+      </if>
+      <if test="methodResult != null">
+        method_result,
+      </if>
+      <if test="isAbstract != null">
+        is_abstract,
+      </if>
+      <if test="methodCommonUse != null">
+        method_common_use,
+      </if>
+      <if test="fromCodeId != null">
+        from_code_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="methodId != null">
+        #{methodId,jdbcType=VARCHAR},
+      </if>
+      <if test="methodName != null">
+        #{methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="methodUsage != null">
+        #{methodUsage,jdbcType=VARCHAR},
+      </if>
+      <if test="methodNotice != null">
+        #{methodNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="methodOrder != null">
+        #{methodOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="methodResult != null">
+        #{methodResult,jdbcType=VARCHAR},
+      </if>
+      <if test="isAbstract != null">
+        #{isAbstract,jdbcType=VARCHAR},
+      </if>
+      <if test="methodCommonUse != null">
+        #{methodCommonUse,jdbcType=VARCHAR},
+      </if>
+      <if test="fromCodeId != null">
+        #{fromCodeId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.corn.vsound.dao.entity.CodeMethod">
+    update code_method
+    <set>
+      <if test="methodId != null">
+        method_id = #{methodId,jdbcType=VARCHAR},
+      </if>
+      <if test="methodName != null">
+        method_name = #{methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="methodUsage != null">
+        method_usage = #{methodUsage,jdbcType=VARCHAR},
+      </if>
+      <if test="methodNotice != null">
+        method_notice = #{methodNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="methodOrder != null">
+        method_order = #{methodOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="methodResult != null">
+        method_result = #{methodResult,jdbcType=VARCHAR},
+      </if>
+      <if test="isAbstract != null">
+        is_abstract = #{isAbstract,jdbcType=VARCHAR},
+      </if>
+      <if test="methodCommonUse != null">
+        method_common_use = #{methodCommonUse,jdbcType=VARCHAR},
+      </if>
+      <if test="fromCodeId != null">
+        from_code_id = #{fromCodeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.corn.vsound.dao.entity.CodeMethod">
+    update code_method
+    set method_id = #{methodId,jdbcType=VARCHAR},
+      method_name = #{methodName,jdbcType=VARCHAR},
+      method_usage = #{methodUsage,jdbcType=VARCHAR},
+      method_notice = #{methodNotice,jdbcType=VARCHAR},
+      method_order = #{methodOrder,jdbcType=VARCHAR},
+      method_result = #{methodResult,jdbcType=VARCHAR},
+      is_abstract = #{isAbstract,jdbcType=VARCHAR},
+      method_common_use = #{methodCommonUse,jdbcType=VARCHAR},
+      from_code_id = #{fromCodeId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.corn.vsound.dao.entity.CodeMethod">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="method_id" jdbcType="VARCHAR" property="methodId" />
+    <result column="method_name" jdbcType="VARCHAR" property="methodName" />
+    <result column="method_usage" jdbcType="VARCHAR" property="methodUsage" />
+    <result column="method_notice" jdbcType="VARCHAR" property="methodNotice" />
+    <result column="method_order" jdbcType="VARCHAR" property="methodOrder" />
+    <result column="method_result" jdbcType="VARCHAR" property="methodResult" />
+    <result column="is_abstract" jdbcType="VARCHAR" property="isAbstract" />
+    <result column="method_common_use" jdbcType="VARCHAR" property="methodCommonUse" />
+    <result column="from_code_id" jdbcType="VARCHAR" property="fromCodeId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, method_id, method_name, method_usage, method_notice, method_order, method_result, 
+    is_abstract, method_common_use, from_code_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from code_method
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from code_method
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.corn.vsound.dao.entity.CodeMethod">
+    insert into code_method (id, method_id, method_name, 
+      method_usage, method_notice, method_order, 
+      method_result, is_abstract, method_common_use, 
+      from_code_id)
+    values (#{id,jdbcType=INTEGER}, #{methodId,jdbcType=VARCHAR}, #{methodName,jdbcType=VARCHAR}, 
+      #{methodUsage,jdbcType=VARCHAR}, #{methodNotice,jdbcType=VARCHAR}, #{methodOrder,jdbcType=VARCHAR}, 
+      #{methodResult,jdbcType=VARCHAR}, #{isAbstract,jdbcType=VARCHAR}, #{methodCommonUse,jdbcType=VARCHAR}, 
+      #{fromCodeId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.corn.vsound.dao.entity.CodeMethod">
+    insert into code_method
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="methodId != null">
+        method_id,
+      </if>
+      <if test="methodName != null">
+        method_name,
+      </if>
+      <if test="methodUsage != null">
+        method_usage,
+      </if>
+      <if test="methodNotice != null">
+        method_notice,
+      </if>
+      <if test="methodOrder != null">
+        method_order,
+      </if>
+      <if test="methodResult != null">
+        method_result,
+      </if>
+      <if test="isAbstract != null">
+        is_abstract,
+      </if>
+      <if test="methodCommonUse != null">
+        method_common_use,
+      </if>
+      <if test="fromCodeId != null">
+        from_code_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="methodId != null">
+        #{methodId,jdbcType=VARCHAR},
+      </if>
+      <if test="methodName != null">
+        #{methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="methodUsage != null">
+        #{methodUsage,jdbcType=VARCHAR},
+      </if>
+      <if test="methodNotice != null">
+        #{methodNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="methodOrder != null">
+        #{methodOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="methodResult != null">
+        #{methodResult,jdbcType=VARCHAR},
+      </if>
+      <if test="isAbstract != null">
+        #{isAbstract,jdbcType=VARCHAR},
+      </if>
+      <if test="methodCommonUse != null">
+        #{methodCommonUse,jdbcType=VARCHAR},
+      </if>
+      <if test="fromCodeId != null">
+        #{fromCodeId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.corn.vsound.dao.entity.CodeMethod">
+    update code_method
+    <set>
+      <if test="methodId != null">
+        method_id = #{methodId,jdbcType=VARCHAR},
+      </if>
+      <if test="methodName != null">
+        method_name = #{methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="methodUsage != null">
+        method_usage = #{methodUsage,jdbcType=VARCHAR},
+      </if>
+      <if test="methodNotice != null">
+        method_notice = #{methodNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="methodOrder != null">
+        method_order = #{methodOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="methodResult != null">
+        method_result = #{methodResult,jdbcType=VARCHAR},
+      </if>
+      <if test="isAbstract != null">
+        is_abstract = #{isAbstract,jdbcType=VARCHAR},
+      </if>
+      <if test="methodCommonUse != null">
+        method_common_use = #{methodCommonUse,jdbcType=VARCHAR},
+      </if>
+      <if test="fromCodeId != null">
+        from_code_id = #{fromCodeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.corn.vsound.dao.entity.CodeMethod">
+    update code_method
+    set method_id = #{methodId,jdbcType=VARCHAR},
+      method_name = #{methodName,jdbcType=VARCHAR},
+      method_usage = #{methodUsage,jdbcType=VARCHAR},
+      method_notice = #{methodNotice,jdbcType=VARCHAR},
+      method_order = #{methodOrder,jdbcType=VARCHAR},
+      method_result = #{methodResult,jdbcType=VARCHAR},
+      is_abstract = #{isAbstract,jdbcType=VARCHAR},
+      method_common_use = #{methodCommonUse,jdbcType=VARCHAR},
+      from_code_id = #{fromCodeId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
