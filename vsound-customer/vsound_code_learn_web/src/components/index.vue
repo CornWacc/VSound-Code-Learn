@@ -45,7 +45,7 @@
                 this.$refs["loginForm"].validate((valid) => {
                     if (valid) {
                         this.$axios({
-                            url: this.Globel.requestUrl + "/base/user/userLogin",
+                            url: this.Globel.requestUrl + "/user/userLogin",
                             method: "post",
                             data: this.loginForm
                         }).then(res => {

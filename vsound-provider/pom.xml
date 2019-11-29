@@ -17,7 +17,6 @@
     <modules>
         <module>vsound-run</module>
         <module>vsound-facade</module>
-        <module>vsound-service</module>
         <module>vsound-dao</module>
         <module>vsound-common</module>
         <module>vsound-controller</module>
@@ -25,14 +24,16 @@
         <module>vsound-integration</module>
     </modules>
 
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
 
     <dependencies>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.corn.base</groupId>
             <artifactId>yyc-spring-boot-starter-pojo</artifactId>
@@ -41,4 +42,16 @@
 
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

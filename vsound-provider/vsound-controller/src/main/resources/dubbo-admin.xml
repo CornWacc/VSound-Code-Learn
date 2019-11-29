@@ -5,7 +5,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd        http://dubbo.apache.org/schema/dubbo        http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
 
 <!--    &lt;!&ndash; 提供方应用信息，用于计算依赖关系 &ndash;&gt;-->
-    <dubbo:application name="vsound-provider"/>
+    <dubbo:application name="vsound-provider">
+        <dubbo:parameter key="qos.enable" value="false"></dubbo:parameter>
+    </dubbo:application>
 
     <!-- 使用multicast广播注册中心暴露服务地址 -->
     <dubbo:registry address="zookeeper://127.0.0.1:2181" />
@@ -13,6 +15,8 @@
     <dubbo:metadata-report address="zookeeper://127.0.0.1:2181"></dubbo:metadata-report>
 
     <!-- 用dubbo协议在20880端口暴露服务 -->
-    <dubbo:protocol name="dubbo" port="20880"/>
+    <dubbo:protocol name="dubbo" port="20881"/>
 
+    <dubbo:service interface="com.corn.vsound.facade.project.ProjectFacade" version="1.0.0" id="projectService" ref="projectFacadeImpl"></dubbo:service>
+    <bean id="projectFacadeImpl" class="com.corn.vsound.service.project.ProjectFacadeImpl"></bean>
 </beans>

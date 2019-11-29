@@ -104,10 +104,10 @@
     },
     mounted(){
       this.$axios({
-        url:"https://119.3.219.207:9055/base/project/projectListQuery",
+        url:this.Globel.requestUrl+"/project/projectListQuery",
         method:"get"
       }).then(res =>{
-        if(res.data.status = "SUCCESS"){
+        if(res.data.success){
           this.projectList = res.data.object.projectInfoList
         }
       })
@@ -136,17 +136,17 @@
       },
       addProject(){
         this.$axios({
-          url:"https://119.3.219.207:9055/base/project/projectAdd",
+          url:this.Globel.requestUrl+"/project/projectAdd",
           data:this.addProjectForm,
           method:"Post"
         }).then(res =>{
-          if(res.data.status == "SUCCESS"){
+          if(res.data.success){
             this.disableDialog = false
             this.$axios({
-              url:"https://119.3.219.207:9055/base/project/projectListQuery",
+              url:this.Globel.requestUrl+"/project/projectListQuery",
               method:"get"
             }).then(res =>{
-              if(res.data.status = "SUCCESS"){
+              if(res.data.success){
                 this.projectList = res.data.object.projectInfoList
               }
             })
@@ -155,7 +155,7 @@
       },
       doSearch(){
         this.$axios({
-          url:"https://119.3.219.207:9055/base/project/projectListQuery?keyWord="+this.searchInput,
+          url:this.Globel.requestUrl+"/project/projectListQuery?keyWord="+this.searchInput,
           method:"Get"
         }).then(res =>{
           if(res.data.status == "SUCCESS"){
