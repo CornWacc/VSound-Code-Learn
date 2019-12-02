@@ -24,16 +24,16 @@
     from project_base
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from project_base
-    where id = #{id,jdbcType=INTEGER}
+    where project_id = #{projectId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.corn.vsound.dao.entity.ProjectBase" >
-    insert into project_base (id, project_id, project_name, 
+    insert into project_base (project_id, project_name,
       project_affiliation, project_type, use_position, 
       remark, gather_class_count, gather_interface_count, 
       create_user_id, create_user_name)
-    values (#{id,jdbcType=INTEGER}, #{projectId,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, 
+    values (#{projectId,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR},
       #{projectAffiliation,jdbcType=VARCHAR}, #{projectType,jdbcType=VARCHAR}, #{usePosition,jdbcType=VARCHAR}, 
       #{remark,jdbcType=VARCHAR}, #{gatherClassCount,jdbcType=INTEGER}, #{gatherInterfaceCount,jdbcType=INTEGER}, 
       #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR})
@@ -41,9 +41,6 @@
   <insert id="insertSelective" parameterType="com.corn.vsound.dao.entity.ProjectBase" >
     insert into project_base
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="projectId != null" >
         project_id,
       </if>
@@ -72,13 +69,10 @@
         create_user_id,
       </if>
       <if test="createUserName != null" >
-        create_user_name,
+        create_user_name
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="projectId != null" >
         #{projectId,jdbcType=VARCHAR},
       </if>
@@ -102,12 +96,6 @@
       </if>
       <if test="gatherInterfaceCount != null" >
         #{gatherInterfaceCount,jdbcType=INTEGER},
-      </if>
-      <if test="createUserId != null" >
-        #{createUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="createUserName != null" >
-        #{createUserName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -138,14 +126,8 @@
       <if test="gatherInterfaceCount != null" >
         gather_interface_count = #{gatherInterfaceCount,jdbcType=INTEGER},
       </if>
-      <if test="createUserId != null" >
-        create_user_id = #{createUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="createUserName != null" >
-        create_user_name = #{createUserName,jdbcType=VARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where project_id = #{projectId,jdbcType=VARCAHR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.corn.vsound.dao.entity.ProjectBase" >
     update project_base

@@ -13,7 +13,7 @@ public class ProjectInfo extends Base {
 
     private String projectId;
 
-    private String projectAffilitaion;
+    private String projectAffiliation;
 
     private String projectType;
 
@@ -45,12 +45,12 @@ public class ProjectInfo extends Base {
         this.projectId = projectId;
     }
 
-    public String getProjectAffilitaion() {
-        return projectAffilitaion;
+    public String getProjectAffiliation() {
+        return projectAffiliation;
     }
 
-    public void setProjectAffilitaion(String projectAffilitaion) {
-        this.projectAffilitaion = projectAffilitaion;
+    public void setProjectAffiliation(String projectAffiliation) {
+        this.projectAffiliation = projectAffiliation;
     }
 
     public String getProjectType() {

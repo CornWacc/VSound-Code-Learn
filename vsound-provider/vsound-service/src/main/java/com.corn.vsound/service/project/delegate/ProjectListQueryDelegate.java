@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * @author yyc
+ */
 @Service
 public class ProjectListQueryDelegate extends AbstractBizService<ProjectListQueryOrder, ProjectListQueryResult> {
 
