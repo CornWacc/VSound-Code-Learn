@@ -144,11 +144,11 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="projectListQuery" resultMap="BaseResultMap">
+  <select id="findProjectListByKeyWord" resultMap="BaseResultMap">
     select
     project_id projectId,
     project_name projectName,
-    project_affilitation projectAffilitation,
+    project_affiliation projectAffiliation,
     project_type projectType,
     use_position usePosition,
     remark remark,

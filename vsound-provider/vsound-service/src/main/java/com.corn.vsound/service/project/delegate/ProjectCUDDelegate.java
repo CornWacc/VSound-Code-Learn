@@ -1,5 +1,6 @@
 package com.corn.vsound.service.project.delegate;
 
+import com.corn.boot.annotations.DoTranscation;
 import com.corn.boot.base.AbstractBizService;
 import com.corn.boot.error.BizError;
 import com.corn.vsound.facade.project.order.ProjectCUDOrder;
@@ -17,6 +18,7 @@ import org.springframework.util.ObjectUtils;
  * @apiNote 项目增删改实现
  * */
 @Service
+@DoTranscation
 public class ProjectCUDDelegate extends AbstractBizService<ProjectCUDOrder, ProjectCUDResult> {
 
     @Autowired

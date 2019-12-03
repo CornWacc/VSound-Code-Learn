@@ -13,7 +13,7 @@ public class ProjectStrategyFactory {
 
     private static final String DELETE = "DELETE";
 
-    @Autowired
+     @Autowired
     private SpringBeanUtils springBeanUtils;
 
     public ProjectStrategyInterface createProjectStrategy(String cudType){
