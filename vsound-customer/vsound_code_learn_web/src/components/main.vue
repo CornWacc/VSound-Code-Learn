@@ -42,7 +42,7 @@
     <el-dialog
       title="源码研究新增"
       :visible.sync="disableDialog"
-      width="30%"
+      width="50%"
       :before-close="handleClose">
       <el-form ref="addProjectForm" :model="addProjectForm" :rules="rules" :hide-required-asterisk="hideRequiredAsterisk" style="margin-left: 40px;">
         <el-form-item label="源码项目名称:" prop="projectName">
@@ -84,7 +84,8 @@
           projectType:"",
           projectAffiliation:"",
           usePosition:"",
-          remark:""
+          remark:"",
+          cudType:"CREATE"
         },
         rules:{
           projectName:[{
@@ -92,9 +93,6 @@
           }],
           projectType:[{
             required:true,message:"项目类型不能为空",trigger:"blur"
-          }],
-          projectAffiliation:[{
-            required:true,message:"项目所属框架不能为空",trigger:"blur"
           }],
           usePosition:[{
             required:true,message:"项目可用范围不能为空",trigger:"blur"
@@ -107,8 +105,9 @@
         url:this.Globel.requestUrl+"/project/projectListQuery",
         method:"get"
       }).then(res =>{
+        console.log(res)
         if(res.data.success){
-          this.projectList = res.data.object.projectInfoList
+          this.projectList = res.data.data.projectInfoList
         }
       })
     },
@@ -136,7 +135,7 @@
       },
       addProject(){
         this.$axios({
-          url:this.Globel.requestUrl+"/project/projectAdd",
+          url:this.Globel.requestUrl+"/project/projectCUD",
           data:this.addProjectForm,
           method:"Post"
         }).then(res =>{
@@ -147,7 +146,7 @@
               method:"get"
             }).then(res =>{
               if(res.data.success){
-                this.projectList = res.data.object.projectInfoList
+                this.projectList = res.data.data.projectInfoList
               }
             })
           }

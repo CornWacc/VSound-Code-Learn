@@ -1,4 +1,4 @@
-package com.corn.vsound.web.user.filter;
+package com.corn.vsound.web.filter;
 
 import com.corn.boot.base.HttpBase;
 import com.corn.boot.base.LogClientBase;
@@ -14,10 +14,12 @@ import java.io.IOException;
  * */
 public class CorsFilter extends LogClientBase implements Filter {
 
+    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         log.info("********** 跨域过滤器初始化 **********");
     }
 
+    @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
@@ -52,6 +54,7 @@ public class CorsFilter extends LogClientBase implements Filter {
 
     }
 
+    @Override
     public void destroy() {
         log.info("********** 跨域过滤器销毁 **********");
     }

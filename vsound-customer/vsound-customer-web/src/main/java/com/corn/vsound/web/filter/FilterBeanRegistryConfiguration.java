@@ -1,4 +1,4 @@
-package com.corn.vsound.web.user.filter;
+package com.corn.vsound.web.filter;
 
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
