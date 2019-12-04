@@ -1,37 +1,32 @@
 package com.corn.vsound.service.project.strategy;
 
+import com.corn.boot.base.factory.AbstractCUDFactory;
+import com.corn.boot.error.BizError;
 import com.corn.vsound.common.spring.SpringBeanUtils;
+import com.corn.vsound.facade.project.order.ProjectCUDOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProjectStrategyFactory {
-
-    private static final String CREATE = "CREATE";
-
-    private static final String UPDATE = "UPDATE";
-
-    private static final String DELETE = "DELETE";
+public class ProjectStrategyFactory extends AbstractCUDFactory<ProjectStrategyInterface, ProjectCUDOrder> {
 
      @Autowired
     private SpringBeanUtils springBeanUtils;
 
-    public ProjectStrategyInterface createProjectStrategy(String cudType){
-
-        ProjectStrategyInterface projectCreateStrategy = null;
-        if(CREATE.equals(cudType)){
-            projectCreateStrategy = springBeanUtils.getApplicationContext().getBean(ProjectCreateStrategy.class);
+    @Override
+    public ProjectStrategyInterface createStrategy(ProjectCUDOrder order) {
+        String cudType = order.getCudType();
+        if(CREATE_CODE.equals(cudType)){
+            return springBeanUtils.getApplicationContext().getBean(ProjectCreateStrategy.class);
         }
 
-        if(UPDATE.equals(cudType)){
-            projectCreateStrategy = springBeanUtils.getApplicationContext().getBean(ProjectUpdateStrategy.class);
+        if(UPDATE_CODE.equals(cudType)){
+            return springBeanUtils.getApplicationContext().getBean(ProjectUpdateStrategy.class);
         }
 
-        if(DELETE.equals(cudType)){
-            projectCreateStrategy = springBeanUtils.getApplicationContext().getBean(ProjectDelStrategy.class);
+        if(DELETE_CODE.equals(cudType)){
+            return springBeanUtils.getApplicationContext().getBean(ProjectDelStrategy.class);
         }
-
-        return projectCreateStrategy;
+        throw new BizError("策略类型异常,请校验");
     }
-
 }

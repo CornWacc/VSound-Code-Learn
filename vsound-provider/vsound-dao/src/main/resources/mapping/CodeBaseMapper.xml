@@ -103,4 +103,26 @@
       code_program = #{codeProgram,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="pageFindCodeBaseListByProjectIdOrKeyWord" resultMap="BaseResultMap">
+    select
+    code_id,
+    code_name,
+    code_type,
+    code_level,
+    code_program
+    from
+    code_base
+    <where>
+      <if test="projectId != null and projectId != ''">
+        code_program = #{projectId}
+      </if>
+      <if test="keyWord != null and keyWord != ''">
+        and code_name like concat('%',#{keyWord},'%')
+      </if>
+      <if test="codeType != null and codeType != ''">
+        and code_type = #{codeType}
+      </if>
+    </where>
+  </select>
 </mapper>

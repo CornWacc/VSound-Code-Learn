@@ -42,11 +42,7 @@ public class ProjectCUDDelegate extends AbstractBizService<ProjectCUDOrder, Proj
     protected void appBiz(ProjectCUDOrder order, ProjectCUDResult result) {
 
         //此处使用策略模式
-        ProjectStrategyInterface projectStrategyInterface = projectStrategyFactory.createProjectStrategy(order.getCudType());
-
-        if(ObjectUtils.isEmpty(projectStrategyInterface)){
-            throw new BizError("策略类型异常,请校验");
-        }
+        ProjectStrategyInterface projectStrategyInterface = projectStrategyFactory.createStrategy(order);
         projectStrategyInterface.execute(order);
     }
 }

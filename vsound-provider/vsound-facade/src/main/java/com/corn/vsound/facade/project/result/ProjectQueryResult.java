@@ -1,16 +1,20 @@
-package com.corn.vsound.facade.project.order;
+package com.corn.vsound.facade.project.result;
 
-import com.corn.boot.base.pojobase.BaseOrder;
-import com.corn.boot.base.strategy.CUDOrder;
+import com.corn.boot.base.pojobase.BaseRes;
+import com.corn.vsound.facade.code.info.CodeInfo;
+
+import java.util.List;
+
 
 /**
  * @author yyc
- */
-public class ProjectCUDOrder extends CUDOrder {
-
-    private String projectId;
+ * @apiNote 项目单查询出参
+ * */
+public class ProjectQueryResult extends BaseRes {
 
     private String projectName;
+
+    private String projectId;
 
     private String projectAffiliation;
 
@@ -28,13 +32,7 @@ public class ProjectCUDOrder extends CUDOrder {
 
     private String createUserName;
 
-    public String getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
+    private List<CodeInfo> codeInfoList;
 
     public String getProjectName() {
         return projectName;
@@ -42,6 +40,14 @@ public class ProjectCUDOrder extends CUDOrder {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 
     public String getProjectAffiliation() {
@@ -108,4 +114,11 @@ public class ProjectCUDOrder extends CUDOrder {
         this.createUserName = createUserName;
     }
 
+    public List<CodeInfo> getCodeInfoList() {
+        return codeInfoList;
+    }
+
+    public void setCodeInfoList(List<CodeInfo> codeInfoList) {
+        this.codeInfoList = codeInfoList;
+    }
 }

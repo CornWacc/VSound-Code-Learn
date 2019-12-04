@@ -7,6 +7,7 @@ import com.corn.vsound.facade.project.info.ProjectInfo;
 import com.corn.vsound.facade.project.order.ProjectListQueryOrder;
 import com.corn.vsound.facade.project.result.ProjectListQueryResult;
 import com.google.common.collect.Lists;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.cglib.proxy.Proxy;
