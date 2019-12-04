@@ -77,8 +77,7 @@
         hideRequiredAsterisk:true,
         searchInput:"",
         disableDialog:false,
-        projectList: [{
-        }],
+        projectList: [],
         addProjectForm:{
           projectName:"",
           projectType:"",

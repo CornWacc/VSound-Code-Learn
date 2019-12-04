@@ -469,13 +469,13 @@
     },
     mounted() {
       this.$axios({
-        url: "https://119.3.219.207:9055/base/code/codeInfoQuery?programId=" + this.$route.query.projectId + "&keyWord=" + "",
+        url: this.Globel.requestUrl+"/project/projectQuery?projectId=" + this.$route.query.projectId,
         method: "Get"
       }).then(res => {
-        if (res.data.status == "SUCCESS") {
+        if (res.data.success) {
           console.log(res)
-          this.projectForm.projectName = res.data.object.projectName
-          this.tableData = res.data.object.codeInfoList
+          this.projectForm.projectName = res.data.data.projectName
+          this.tableData = res.data.data.codeInfoList
         } else {
           this.$message.error("查询失败!" + res.data.msg)
         }
