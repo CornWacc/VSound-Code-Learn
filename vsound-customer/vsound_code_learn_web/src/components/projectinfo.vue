@@ -224,8 +224,12 @@
                   </el-table-column>
                   <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
-                      <el-button size="mini" type="primary" @click="sureCUDCodeParameter(scope.row,type='U')" v-if="scope.row.type !== 'new'">编辑</el-button>
-                      <el-button size="mini" v-if="scope.row.type !== 'new'" @click="sureCUDCodeParameter(scope.row,type='D')">删除</el-button>
+                      <el-button size="mini" type="primary" @click="sureCUDCodeParameter(scope.row,type='U')"
+                                 v-if="scope.row.type !== 'new'">编辑
+                      </el-button>
+                      <el-button size="mini" v-if="scope.row.type !== 'new'"
+                                 @click="sureCUDCodeParameter(scope.row,type='D')">删除
+                      </el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -253,8 +257,12 @@
                   </el-table-column>
                   <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
-                      <el-button size="mini" type="primary" @click="sureCUDCodeUrl(scope.row,type='U')" v-if="scope.row.type !== 'new'">编辑</el-button>
-                      <el-button size="mini" @click="sureCUDCodeUrl(scope.row,type='D')" v-if="scope.row.type !== 'new'">删除</el-button>
+                      <el-button size="mini" type="primary" @click="sureCUDCodeUrl(scope.row,type='U')"
+                                 v-if="scope.row.type !== 'new'">编辑
+                      </el-button>
+                      <el-button size="mini" @click="sureCUDCodeUrl(scope.row,type='D')"
+                                 v-if="scope.row.type !== 'new'">删除
+                      </el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -269,7 +277,8 @@
       :visible.sync="dialog.dialogVisible"
       width="30%"
       :before-close="handleClose">
-      <el-form ref="codeForm" :model="codeForm" :rules="rules" style="margin-left: 10px;" v-if="dialog.dialogType == 'code'">
+      <el-form ref="codeForm" :model="codeForm" :rules="rules" style="margin-left: 10px;"
+               v-if="dialog.dialogType == 'code'">
         <el-form-item label="源码名称:" prop="codeName">
           <el-input placeholder="请输入源码名称" v-model="codeForm.codeName" style="width: 220px"></el-input>
         </el-form-item>
@@ -287,7 +296,8 @@
           <el-input placeholder="请输入源码继承等级" v-model="codeForm.codeLevel" style="width: 220px"></el-input>
         </el-form-item>
       </el-form>
-      <el-form v-else-if="dialog.dialogType=='method'" ref="CUDCodeMethodForm" label-width="100px" :model="CUDCodeMethodForm" :label-position="labelPosition">
+      <el-form v-else-if="dialog.dialogType=='method'" ref="CUDCodeMethodForm" label-width="100px"
+               :model="CUDCodeMethodForm" :label-position="labelPosition">
         <el-form-item label="方法名称:" prop="methodName">
           <el-input placeholder="请输入方法名称" v-model="CUDCodeMethodForm.methodName" style="width: 220px"></el-input>
         </el-form-item>
@@ -319,10 +329,12 @@
           </el-switch>
         </el-form-item>
         <el-form-item label="用法:" prop="methodUsage">
-          <el-input type="textarea" show-word-limit maxlength="50"  v-model="CUDCodeMethodForm.methodUsage" style="width: 220px"></el-input>
+          <el-input type="textarea" show-word-limit maxlength="50" v-model="CUDCodeMethodForm.methodUsage"
+                    style="width: 220px"></el-input>
         </el-form-item>
       </el-form>
-      <el-form v-else-if="dialog.dialogType=='parameter'" ref="CUDCodeParameterForm" label-width="100px" :model="CUDCodeParameterForm" :label-position="labelPosition">
+      <el-form v-else-if="dialog.dialogType=='parameter'" ref="CUDCodeParameterForm" label-width="100px"
+               :model="CUDCodeParameterForm" :label-position="labelPosition">
         <el-form-item label="参数名称:" prop="parameterName">
           <el-input placeholder="请输入参数名称" v-model="CUDCodeParameterForm.parameterName" style="width: 220px"></el-input>
         </el-form-item>
@@ -357,10 +369,12 @@
           </el-switch>
         </el-form-item>
         <el-form-item label="参数理解:" prop="parameterRemark">
-          <el-input type="textarea" show-word-limit maxlength="50" v-model="CUDCodeParameterForm.parameterRemark" style="width: 220px"></el-input>
+          <el-input type="textarea" show-word-limit maxlength="50" v-model="CUDCodeParameterForm.parameterRemark"
+                    style="width: 220px"></el-input>
         </el-form-item>
       </el-form>
-      <el-form v-else-if="dialog.dialogType=='url'"  ref="CUDCodeUrlForm" label-width="100px" :model="CUDCodeUrlForm" :label-position="labelPosition">
+      <el-form v-else-if="dialog.dialogType=='url'" ref="CUDCodeUrlForm" label-width="100px" :model="CUDCodeUrlForm"
+               :label-position="labelPosition">
         <el-form-item label="链接注释:" prop="urlRemark">
           <el-input placeholder="请输入链接注释" v-model="CUDCodeUrlForm.urlRemark" style="width: 220px"></el-input>
         </el-form-item>
@@ -384,7 +398,7 @@
     data() {
       return {
         drawer: false,
-        labelPosition:"right",
+        labelPosition: "right",
         direction: 'rtl',
         projectForm: {
           projectName: ""
@@ -395,7 +409,7 @@
           codeLevel: "",
           codeProgram: "",
           codeId: "",
-          type: ""
+          cudType: ""
         },
         rules: {},
         codeSearch: {
@@ -403,9 +417,9 @@
           codeLevel: "",
           codeType: ""
         },
-        CUDCodeMethodForm:{},
-        CUDCodeParameterForm:{},
-        CUDCodeUrlForm:{},
+        CUDCodeMethodForm: {},
+        CUDCodeParameterForm: {},
+        CUDCodeUrlForm: {},
         tableData: [],
         options: [
           {
@@ -456,20 +470,20 @@
             outSideUrlPath: "",
           }
         },
-        codeUpdateForm: {
+        codeCUDForm: {
           codeId: "",
           codeName: "",
           codeType: "",
           codeLevel: 0,
           codeRemark: "",
           usePosition: "",
-          updateType: ""
+          cudType: ""
         },
       }
     },
     mounted() {
       this.$axios({
-        url: this.Globel.requestUrl+"/project/projectQuery?projectId=" + this.$route.query.projectId,
+        url: this.Globel.requestUrl + "/project/projectQuery?projectId=" + this.$route.query.projectId,
         method: "Get"
       }).then(res => {
         if (res.data.success) {
@@ -490,14 +504,15 @@
         this.dialog.dialogVisible = true
         this.dialog.dialogTital = "新增源码"
         this.dialog.dialogType = "code"
+        this.codeCUDForm.cudType="CREATE"
       },
 
       updateCode(row) {
         this.dialog.dialogVisible = true
         this.dialog.dialogTital = "编辑源码"
         this.codeForm = row
-        this.codeUpdateForm = row
-        this.codeUpdateForm.updateType = "BASE"
+        this.codeCUDForm = row
+        this.codeCUDForm.cudType = "UPDATE"
       },
 
       handleClose(done) {
@@ -511,8 +526,8 @@
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            this.codeUpdateForm = this.drawerData
-            this.codeUpdateForm.updateType = "EXTRA"
+            this.codeCUDForm = this.drawerData
+            this.codeCUDForm.cudType = "EXTRA"
             this.sureCUCode()
             done()
           }).catch(() => {
@@ -534,11 +549,15 @@
 
       doSearch() {
         this.$axios({
-          url: "https://119.3.219.207:9055/base/code/codeInfoQuery?programId=" + this.$route.query.projectId + "&codeName=" + this.codeSearch.codeName + "&codeType=" + this.codeSearch.codeType + "&codeLevel=" + this.codeSearch.codeLevel,
-          method: "get"
+          url: this.Globel.requestUrl + "/project/projectQuery?projectId=" + this.$route.query.projectId,
+          method: "Get"
         }).then(res => {
-          if (res.data.status = "SUCCESS") {
-            this.tableData = res.data.object.codeInfoList
+          if (res.data.success) {
+            console.log(res)
+            this.projectForm.projectName = res.data.data.projectName
+            this.tableData = res.data.data.codeInfoList
+          } else {
+            this.$message.error("查询失败!" + res.data.msg)
           }
         })
       },
@@ -572,12 +591,12 @@
 
       addParameterInput(type) {
         this.dialog.dialogVisible = true
-        if(type == "method"){
-          this.dialog.dialogTital="方法新增"
-        }else if(type == "parameter"){
-          this.dialog.dialogTital="参数新增"
-        }else{
-          this.dialog.dialogTital="链接新增"
+        if (type == "method") {
+          this.dialog.dialogTital = "方法新增"
+        } else if (type == "parameter") {
+          this.dialog.dialogTital = "参数新增"
+        } else {
+          this.dialog.dialogTital = "链接新增"
         }
         this.dialog.dialogType = type
       },
@@ -590,17 +609,17 @@
        * 新增源码内容
        * */
       sureAddCodeParams() {
-        if(this.dialog.dialogType == 'code'){
+        if (this.dialog.dialogType == 'code') {
           this.sureCUCode();
         }
-        if(this.dialog.dialogType == 'method'){
-          this.sureCUDCodeMethod(null,"C")
+        if (this.dialog.dialogType == 'method') {
+          this.sureCUDCodeMethod(null, "C")
         }
-        if(this.dialog.dialogType == 'parameter'){
-          this.sureCUDCodeParameter(null,"C")
+        if (this.dialog.dialogType == 'parameter') {
+          this.sureCUDCodeParameter(null, "C")
         }
-        if(this.dialog.dialogType == 'url'){
-          this.sureCUDCodeUrl(null,"C")
+        if (this.dialog.dialogType == 'url') {
+          this.sureCUDCodeUrl(null, "C")
         }
       },
 
@@ -609,66 +628,45 @@
        * */
       sureCUCode() {
         this.codeForm.codeProgram = this.$route.query.projectId
-        if (this.dialog.dialogTital == "编辑源码" || this.codeUpdateForm.updateType == 'EXTRA') {
-          this.$axios({
-            url: "https://119.3.219.207:9055/base/code/codeUpdate",
-            data: this.codeUpdateForm,
-            method: "Post"
-          }).then(res => {
-            if (res.data.status == "SUCCESS") {
-              this.$message({
-                type: 'success',
-                message: '保存成功!'
-              });
-              this.dialog.dialogVisible = false
-              this.doSearch()
-            } else {
-              this.$message({
-                type: 'error',
-                message: '保存失败!' + res.data.msg + "!"
-              });
-            }
-          })
-        } else {
-          this.$axios({
-            url: "https://119.3.219.207:9055/base/code/codeAdd",
-            data: this.codeForm,
-            method: "Post"
-          }).then(res => {
-            if (res.data.status == "SUCCESS") {
-              this.$message.success("操作成功")
-              this.dialog.dialogVisible = false
-              this.$refs[""]
-              this.doSearch()
-            }
-          })
-        }
+        this.$axios({
+          url: this.Globel.requestUrl + "/code/codeCUD",
+          data: this.codeCUDForm,
+          method: "Post"
+        }).then(res => {
+          if (res.data.success) {
+            this.$message.success("操作成功")
+            this.dialog.dialogVisible = false
+            // this.$refs[""]
+            this.doSearch()
+          }
+        })
+
       },
 
       /**
        * CUD源码方法
        * */
-      sureCUDCodeMethod(row,type){
-        if(row != null){
-          this.CUDCodeMethodForm = row;
+      sureCUDCodeMethod(row, type) {
+        if (row != null) {
+          this.codeCUDForm = row;
         }
         this.$axios({
-          url:"https://119.3.219.207:9055/base/code/codeMethodCUD",
-          method:"Post",
-          data:{
-            type:type,
-            codeId:this.drawerData.codeId,
-            methodId:this.CUDCodeMethodForm.methodId,
-            codeMethodInfo:this.CUDCodeMethodForm
+          url: this.Globel.requestUrl + "/base/code/codeMethodCUD",
+          method: "Post",
+          data: {
+            type: type,
+            codeId: this.drawerData.codeId,
+            methodId: this.CUDCodeMethodForm.methodId,
+            codeMethodInfo: this.CUDCodeMethodForm
           }
-        }).then(res =>{
+        }).then(res => {
           console.log(res.data.object)
-          if(res.data.status == "SUCCESS"){
+          if (res.data.status == "SUCCESS") {
             this.$message.success("操作成功！")
             this.dialog.dialogVisible = false
             this.drawerData.codeMethods = res.data.object.codeMethodInfoList
 
-            if(type == "C"){
+            if (type == "C") {
               this.$refs["CUDCodeMethodForm"].resetFields()
             }
           }
@@ -679,26 +677,26 @@
       /**
        * CUD源码参数
        * */
-      sureCUDCodeParameter(row,type){
-        if(row != null){
+      sureCUDCodeParameter(row, type) {
+        if (row != null) {
           this.CUDCodeParameterForm = row;
         }
         this.$axios({
-          url:"https://119.3.219.207:9055/base/code/codeParameterCUD",
-          method:"Post",
-          data:{
-            type:type,
-            codeId:this.drawerData.codeId,
-            parameterId:this.CUDCodeParameterForm.parameterId,
-            codeParameterInfo:this.CUDCodeParameterForm
+          url: "https://119.3.219.207:9055/base/code/codeParameterCUD",
+          method: "Post",
+          data: {
+            type: type,
+            codeId: this.drawerData.codeId,
+            parameterId: this.CUDCodeParameterForm.parameterId,
+            codeParameterInfo: this.CUDCodeParameterForm
           }
-        }).then(res =>{
-          if(res.data.status == "SUCCESS"){
+        }).then(res => {
+          if (res.data.status == "SUCCESS") {
             this.$message.success("操作成功！")
             this.dialog.dialogVisible = false
             this.drawerData.codeParameters = res.data.object.codeParameterInfoList
 
-            if(type == "C"){
+            if (type == "C") {
               this.$refs["CUDCodeParameterForm"].resetFields()
             }
           }
@@ -709,27 +707,27 @@
       /**
        * CUD源码链接
        * */
-      sureCUDCodeUrl(row,type){
-        if(row != null){
+      sureCUDCodeUrl(row, type) {
+        if (row != null) {
           this.CUDCodeUrlForm = row;
         }
         this.$axios({
-          url:"https://119.3.219.207:9055/base/code/codeUrlCUD",
-          method:"Post",
-          data:{
-            type:type,
-            codeId:this.drawerData.codeId,
-            urlId:this.CUDCodeUrlForm.urlId,
-            codeOutSideUrlInfo:this.CUDCodeUrlForm
+          url: "https://119.3.219.207:9055/base/code/codeUrlCUD",
+          method: "Post",
+          data: {
+            type: type,
+            codeId: this.drawerData.codeId,
+            urlId: this.CUDCodeUrlForm.urlId,
+            codeOutSideUrlInfo: this.CUDCodeUrlForm
           }
-        }).then(res =>{
-          if(res.data.status == "SUCCESS"){
+        }).then(res => {
+          if (res.data.status == "SUCCESS") {
             this.$message.success("操作成功！")
 
             this.dialog.dialogVisible = false
             this.drawerData.outSideUrl = res.data.object.codeOutSideUrlInfoList
 
-            if(type == "C"){
+            if (type == "C") {
               this.$refs["CUDCodeUrlForm"].resetFields()
             }
           }
