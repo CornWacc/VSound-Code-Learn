@@ -20,4 +20,7 @@
     <dubbo:service interface="com.corn.vsound.facade.project.ProjectFacade" version="1.0.0" id="projectService" ref="projectFacadeImpl"></dubbo:service>
     <bean id="projectFacadeImpl" class="com.corn.vsound.service.project.ProjectFacadeImpl"></bean>
 
+    <dubbo:service interface="com.corn.vsound.facade.code.CodeFacade" version="1.0.0" id="codeFacade" ref="codeFacadeImpl"></dubbo:service>
+    <bean id="codeFacadeImpl" class="com.corn.vsound.service.code.CodeFacadeImpl"></bean>
+
 </beans>

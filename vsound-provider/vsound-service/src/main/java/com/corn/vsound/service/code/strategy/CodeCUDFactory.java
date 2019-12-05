@@ -19,13 +19,13 @@ public class CodeCUDFactory extends AbstractCUDFactory<CodeStrategyInterface, Co
     public CodeStrategyInterface createStrategy(CodeCUDOrder order){
 
         if(CREATE_CODE.equals(order.getCudType())){
-
+            return springBeanUtils.getApplicationContext().getBean(CodeCreateStrategy.class);
         }
         if(UPDATE_CODE.equals(order.getCudType())){
-
+            return springBeanUtils.getApplicationContext().getBean(CodeUpdateStrategy.class);
         }
         if(DELETE_CODE.equals(order.getCudType())){
-
+            return springBeanUtils.getApplicationContext().getBean(CodeDeleteStrategy.class);
         }
         throw new BizError("策略类型异常,请校验");
     };
