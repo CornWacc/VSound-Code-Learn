@@ -280,10 +280,10 @@
       <el-form ref="codeForm" :model="codeForm" :rules="rules" style="margin-left: 10px;"
                v-if="dialog.dialogType == 'code'">
         <el-form-item label="源码名称:" prop="codeName">
-          <el-input placeholder="请输入源码名称" v-model="codeForm.codeName" style="width: 220px"></el-input>
+          <el-input placeholder="请输入源码名称" v-model="codeCUDForm.codeName" style="width: 220px"></el-input>
         </el-form-item>
         <el-form-item label="源码类型:" prop="codeType">
-          <el-select v-model="codeForm.codeType" clearable style="width: 220px" placeholder="请选择源码类型">
+          <el-select v-model="codeCUDForm.codeType" clearable style="width: 220px" placeholder="请选择源码类型">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -293,7 +293,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="继承等级:" prop="codeLevel">
-          <el-input placeholder="请输入源码继承等级" v-model="codeForm.codeLevel" style="width: 220px"></el-input>
+          <el-input placeholder="请输入源码继承等级" v-model="codeCUDForm.codeLevel" style="width: 220px"></el-input>
         </el-form-item>
       </el-form>
       <el-form v-else-if="dialog.dialogType=='method'" ref="CUDCodeMethodForm" label-width="100px"
@@ -474,10 +474,11 @@
           codeId: "",
           codeName: "",
           codeType: "",
-          codeLevel: 0,
+          codeLevel: 1,
           codeRemark: "",
           usePosition: "",
-          cudType: ""
+          cudType: "",
+          codeProgram:""
         },
       }
     },
@@ -500,51 +501,29 @@
         this.$router.push("/main")
       },
 
+      /**
+       * 新增源码(点击页面新增事件)
+       * */
       addNewCode() {
         this.dialog.dialogVisible = true
         this.dialog.dialogTital = "新增源码"
         this.dialog.dialogType = "code"
-        this.codeCUDForm.cudType="CREATE"
+        this.codeCUDForm.cudType = "CREATE"
+        this.codeCUDForm.codeProgram = this.$route.query.projectId
       },
 
+      /**
+       * 编辑源码(点击列表编辑事件)
+       * */
       updateCode(row) {
         this.dialog.dialogVisible = true
         this.dialog.dialogTital = "编辑源码"
-        this.codeForm = row
         this.codeCUDForm = row
         this.codeCUDForm.cudType = "UPDATE"
       },
 
       handleClose(done) {
         done()
-      },
-
-      drawerHandleClose(done) {
-        if (this.drawerData.haveChange == true) {
-          this.$confirm('该源码有文本已编辑, 是否保存?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            this.codeCUDForm = this.drawerData
-            this.codeCUDForm.cudType = "EXTRA"
-            this.sureCUCode()
-            done()
-          }).catch(() => {
-            this.$message({
-              type: 'info',
-              message: '撤销保存!'
-            });
-          });
-        } else {
-          done()
-        }
-
-      },
-
-      cancelDialog() {
-        this.doSearch()
-        this.dialog.dialogVisible = false
       },
 
       doSearch() {
@@ -565,30 +544,29 @@
       viewDetails(row) {
         this.drawer = true
         this.drawerData = row
-        console.log(this.drawerData)
       },
 
       delCode(row) {
         this.$axios({
-          url: "https://119.3.219.207:9055/base/code/delCode",
+          url: this.Globel.requestUrl+"/code/codeCUD",
           data: {
+            cudType:"DELETE",
             codeId: row.codeId,
           },
           method: "Post"
         }).then(res => {
-          if (res.data.status == "SUCCESS") {
-            this.$axios({
-              url: "https://119.3.219.207:9055/base/code/codeInfoQuery?programId=" + this.$route.query.projectId + "&codeName=" + this.codeSearch.codeName + "&codeType=" + this.codeSearch.codeType + "&codeLevel=" + this.codeSearch.codeLevel,
-              method: "get"
-            }).then(res => {
-              if (res.data.status = "SUCCESS") {
-                this.tableData = res.data.object.codeInfoList
-              }
-            })
+          if (res.data.success) {
+            this.$message.success("删除成功");
+            this.doSearch()
+          }else{
+            this.$message.error(res.data.message)
           }
         })
       },
 
+      /**
+       * 新增一行对应的属性
+       * */
       addParameterInput(type) {
         this.dialog.dialogVisible = true
         if (type == "method") {
@@ -599,10 +577,6 @@
           this.dialog.dialogTital = "链接新增"
         }
         this.dialog.dialogType = type
-      },
-
-      drawerInputChange() {
-        this.drawerData.haveChange = true
       },
 
       /**
@@ -633,11 +607,18 @@
           data: this.codeCUDForm,
           method: "Post"
         }).then(res => {
+          console.log(res)
           if (res.data.success) {
             this.$message.success("操作成功")
             this.dialog.dialogVisible = false
             // this.$refs[""]
             this.doSearch()
+          }else{
+            this.$message({
+              showClose:true,
+              message:res.data.msg,
+              type:'error'
+            })
           }
         })
 
@@ -651,8 +632,8 @@
           this.codeCUDForm = row;
         }
         this.$axios({
-          url: this.Globel.requestUrl + "/base/code/codeMethodCUD",
-          method: "Post",
+          url: this.Globel.requestUrl + "/code/codeMethodCUD",
+          method: "POST",
           data: {
             type: type,
             codeId: this.drawerData.codeId,
@@ -661,10 +642,10 @@
           }
         }).then(res => {
           console.log(res.data.object)
-          if (res.data.status == "SUCCESS") {
+          if (res.data.success) {
             this.$message.success("操作成功！")
             this.dialog.dialogVisible = false
-            this.drawerData.codeMethods = res.data.object.codeMethodInfoList
+            this.drawerData.codeMethods = res.data.data.codeMethodInfoList
 
             if (type == "C") {
               this.$refs["CUDCodeMethodForm"].resetFields()
@@ -682,7 +663,7 @@
           this.CUDCodeParameterForm = row;
         }
         this.$axios({
-          url: "https://119.3.219.207:9055/base/code/codeParameterCUD",
+          url: this.Globel.requestUrl+"/code/codeParameterCUD",
           method: "Post",
           data: {
             type: type,
@@ -691,7 +672,7 @@
             codeParameterInfo: this.CUDCodeParameterForm
           }
         }).then(res => {
-          if (res.data.status == "SUCCESS") {
+          if (res.data.success) {
             this.$message.success("操作成功！")
             this.dialog.dialogVisible = false
             this.drawerData.codeParameters = res.data.object.codeParameterInfoList
@@ -712,8 +693,8 @@
           this.CUDCodeUrlForm = row;
         }
         this.$axios({
-          url: "https://119.3.219.207:9055/base/code/codeUrlCUD",
-          method: "Post",
+          url: this.Globel.requestUrl+"/code/codeUrlCUD",
+          method: "POST",
           data: {
             type: type,
             codeId: this.drawerData.codeId,
@@ -721,7 +702,7 @@
             codeOutSideUrlInfo: this.CUDCodeUrlForm
           }
         }).then(res => {
-          if (res.data.status == "SUCCESS") {
+          if (res.data.success) {
             this.$message.success("操作成功！")
 
             this.dialog.dialogVisible = false
@@ -733,7 +714,36 @@
           }
         })
 
-      }
+      },
+      drawerHandleClose(done) {
+        if (this.drawerData.haveChange == true) {
+          this.$confirm('该源码有文本已编辑, 是否保存?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.codeCUDForm = this.drawerData
+            this.codeCUDForm.cudType = "UPDATE"
+            this.sureCUCode()
+            done()
+          }).catch(() =>{
+
+          })
+        } else {
+          done()
+        }
+
+      },
+
+      cancelDialog() {
+        this.doSearch()
+        this.dialog.dialogVisible = false
+      },
+
+      drawerInputChange() {
+        this.drawerData.haveChange = true
+      },
+
     }
 
   }

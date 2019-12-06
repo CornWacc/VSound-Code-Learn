@@ -21,4 +21,5 @@
 
     <dubbo:reference interface="com.corn.vsound.facade.project.ProjectFacade" id="projectFacade" version="1.0.0" check="false"></dubbo:reference>
 
+    <dubbo:reference interface="com.corn.vsound.facade.code.CodeFacade" id="codeFacade" version="1.0.0" check="false"></dubbo:reference>
 </beans>

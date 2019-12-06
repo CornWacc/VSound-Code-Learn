@@ -10,7 +10,37 @@ public class CodeCUDAO {
 
     private Integer codeLevel;
 
-    private String projectId;
+    private String codeProgram;
+
+    private String codeId;
+
+    private String codeRemark;
+
+    private String usePosition;
+
+    public String getCodeRemark() {
+        return codeRemark;
+    }
+
+    public void setCodeRemark(String codeRemark) {
+        this.codeRemark = codeRemark;
+    }
+
+    public String getUsePosition() {
+        return usePosition;
+    }
+
+    public void setUsePosition(String usePosition) {
+        this.usePosition = usePosition;
+    }
+
+    public String getCodeId() {
+        return codeId;
+    }
+
+    public void setCodeId(String codeId) {
+        this.codeId = codeId;
+    }
 
     public String getCudType() {
         return cudType;
@@ -44,11 +74,11 @@ public class CodeCUDAO {
         this.codeLevel = codeLevel;
     }
 
-    public String getProjectId() {
-        return projectId;
+    public String getCodeProgram() {
+        return codeProgram;
     }
 
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
+    public void setCodeProgram(String codeProgram) {
+        this.codeProgram = codeProgram;
     }
 }
