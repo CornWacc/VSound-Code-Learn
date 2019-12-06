@@ -2,6 +2,8 @@ package com.corn.vsound.dao.mapper;
 
 import com.corn.vsound.dao.entity.CodeOutSideUrl;
 
+import java.util.List;
+
 public interface CodeOutSideUrlMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface CodeOutSideUrlMapper {
     int updateByPrimaryKeySelective(CodeOutSideUrl record);
 
     int updateByPrimaryKey(CodeOutSideUrl record);
+
+    List<CodeOutSideUrl> findCodeOutSideUrlByCodeId(String codeId);
 }

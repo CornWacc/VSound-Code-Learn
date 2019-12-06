@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.corn.vsound.dao.mapper.CodeParameterMapper" >
+  <resultMap id="BaseResultMap" type="com.corn.vsound.dao.entity.CodeParameter" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="parameter_id" property="parameterId" jdbcType="VARCHAR" />
+    <result column="parameter_name" property="parameterName" jdbcType="VARCHAR" />
+    <result column="parameter_remark" property="parameterRemark" jdbcType="VARCHAR" />
+    <result column="parameter_type" property="parameterType" jdbcType="VARCHAR" />
+    <result column="is_final" property="isFinal" jdbcType="VARCHAR" />
+    <result column="is_autowire" property="isAutowire" jdbcType="VARCHAR" />
+    <result column="is_interface" property="isInterface" jdbcType="VARCHAR" />
+    <result column="from_code_id" property="fromCodeId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, parameter_id, parameter_name, parameter_remark, parameter_type, is_final, is_autowire, 
+    is_interface, from_code_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from code_parameter
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from code_parameter
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.corn.vsound.dao.entity.CodeParameter" >
+    insert into code_parameter (id, parameter_id, parameter_name, 
+      parameter_remark, parameter_type, is_final, 
+      is_autowire, is_interface, from_code_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{parameterId,jdbcType=VARCHAR}, #{parameterName,jdbcType=VARCHAR}, 
+      #{parameterRemark,jdbcType=VARCHAR}, #{parameterType,jdbcType=VARCHAR}, #{isFinal,jdbcType=VARCHAR}, 
+      #{isAutowire,jdbcType=VARCHAR}, #{isInterface,jdbcType=VARCHAR}, #{fromCodeId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.corn.vsound.dao.entity.CodeParameter" >
+    insert into code_parameter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="parameterId != null" >
+        parameter_id,
+      </if>
+      <if test="parameterName != null" >
+        parameter_name,
+      </if>
+      <if test="parameterRemark != null" >
+        parameter_remark,
+      </if>
+      <if test="parameterType != null" >
+        parameter_type,
+      </if>
+      <if test="isFinal != null" >
+        is_final,
+      </if>
+      <if test="isAutowire != null" >
+        is_autowire,
+      </if>
+      <if test="isInterface != null" >
+        is_interface,
+      </if>
+      <if test="fromCodeId != null" >
+        from_code_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="parameterId != null" >
+        #{parameterId,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterName != null" >
+        #{parameterName,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterRemark != null" >
+        #{parameterRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterType != null" >
+        #{parameterType,jdbcType=VARCHAR},
+      </if>
+      <if test="isFinal != null" >
+        #{isFinal,jdbcType=VARCHAR},
+      </if>
+      <if test="isAutowire != null" >
+        #{isAutowire,jdbcType=VARCHAR},
+      </if>
+      <if test="isInterface != null" >
+        #{isInterface,jdbcType=VARCHAR},
+      </if>
+      <if test="fromCodeId != null" >
+        #{fromCodeId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.corn.vsound.dao.entity.CodeParameter" >
+    update code_parameter
+    <set >
+      <if test="parameterId != null" >
+        parameter_id = #{parameterId,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterName != null" >
+        parameter_name = #{parameterName,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterRemark != null" >
+        parameter_remark = #{parameterRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterType != null" >
+        parameter_type = #{parameterType,jdbcType=VARCHAR},
+      </if>
+      <if test="isFinal != null" >
+        is_final = #{isFinal,jdbcType=VARCHAR},
+      </if>
+      <if test="isAutowire != null" >
+        is_autowire = #{isAutowire,jdbcType=VARCHAR},
+      </if>
+      <if test="isInterface != null" >
+        is_interface = #{isInterface,jdbcType=VARCHAR},
+      </if>
+      <if test="fromCodeId != null" >
+        from_code_id = #{fromCodeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.corn.vsound.dao.entity.CodeParameter" >
+    update code_parameter
+    set parameter_id = #{parameterId,jdbcType=VARCHAR},
+      parameter_name = #{parameterName,jdbcType=VARCHAR},
+      parameter_remark = #{parameterRemark,jdbcType=VARCHAR},
+      parameter_type = #{parameterType,jdbcType=VARCHAR},
+      is_final = #{isFinal,jdbcType=VARCHAR},
+      is_autowire = #{isAutowire,jdbcType=VARCHAR},
+      is_interface = #{isInterface,jdbcType=VARCHAR},
+      from_code_id = #{fromCodeId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findCodeParameterListByCodeId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+    </include>
+    from code_parameter
+    <where>
+      <if test="codeId != null and codeId != ''">
+        code_id = #{codeId}
+      </if>
+    </where>
+  </select>
+</mapper>

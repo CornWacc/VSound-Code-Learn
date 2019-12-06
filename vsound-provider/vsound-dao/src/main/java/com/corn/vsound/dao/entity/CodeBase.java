@@ -13,6 +13,26 @@ public class CodeBase {
 
     private String codeProgram;
 
+    private String codeRemark;
+
+    private String usePosition;
+
+    public String getCodeRemark() {
+        return codeRemark;
+    }
+
+    public void setCodeRemark(String codeRemark) {
+        this.codeRemark = codeRemark;
+    }
+
+    public String getUsePosition() {
+        return usePosition;
+    }
+
+    public void setUsePosition(String usePosition) {
+        this.usePosition = usePosition;
+    }
+
     public Integer getId() {
         return id;
     }

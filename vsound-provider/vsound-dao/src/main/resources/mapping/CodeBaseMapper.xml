@@ -18,9 +18,9 @@
     from code_base
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from code_base
-    where id = #{id,jdbcType=INTEGER}
+    where code_id = #{codeId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.corn.vsound.dao.entity.CodeBase" >
     insert into code_base (id, code_id, code_name, 
@@ -51,6 +51,12 @@
       <if test="codeProgram != null" >
         code_program,
       </if>
+      <if test="codeRemark != null and codeRemark != ''">
+        code_remark,
+      </if>
+      <if test="usePosition != null and usePosition != ''">
+        use_position
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -70,6 +76,12 @@
       </if>
       <if test="codeProgram != null" >
         #{codeProgram,jdbcType=VARCHAR},
+      </if>
+      <if test="codeRemark != null and codeRemark != ''">
+        #{codeRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="usePosition != null and usePosition != ''">
+        #{usePosition,jdbcType=VARCHAR}
       </if>
     </trim>
   </insert>
@@ -91,8 +103,14 @@
       <if test="codeProgram != null" >
         code_program = #{codeProgram,jdbcType=VARCHAR},
       </if>
+      <if test="codeRemark != null and codeRemark != ''">
+        code_remark = #{codeRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="usePosition != null and usePosition != ''">
+        use_position = #{usePosition,jdbcType=VARCHAR}
+      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where code_id = #{codeId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.corn.vsound.dao.entity.CodeBase" >
     update code_base
@@ -110,7 +128,9 @@
     code_name,
     code_type,
     code_level,
-    code_program
+    code_program,
+    code_remark,
+    use_position
     from
     code_base
     <where>

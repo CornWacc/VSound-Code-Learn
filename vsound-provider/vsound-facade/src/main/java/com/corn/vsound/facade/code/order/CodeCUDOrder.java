@@ -5,14 +5,45 @@ import com.corn.boot.base.strategy.CUDOrder;
 
 public class CodeCUDOrder extends CUDOrder {
 
+    private static final long serialVersionUID = -930685417167740238L;
+
+    private String codeId;
+
     private String codeName;
 
     private String codeType;
 
     private Integer codeLevel;
 
-    private String projectId;
+    private String codeProgram;
 
+    private String codeRemark;
+
+    private String usePosition;
+
+    public String getCodeRemark() {
+        return codeRemark;
+    }
+
+    public void setCodeRemark(String codeRemark) {
+        this.codeRemark = codeRemark;
+    }
+
+    public String getUsePosition() {
+        return usePosition;
+    }
+
+    public void setUsePosition(String usePosition) {
+        this.usePosition = usePosition;
+    }
+
+    public String getCodeId() {
+        return codeId;
+    }
+
+    public void setCodeId(String codeId) {
+        this.codeId = codeId;
+    }
 
     public String getCodeName() {
         return codeName;
@@ -38,11 +69,11 @@ public class CodeCUDOrder extends CUDOrder {
         this.codeLevel = codeLevel;
     }
 
-    public String getProjectId() {
-        return projectId;
+    public String getCodeProgram() {
+        return codeProgram;
     }
 
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
+    public void setCodeProgram(String codeProgram) {
+        this.codeProgram = codeProgram;
     }
 }

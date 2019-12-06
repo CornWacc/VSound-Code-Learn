@@ -1,6 +1,8 @@
 package com.corn.vsound.facade.code.info;
 
-public class CodeInfo {
+import com.corn.boot.base.pojobase.Base;
+
+public class CodeInfo extends Base {
 
     private String codeId;
 

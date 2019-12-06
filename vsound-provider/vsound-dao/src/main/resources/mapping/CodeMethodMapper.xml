@@ -23,9 +23,9 @@
     from code_method
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from code_method
-    where id = #{id,jdbcType=INTEGER}
+    where method_id = #{methodId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.corn.vsound.dao.entity.CodeMethod" >
     insert into code_method (id, method_id, method_name, 
@@ -135,7 +135,7 @@
         from_code_id = #{fromCodeId,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where method_id = #{methodId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.corn.vsound.dao.entity.CodeMethod" >
     update code_method
@@ -148,6 +148,17 @@
       is_abstract = #{isAbstract,jdbcType=VARCHAR},
       method_common_use = #{methodCommonUse,jdbcType=VARCHAR},
       from_code_id = #{fromCodeId,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where method_id = #{methodId,jdbcType=VARCHAR}
   </update>
+
+  <select id="findCodeMethodListByCodeId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from code_method
+    <where>
+      <if test="codeId != null and codeId != ''">
+        code_id = #{codeId}
+      </if>
+    </where>
+  </select>
 </mapper>

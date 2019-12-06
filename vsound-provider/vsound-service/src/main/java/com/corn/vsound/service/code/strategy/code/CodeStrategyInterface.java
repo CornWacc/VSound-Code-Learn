@@ -1,4 +1,4 @@
-package com.corn.vsound.service.code.strategy;
+package com.corn.vsound.service.code.strategy.code;
 
 import com.corn.vsound.facade.code.order.CodeCUDOrder;
 

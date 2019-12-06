@@ -90,4 +90,16 @@
       from_code_id = #{fromCodeId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="findCodeOutSideUrlByCodeId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from
+    code_out_side_url
+    <where>
+      <if test="codeId != null and codeId !=''">
+        code_id = #{codeId}
+      </if>
+    </where>
+  </select>
 </mapper>
