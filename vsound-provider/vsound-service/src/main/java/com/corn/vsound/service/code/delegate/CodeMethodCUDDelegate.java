@@ -12,6 +12,7 @@ import com.corn.vsound.service.code.strategy.codemethod.CodeMethodStrategyFactor
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 @Service
 @DoTranscation
@@ -33,7 +34,7 @@ public class CodeMethodCUDDelegate extends AbstractBizService<CodeMethodCUDOrder
     @Override
     protected void orderCheck(CodeMethodCUDOrder order) {
         order.orderCheck();
-        if(StringUtils.isBlank(order.getCudType())){
+        if(ObjectUtils.isEmpty(order.getCudType())){
             throw new BizError("策略类型不能为空!");
         }
 

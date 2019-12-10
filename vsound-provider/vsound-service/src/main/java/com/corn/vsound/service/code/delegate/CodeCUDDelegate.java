@@ -10,6 +10,7 @@ import com.corn.vsound.service.code.strategy.code.CodeCUDFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 @Service
 @DoTranscation
@@ -28,7 +29,7 @@ public class CodeCUDDelegate extends AbstractBizService<CodeCUDOrder, CodeCUDRes
     @Override
     protected void orderCheck(CodeCUDOrder order) {
         order.orderCheck();
-        if(StringUtils.isBlank(order.getCudType())){
+        if(ObjectUtils.isEmpty(order.getCudType())){
             throw new BizError("策略类型不能为空!");
         }
 
