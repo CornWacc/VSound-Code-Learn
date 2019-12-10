@@ -8,6 +8,8 @@
     <result column="code_type" property="codeType" jdbcType="VARCHAR" />
     <result column="code_level" property="codeLevel" jdbcType="INTEGER" />
     <result column="code_program" property="codeProgram" jdbcType="VARCHAR" />
+    <result column="use_position" property="usePosition" jdbcType="VARCHAR" />
+    <result column="code_remark" property="codeRemark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, code_id, code_name, code_type, code_level, code_program

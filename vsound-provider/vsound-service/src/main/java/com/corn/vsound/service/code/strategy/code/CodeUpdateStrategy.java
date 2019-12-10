@@ -1,5 +1,6 @@
 package com.corn.vsound.service.code.strategy.code;
 
+import com.corn.boot.base.strategy.BaseCUDInterface;
 import com.corn.boot.error.BizError;
 import com.corn.vsound.dao.entity.CodeBase;
 import com.corn.vsound.dao.mapper.CodeBaseMapper;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 @Service
-public class CodeUpdateStrategy implements CodeStrategyInterface {
+public class CodeUpdateStrategy implements BaseCUDInterface<CodeCUDOrder> {
 
     @Autowired
     private CodeBaseMapper codeBaseMapper;

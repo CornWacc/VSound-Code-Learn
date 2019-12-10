@@ -18,7 +18,17 @@ public class CodeDetailQueryResult extends BaseRes {
 
     private String codeRemark;
 
-    private String codeLevel;
+    private Integer codeLevel;
+
+    private String codeType;
+
+    public String getCodeType() {
+        return codeType;
+    }
+
+    public void setCodeType(String codeType) {
+        this.codeType = codeType;
+    }
 
     private List<CodeMethodInfo> codeMethodInfoList;
 
@@ -74,11 +84,11 @@ public class CodeDetailQueryResult extends BaseRes {
         this.codeRemark = codeRemark;
     }
 
-    public String getCodeLevel() {
+    public Integer getCodeLevel() {
         return codeLevel;
     }
 
-    public void setCodeLevel(String codeLevel) {
+    public void setCodeLevel(Integer codeLevel) {
         this.codeLevel = codeLevel;
     }
 

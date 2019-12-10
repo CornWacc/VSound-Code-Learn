@@ -80,4 +80,18 @@ public class CodeBase {
     public void setCodeProgram(String codeProgram) {
         this.codeProgram = codeProgram == null ? null : codeProgram.trim();
     }
+
+    @Override
+    public String toString() {
+        return "CodeBase{" +
+                "id=" + id +
+                ", codeId='" + codeId + '\'' +
+                ", codeName='" + codeName + '\'' +
+                ", codeType='" + codeType + '\'' +
+                ", codeLevel=" + codeLevel +
+                ", codeProgram='" + codeProgram + '\'' +
+                ", codeRemark='" + codeRemark + '\'' +
+                ", usePosition='" + usePosition + '\'' +
+                '}';
+    }
 }

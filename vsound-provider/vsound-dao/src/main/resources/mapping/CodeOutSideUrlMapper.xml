@@ -98,7 +98,7 @@
     code_out_side_url
     <where>
       <if test="codeId != null and codeId !=''">
-        code_id = #{codeId}
+        from_code_id = #{codeId}
       </if>
     </where>
   </select>

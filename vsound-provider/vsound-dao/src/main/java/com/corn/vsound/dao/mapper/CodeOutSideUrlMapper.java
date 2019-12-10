@@ -1,6 +1,7 @@
 package com.corn.vsound.dao.mapper;
 
 import com.corn.vsound.dao.entity.CodeOutSideUrl;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface CodeOutSideUrlMapper {
 
     int updateByPrimaryKey(CodeOutSideUrl record);
 
-    List<CodeOutSideUrl> findCodeOutSideUrlByCodeId(String codeId);
+    List<CodeOutSideUrl> findCodeOutSideUrlByCodeId(@Param("codeId") String codeId);
 }

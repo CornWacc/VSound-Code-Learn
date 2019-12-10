@@ -18,7 +18,7 @@ public class CodeMethodStrategyFactory extends AbstractCUDFactory<BaseCUDInterfa
     @Override
     public BaseCUDInterface createStrategy(CodeMethodCUDOrder order) {
 
-        String cudType = order.getCudType();
+        String cudType = order.getCudType().getCode();
         ApplicationContext applicationContext = springBeanUtils.getApplicationContext();
         if(CREATE_CODE.equals(cudType)){
             return applicationContext.getBean(CodeMethodCreateStrategy.class);

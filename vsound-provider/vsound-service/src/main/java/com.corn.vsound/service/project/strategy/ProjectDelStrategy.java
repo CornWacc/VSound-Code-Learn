@@ -1,5 +1,6 @@
 package com.corn.vsound.service.project.strategy;
 
+import com.corn.boot.base.strategy.BaseCUDInterface;
 import com.corn.boot.error.BizError;
 import com.corn.vsound.dao.entity.ProjectBase;
 import com.corn.vsound.dao.mapper.ProjectBaseMapper;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 @Service
-public class ProjectDelStrategy implements ProjectStrategyInterface {
+public class ProjectDelStrategy implements BaseCUDInterface<ProjectCUDOrder> {
 
     @Autowired
     private ProjectBaseMapper projectBaseMapper;
