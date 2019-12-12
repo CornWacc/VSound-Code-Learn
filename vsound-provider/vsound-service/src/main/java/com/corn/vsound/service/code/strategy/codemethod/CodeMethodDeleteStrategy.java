@@ -19,11 +19,11 @@ public class CodeMethodDeleteStrategy implements BaseCUDInterface<CodeMethodCUDO
     @Override
     public void execute(CodeMethodCUDOrder order) {
 
-        CodeMethod codeMethod = codeMethodMapper.findCodeMethodByMethodId(order.getCodeMethodId());
+        CodeMethod codeMethod = codeMethodMapper.findCodeMethodByMethodId(order.getMethodId());
         if(ObjectUtils.isEmpty(codeMethod)){
             throw new BizError("该源码方法不存在,请刷新页面!");
         }
 
-        codeMethodMapper.deleteByPrimaryKey(order.getCodeMethodId());
+        codeMethodMapper.deleteByPrimaryKey(order.getMethodId());
     }
 }

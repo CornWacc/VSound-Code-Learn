@@ -29,6 +29,12 @@ public class CodeFacadeImpl implements CodeFacade {
     @Autowired
     private CodeParameterCUDDelegate codeParameterCUDDelegate;
 
+    @Autowired
+    private CodeOutSideUrlCUDDelegate codeOutSideUrlCUDDelegate;
+
+    @Autowired
+    private CodeOutSideUrlListQueryDelegate codeOutSideUrlListQueryDelegate;
+
     @Override
     public CodeCUDResult codeCUD(CodeCUDOrder order) {
         return codeCUDDelegate.execute("源码CUD业务",order);
@@ -57,6 +63,16 @@ public class CodeFacadeImpl implements CodeFacade {
     @Override
     public CodeParameterListQueryResult codeParameterListQuery(CodeParameterListQueryOrder order) {
         return codeParameterListQueryDelegate.execute("源码参数列表查询",order);
+    }
+
+    @Override
+    public CodeOutSideUrlCUDResult codeOutSideUrlCUD(CodeOutSideUrlCUDOrder order) {
+        return codeOutSideUrlCUDDelegate.execute("源码外链CUD操作",order);
+    }
+
+    @Override
+    public CodeOutSideUrlListQueryResult codeOutSideUrlListQuery(CodeOutSideUrlListQueryOrder order) {
+        return codeOutSideUrlListQueryDelegate.execute("源码外链列表查询",order);
     }
 
 }

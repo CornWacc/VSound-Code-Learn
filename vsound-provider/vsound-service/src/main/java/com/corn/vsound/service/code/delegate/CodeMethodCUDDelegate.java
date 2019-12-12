@@ -18,11 +18,6 @@ import org.springframework.util.ObjectUtils;
 @DoTranscation
 public class CodeMethodCUDDelegate extends AbstractBizService<CodeMethodCUDOrder, CodeMethodCUDResult> {
 
-    private static final String CREATE_CODE = "CREATE";
-
-    @Autowired
-    private CodeMethodMapper codeMethodMapper;
-
     @Autowired
     private CodeMethodStrategyFactory codeMethodStrategyFactory;
 

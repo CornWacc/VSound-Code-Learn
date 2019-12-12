@@ -17,9 +17,9 @@
     from code_out_side_url
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from code_out_side_url
-    where id = #{id,jdbcType=INTEGER}
+    where url_id = #{urlId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.corn.vsound.dao.entity.CodeOutSideUrl" >
     insert into code_out_side_url (id, url_id, url_remark, 
@@ -80,7 +80,7 @@
         from_code_id = #{fromCodeId,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where url_id = #{urlId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.corn.vsound.dao.entity.CodeOutSideUrl" >
     update code_out_side_url

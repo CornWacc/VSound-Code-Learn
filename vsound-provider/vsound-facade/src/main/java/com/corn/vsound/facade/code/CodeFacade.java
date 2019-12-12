@@ -18,4 +18,8 @@ public interface CodeFacade {
     CodeParameterCUDResult codeParameterCUD(CodeParameterCUDOrder order);
 
     CodeParameterListQueryResult codeParameterListQuery(CodeParameterListQueryOrder order);
+
+    CodeOutSideUrlCUDResult codeOutSideUrlCUD(CodeOutSideUrlCUDOrder order);
+
+    CodeOutSideUrlListQueryResult codeOutSideUrlListQuery(CodeOutSideUrlListQueryOrder order);
 }

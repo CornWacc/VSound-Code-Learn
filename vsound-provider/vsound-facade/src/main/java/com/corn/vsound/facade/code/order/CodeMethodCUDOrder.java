@@ -8,10 +8,10 @@ public class CodeMethodCUDOrder extends CUDOrder {
 
     private static final long serialVersionUID = -2585905066420707215L;
 
-    @CudParamsCheck(cudTypes = {CudTypeEnum.UPDATE,CudTypeEnum.DELETE})
-    private String codeMethodId;
+    @CudParamsCheck(cudTypes = {CudTypeEnum.UPDATE,CudTypeEnum.DELETE},errorMsg = "方法id不能为空")
+    private String methodId;
 
-    @CudParamsCheck(cudTypes = {CudTypeEnum.CREATE})
+    @CudParamsCheck(cudTypes = {CudTypeEnum.CREATE},errorMsg = "方法名称不能为空")
     private String methodName;
 
     private String methodUsage;
@@ -28,12 +28,12 @@ public class CodeMethodCUDOrder extends CUDOrder {
 
     private String fromCodeId;
 
-    public String getCodeMethodId() {
-        return codeMethodId;
+    public String getMethodId() {
+        return methodId;
     }
 
-    public void setCodeMethodId(String codeMethodId) {
-        this.codeMethodId = codeMethodId;
+    public void setMethodId(String methodId) {
+        this.methodId = methodId;
     }
 
     public String getMethodName() {

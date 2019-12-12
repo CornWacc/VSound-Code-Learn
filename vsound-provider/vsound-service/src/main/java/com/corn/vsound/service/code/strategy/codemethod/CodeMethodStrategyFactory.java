@@ -29,7 +29,7 @@ public class CodeMethodStrategyFactory extends AbstractCUDFactory<BaseCUDInterfa
         }
 
         if(DELETE_CODE.equals(cudType)){
-            return applicationContext.getBean(CodeMethodCreateStrategy.class);
+            return applicationContext.getBean(CodeMethodDeleteStrategy.class);
         }
         throw new BizError("策略类型异常,请校验");
     }
