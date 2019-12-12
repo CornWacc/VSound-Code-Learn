@@ -29,9 +29,6 @@ public class CodeCUDDelegate extends AbstractBizService<CodeCUDOrder, CodeCUDRes
     @Override
     protected void orderCheck(CodeCUDOrder order) {
         order.orderCheck();
-        if(ObjectUtils.isEmpty(order.getCudType())){
-            throw new BizError("策略类型不能为空!");
-        }
         order.checkCUDParams();
 
     }

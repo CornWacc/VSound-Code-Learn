@@ -19,10 +19,6 @@ public class ProjectDelStrategy implements BaseCUDInterface<ProjectCUDOrder> {
     @Override
     public void execute(ProjectCUDOrder order) {
 
-        if(StringUtils.isBlank(order.getProjectId())){
-            throw new BizError("需删除的项目Id不能为空");
-        }
-
         ProjectBase projectBase = projectBaseMapper.findProjectBaseByProjectId(order.getProjectId());
         if(ObjectUtils.isEmpty(projectBase)){
             throw new BizError("该项目不存在！请刷新页面!");

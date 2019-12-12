@@ -45,9 +45,10 @@ public class ProjectListQueryDelegate extends AbstractBizService<ProjectListQuer
         if(!ObjectUtils.isEmpty(projectInfoList)){
 
             List<ProjectInfo> infos = Lists.newArrayListWithCapacity(10);
+            BeanCopier copier = BeanCopier.create(ProjectBase.class,ProjectInfo.class,false);
             for(ProjectBase projectBase : projectInfoList){
                 ProjectInfo projectInfo = new ProjectInfo();
-                BeanCopier.create(ProjectBase.class,ProjectInfo.class,false).copy(projectBase,projectInfo,null);
+                copier.copy(projectBase,projectInfo,null);
                 infos.add(projectInfo);
             }
             result.setProjectInfoList(infos);

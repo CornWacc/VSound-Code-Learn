@@ -1,13 +1,16 @@
 package com.corn.vsound.facade.project.order;
 
+import com.corn.boot.annotations.CudParamsCheck;
 import com.corn.boot.base.pojobase.BaseOrder;
 import com.corn.boot.base.strategy.CUDOrder;
+import com.corn.boot.enums.CudTypeEnum;
 
 /**
  * @author yyc
  */
 public class ProjectCUDOrder extends CUDOrder {
 
+    @CudParamsCheck(cudTypes = {CudTypeEnum.DELETE,CudTypeEnum.UPDATE},errorMsg = "项目Id不能为空")
     private String projectId;
 
     private String projectName;

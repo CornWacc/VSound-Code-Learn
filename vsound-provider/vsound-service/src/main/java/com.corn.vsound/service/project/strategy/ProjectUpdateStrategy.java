@@ -22,10 +22,6 @@ public class ProjectUpdateStrategy implements BaseCUDInterface<ProjectCUDOrder> 
     @Override
     public void execute(ProjectCUDOrder order) {
 
-        if(StringUtils.isBlank(order.getProjectId())){
-            throw new BizError("需更新的项目id不能为空!");
-        }
-
         ProjectBase projectBase = projectBaseMapper.findProjectBaseByProjectId(order.getProjectId());
 
         if(ObjectUtils.isEmpty(projectBase)){
