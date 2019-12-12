@@ -32,12 +32,7 @@ public class CodeCUDDelegate extends AbstractBizService<CodeCUDOrder, CodeCUDRes
         if(ObjectUtils.isEmpty(order.getCudType())){
             throw new BizError("策略类型不能为空!");
         }
-
-        if(!CREATE_CODE.equals(order.getCudType())){
-            if(StringUtils.isBlank(order.getCodeId())){
-                throw new BizError("更新/删除策略 -> 源码Id不能为空");
-            }
-        }
+        order.checkCUDParams();
 
     }
 

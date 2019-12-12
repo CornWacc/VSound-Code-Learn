@@ -22,9 +22,9 @@
     from code_parameter
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from code_parameter
-    where id = #{id,jdbcType=INTEGER}
+    where parameter_id = #{parameterId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.corn.vsound.dao.entity.CodeParameter" >
     insert into code_parameter (id, parameter_id, parameter_name, 
@@ -125,7 +125,7 @@
         from_code_id = #{fromCodeId,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where parameter_id = #{parameterId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.corn.vsound.dao.entity.CodeParameter" >
     update code_parameter

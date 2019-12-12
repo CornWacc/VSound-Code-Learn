@@ -1,18 +1,10 @@
 package com.corn.vsound.service.code;
 
+import com.corn.boot.base.strategy.CUDOrder;
 import com.corn.vsound.facade.code.CodeFacade;
-import com.corn.vsound.facade.code.order.CodeCUDOrder;
-import com.corn.vsound.facade.code.order.CodeDetailQueryOrder;
-import com.corn.vsound.facade.code.order.CodeMethodCUDOrder;
-import com.corn.vsound.facade.code.order.CodeMethodListQueryOrder;
-import com.corn.vsound.facade.code.result.CodeCUDResult;
-import com.corn.vsound.facade.code.result.CodeDetailQueryResult;
-import com.corn.vsound.facade.code.result.CodeMethodCUDResult;
-import com.corn.vsound.facade.code.result.CodeMethodListQueryResult;
-import com.corn.vsound.service.code.delegate.CodeCUDDelegate;
-import com.corn.vsound.service.code.delegate.CodeDetailQueryDelegate;
-import com.corn.vsound.service.code.delegate.CodeMethodCUDDelegate;
-import com.corn.vsound.service.code.delegate.CodeMethodListQueryDelegate;
+import com.corn.vsound.facade.code.order.*;
+import com.corn.vsound.facade.code.result.*;
+import com.corn.vsound.service.code.delegate.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +22,12 @@ public class CodeFacadeImpl implements CodeFacade {
 
     @Autowired
     private CodeMethodListQueryDelegate codeMethodListQueryDelegate;
+
+    @Autowired
+    private CodeParameterListQueryDelegate codeParameterListQueryDelegate;
+
+    @Autowired
+    private CodeParameterCUDDelegate codeParameterCUDDelegate;
 
     @Override
     public CodeCUDResult codeCUD(CodeCUDOrder order) {
@@ -50,4 +48,15 @@ public class CodeFacadeImpl implements CodeFacade {
     public CodeMethodListQueryResult codeMethodListQuery(CodeMethodListQueryOrder order) {
         return codeMethodListQueryDelegate.execute("源码方法列表查询",order);
     }
+
+    @Override
+    public CodeParameterCUDResult codeParameterCUD(CodeParameterCUDOrder order) {
+        return codeParameterCUDDelegate.execute("源码参数CUD操作",order);
+    }
+
+    @Override
+    public CodeParameterListQueryResult codeParameterListQuery(CodeParameterListQueryOrder order) {
+        return codeParameterListQueryDelegate.execute("源码参数列表查询",order);
+    }
+
 }

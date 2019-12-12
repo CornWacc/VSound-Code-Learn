@@ -1,13 +1,17 @@
 package com.corn.vsound.facade.code.order;
 
+import com.corn.boot.annotations.CudParamsCheck;
 import com.corn.boot.base.strategy.CUDOrder;
+import com.corn.boot.enums.CudTypeEnum;
 
 public class CodeMethodCUDOrder extends CUDOrder {
 
     private static final long serialVersionUID = -2585905066420707215L;
 
+    @CudParamsCheck(cudTypes = {CudTypeEnum.UPDATE,CudTypeEnum.DELETE})
     private String codeMethodId;
 
+    @CudParamsCheck(cudTypes = {CudTypeEnum.CREATE})
     private String methodName;
 
     private String methodUsage;

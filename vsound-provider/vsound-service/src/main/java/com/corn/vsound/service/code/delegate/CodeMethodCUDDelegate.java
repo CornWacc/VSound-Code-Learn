@@ -37,12 +37,7 @@ public class CodeMethodCUDDelegate extends AbstractBizService<CodeMethodCUDOrder
         if(ObjectUtils.isEmpty(order.getCudType())){
             throw new BizError("策略类型不能为空!");
         }
-
-        if(!CREATE_CODE.equals(order.getCudType())){
-            if(StringUtils.isBlank(order.getCodeMethodId())){
-                throw new BizError("更新/删除策略->源码方法id不能为空!");
-            }
-        }
+        order.checkCUDParams();
     }
 
     @Override

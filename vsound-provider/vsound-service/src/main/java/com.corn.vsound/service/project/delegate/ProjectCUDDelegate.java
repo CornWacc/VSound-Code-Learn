@@ -31,7 +31,7 @@ public class ProjectCUDDelegate extends AbstractBizService<ProjectCUDOrder, Proj
     @Override
     protected void orderCheck(ProjectCUDOrder order) {
 
-        if(StringUtils.isBlank(order.getCudType())){
+        if(StringUtils.isBlank(order.getCudType().getCode())){
             throw new BizError("操作类型不能为空！");
         }
         order.orderCheck();
