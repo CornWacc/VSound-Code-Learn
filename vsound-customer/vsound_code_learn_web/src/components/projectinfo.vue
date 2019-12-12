@@ -182,7 +182,7 @@
                     </el-button>
                   </el-col>
                 </el-row>
-                <el-table :data="drawerData.codeParameters" class="outside_url_table" border>
+                <el-table :data="drawerData.codeParameterInfos" class="outside_url_table" border>
                   <el-table-column type="expand">
                     <template slot-scope="scope">
                       <el-form label-position="left" inline class="code_methods_expand">
@@ -224,11 +224,11 @@
                   </el-table-column>
                   <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
-                      <el-button size="mini" type="primary" @click="sureCUDCodeParameter(scope.row,type='U')"
+                      <el-button size="mini" type="primary" @click="updateCodeParameters(scope.row,'PARAMETER')"
                                  v-if="scope.row.type !== 'new'">编辑
                       </el-button>
                       <el-button size="mini" v-if="scope.row.type !== 'new'"
-                                 @click="sureCUDCodeParameter(scope.row,type='D')">删除
+                                 @click="deleteCodeParameters(scope.row,'PARAMETER')">删除
                       </el-button>
                     </template>
                   </el-table-column>
@@ -244,7 +244,7 @@
                     </el-button>
                   </el-col>
                 </el-row>
-                <el-table :data="drawerData.outSideUrl" class="outside_url_table" border>
+                <el-table :data="drawerData.codeOutSideUrlInfos" class="outside_url_table" border>
                   <el-table-column
                     label="链接注释"
                     align="center"
@@ -257,10 +257,10 @@
                   </el-table-column>
                   <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
-                      <el-button size="mini" type="primary" @click="sureCUDCodeUrl(scope.row,type='U')"
+                      <el-button size="mini" type="primary" @click="updateCodeParameters(scope.row,'URL')"
                                  v-if="scope.row.type !== 'new'">编辑
                       </el-button>
-                      <el-button size="mini" @click="sureCUDCodeUrl(scope.row,type='D')"
+                      <el-button size="mini" @click="deleteCodeParameters(scope.row,'URL')"
                                  v-if="scope.row.type !== 'new'">删除
                       </el-button>
                     </template>
@@ -432,8 +432,22 @@
           cudType: "",
           fromCodeId: ""
         },
-        CUDCodeParameterForm: {},
-        CUDCodeUrlForm: {},
+        CUDCodeParameterForm: {
+          isAutowire: "",
+          isFinal: "",
+          isInterface: "",
+          parameterName: "",
+          parameterRemark: "",
+          parameterType: "",
+          cudType: ""
+        },
+        CUDCodeUrlForm: {
+          urlId: "",
+          urlPath: "",
+          urlRemark: "",
+          cudType: "",
+          fromCodeId: ""
+        },
         tableData: [],
         options: [
           {
@@ -468,7 +482,8 @@
           codeRemark: "",
           haveChange: false,
           usePosition: "",
-          codeMethodInfoList: []
+          codeMethodInfoList: [],
+          codeOutSideUrlList: []
         },
         CUDCodeForm: {
           codeId: "",
@@ -603,17 +618,21 @@
 
       deleteCodeParameters(row, type) {
         this.dialog.cudType = "DELETE";
-        this.CUDCodeForm = row;
         if (type === "CODE") {
+          this.CUDCodeForm = row;
           this.sureCUDCode()
         }
         if (type === "METHOD") {
+          this.CUDCodeMethodForm = row;
           this.sureCUDCodeMethod()
         }
         if (type === "PARAMETER") {
+          this.CUDCodeParameterForm = row;
+          console.log(row)
           this.sureCUDCodeParameter()
         }
         if (type === "URL") {
+          this.CUDCodeUrlForm = row;
           this.sureCUDCodeUrl()
         }
       },
@@ -640,8 +659,8 @@
        * 新增或编辑源码
        * */
       sureCUDCode() {
-        this.CUDCodeForm.cudType = this.dialog.cudType
-        this.CUDCodeForm.codeProgram = this.$route.query.projectId
+        this.CUDCodeForm.cudType = this.dialog.cudType;
+        this.CUDCodeForm.codeProgram = this.$route.query.projectId;
         console.log(this.CUDCodeForm)
         this.$axios({
           url: this.Globel.requestUrl + "/code/codeCUD",
@@ -676,11 +695,10 @@
           if (res.data.success) {
             this.$message.success(res.data.msg)
             this.dialog.dialogVisible = false
-
-            if (this.CUDCodeMethodForm.cudType == "CREATE") {
-              this.$refs["CUDCodeMethodForm"].resetFields()
-            }
+            this.$refs["CUDCodeMethodForm"].resetFields()
             this.codeMethodListQuery(this.drawerData.codeId)
+          }else{
+            this.$message.error(res.data.msg)
           }
         });
       },
@@ -688,30 +706,31 @@
       /**
        * CUD源码参数
        * */
-      sureCUDCodeParameter(row, type) {
-        if (row != null) {
-          this.CUDCodeParameterForm = row;
-        }
+      sureCUDCodeParameter() {
+
+        this.CUDCodeParameterForm.cudType = this.dialog.cudType;
+        this.CUDCodeParameterForm.fromCodeId = this.drawerData.codeId; //从抽屉中获取CodeId
         this.$axios({
           url: this.Globel.requestUrl + "/code/codeParameterCUD",
-          method: "Post",
-          data: {
-            type: type,
-            codeId: this.drawerData.codeId,
-            parameterId: this.CUDCodeParameterForm.parameterId,
-            codeParameterInfo: this.CUDCodeParameterForm
-          }
+          method: "POST",
+          data: this.CUDCodeParameterForm
         }).then(res => {
           if (res.data.success) {
             this.$message.success("操作成功！")
             this.dialog.dialogVisible = false
-            this.drawerData.codeParameters = res.data.object.codeParameterInfoList
-
-            if (type == "C") {
-              this.$refs["CUDCodeParameterForm"].resetFields()
-            }
+            this.$axios({
+              url:this.Globel.requestUrl+"/code/codeParameterListQuery?codeId="+this.CUDCodeParameterForm.fromCodeId,
+              method:"GET"
+            }).then(res =>{
+              if(res.data.success){
+                this.drawerData.codeParameterInfos = res.data.data.codeParameterInfoList
+              }else{
+                this.$message.error("获取方法列表失败!")
+              }
+            })
+            this.$refs["CUDCodeParameterForm"].resetFields()
           } else {
-            this.$message.error("失败")
+            this.$message.error(res.data.msg)
           }
         })
 
@@ -720,28 +739,28 @@
       /**
        * CUD源码链接
        * */
-      sureCUDCodeUrl(row, type) {
-        if (row != null) {
-          this.CUDCodeUrlForm = row;
-        }
+      sureCUDCodeUrl() {
+        this.CUDCodeUrlForm.cudType = this.dialog.cudType;
+        this.CUDCodeUrlForm.fromCodeId = this.drawerData.codeId; //从抽屉中获取CodeId
         this.$axios({
-          url: this.Globel.requestUrl + "/code/codeUrlCUD",
+          url: this.Globel.requestUrl + "/code/codeOutSideUrlCUD",
           method: "POST",
-          data: {
-            type: type,
-            codeId: this.drawerData.codeId,
-            urlId: this.CUDCodeUrlForm.urlId,
-            codeOutSideUrlInfo: this.CUDCodeUrlForm
-          }
+          data: this.CUDCodeUrlForm
         }).then(res => {
           if (res.data.success) {
             this.$message.success("操作成功！")
             this.dialog.dialogVisible = false
-            this.drawerData.outSideUrl = res.data.object.codeOutSideUrlInfoList
-
-            if (type == "C") {
-              this.$refs["CUDCodeUrlForm"].resetFields()
-            }
+            this.$axios({
+              url: this.Globel.requestUrl + "/code/codeOutSideUrlListQuery?codeId=" + this.CUDCodeUrlForm.fromCodeId,
+              method: "GET",
+            }).then(res => {
+              if (res.data.success) {
+                this.drawerData.codeOutSideUrlInfos = res.data.data.codeOutSideUrlInfoList
+              }
+            })
+            this.$refs["CUDCodeUrlForm"].resetFields()
+          } else {
+            this.$message.error(res.data.msg)
           }
         })
 

@@ -1,27 +1,30 @@
 <template>
   <el-container class="container">
     <el-header class="header">
-      <el-button @click="addNewProject" round type="small" style="margin-top: 14px;width: 80px">新 增</el-button>
+      <el-button @click="addNewProject" round type="primary" size="small"
+                 style="margin-top: 14px;width: 80px;font-size: 12px">新 增
+      </el-button>
       <el-row style="float:right;width: 400px;margin-top: 10px;">
         <el-col :span="12">
           <div class="header_search">
-            <el-input v-model="searchInput" class="header_search_input" placeholder="框架名称/类型/所属框架" @keyup.native.enter="doSearch">
+            <el-input v-model="searchInput" class="header_search_input" placeholder="框架名称/类型/所属框架"
+                      @keyup.native.enter="doSearch">
               <el-button slot="append" icon="el-icon-search" @click="doSearch"></el-button>
             </el-input>
           </div>
         </el-col>
-        <el-col :span="8">
-          <div class="header_user">
-            <el-dropdown  @command="handleCommand">
-              <el-avatar></el-avatar>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="userInfo">个人资料</el-dropdown-item>
-                <el-dropdown-item command="backStage">后台管理</el-dropdown-item>
-                <el-dropdown-item command="loginOut">退出登录</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </div>
-        </el-col>
+        <!--        <el-col :span="8">-->
+        <!--          <div class="header_user">-->
+        <!--            <el-dropdown @command="handleCommand">-->
+        <!--              <el-avatar></el-avatar>-->
+        <!--              <el-dropdown-menu slot="dropdown">-->
+        <!--                <el-dropdown-item command="userInfo">个人资料</el-dropdown-item>-->
+        <!--                <el-dropdown-item command="backStage">后台管理</el-dropdown-item>-->
+        <!--                <el-dropdown-item command="loginOut">退出登录</el-dropdown-item>-->
+        <!--              </el-dropdown-menu>-->
+        <!--            </el-dropdown>-->
+        <!--          </div>-->
+        <!--        </el-col>-->
       </el-row>
     </el-header>
     <el-main id="main">
@@ -29,8 +32,18 @@
         <el-col :span="8" v-for="item in projectList" :key="item.projectId">
           <el-card class="project">
             <div class="project_header">
-              <span class="project_header_projectName" @click="goInfo(item.projectId)">{{item.projectName}}</span>
-              <el-tag class="project_header_type" v-if="item.projectType != null">{{item.projectType}}</el-tag>
+              <el-row>
+                <el-col :span="14">
+                <span class="project_header_projectName"
+                      @click="goInfo(item.projectId)">{{item.projectName}}</span>
+                </el-col>
+                <el-col :span="4" :offset="3">
+                  <el-tag class="project_header_type" v-if="item.projectType != null">{{item.projectType}}</el-tag>
+                </el-col>
+                <el-col :span="2" :offset="1">
+                  <el-button @click="deleteProject(item)" type="danger" icon="el-icon-delete" size="mini" circle></el-button>
+                </el-col>
+              </el-row>
             </div>
             <div class="project_body">
               {{item.remark}}
@@ -44,7 +57,8 @@
       :visible.sync="disableDialog"
       width="50%"
       :before-close="handleClose">
-      <el-form ref="addProjectForm" :model="addProjectForm" :rules="rules" :hide-required-asterisk="hideRequiredAsterisk" style="margin-left: 40px;">
+      <el-form ref="addProjectForm" :model="addProjectForm" :rules="rules"
+               :hide-required-asterisk="hideRequiredAsterisk" style="margin-left: 40px;">
         <el-form-item label="源码项目名称:" prop="projectName">
           <el-input v-model="addProjectForm.projectName"></el-input>
         </el-form-item>
@@ -58,7 +72,7 @@
           <el-input v-model="addProjectForm.usePosition"></el-input>
         </el-form-item>
         <el-form-item label="源码项目简介:" prop="remark">
-          <el-input type="textarea" v-model="addProjectForm.remark" maxlength="30"  show-word-limit></el-input>
+          <el-input type="textarea" v-model="addProjectForm.remark" maxlength="30" show-word-limit></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -74,56 +88,60 @@
     name: "Main",
     data() {
       return {
-        hideRequiredAsterisk:true,
-        searchInput:"",
-        disableDialog:false,
+        hideRequiredAsterisk: true,
+        searchInput: "",
+        disableDialog: false,
         projectList: [],
-        addProjectForm:{
-          projectName:"",
-          projectType:"",
-          projectAffiliation:"",
-          usePosition:"",
-          remark:"",
-          cudType:"CREATE"
+        addProjectForm: {
+          projectName: "",
+          projectType: "",
+          projectAffiliation: "",
+          usePosition: "",
+          remark: "",
+          cudType: "CREATE"
         },
-        rules:{
-          projectName:[{
-            required:true,message:"项目名称不能为空",trigger:"blur"
+        rules: {
+          projectName: [{
+            required: true, message: "项目名称不能为空", trigger: "blur"
           }],
-          projectType:[{
-            required:true,message:"项目类型不能为空",trigger:"blur"
+          projectType: [{
+            required: true, message: "项目类型不能为空", trigger: "blur"
           }],
-          usePosition:[{
-            required:true,message:"项目可用范围不能为空",trigger:"blur"
+          usePosition: [{
+            required: true, message: "项目可用范围不能为空", trigger: "blur"
           }],
         }
       }
     },
-    mounted(){
+    mounted() {
+
       this.$axios({
-        url:this.Globel.requestUrl+"/project/projectListQuery",
-        method:"get"
-      }).then(res =>{
+        url: this.Globel.requestUrl + "/project/projectListQuery",
+        method: "get"
+      }).then(res => {
         console.log(res)
-        if(res.data.success){
+        if (res.data.success) {
           this.projectList = res.data.data.projectInfoList
         }
       })
     },
-    methods:{
-      handleCommand(c){
-        console.log(c);
-        if(c === "userInfo"){
 
-        }else if(c === "backStage"){
+    methods: {
+      handleCommand(c) {
+        console.log(c);
+        if (c === "userInfo") {
+
+        } else if (c === "backStage") {
           this.$router.push("/backStage")
-        }else{
+        } else {
           this.$router.push("/")
         }
       },
-      addNewProject(){
+
+      addNewProject() {
         this.disableDialog = true
       },
+
       /**
        * 对话框关闭
        * */
@@ -132,40 +150,66 @@
         this.$refs['addProjectForm'].resetFields()
         done;
       },
-      addProject(){
+
+      addProject() {
         this.$axios({
-          url:this.Globel.requestUrl+"/project/projectCUD",
-          data:this.addProjectForm,
-          method:"Post"
-        }).then(res =>{
-          if(res.data.success){
+          url: this.Globel.requestUrl + "/project/projectCUD",
+          data: this.addProjectForm,
+          method: "Post"
+        }).then(res => {
+          if (res.data.success) {
             this.disableDialog = false
             this.$axios({
-              url:this.Globel.requestUrl+"/project/projectListQuery",
-              method:"get"
-            }).then(res =>{
-              if(res.data.success){
+              url: this.Globel.requestUrl + "/project/projectListQuery",
+              method: "GET"
+            }).then(res => {
+              if (res.data.success) {
                 this.projectList = res.data.data.projectInfoList
               }
             })
           }
         })
       },
-      doSearch(){
+
+      doSearch() {
         this.$axios({
-          url:this.Globel.requestUrl+"/project/projectListQuery?keyWord="+this.searchInput,
-          method:"Get"
-        }).then(res =>{
-          if(res.data.status == "SUCCESS"){
-            this.projectList = res.data.object.projectInfoList
+          url: this.Globel.requestUrl + "/project/projectListQuery?keyWord=" + this.searchInput,
+          method: "GET"
+        }).then(res => {
+          if (res.data.status == "SUCCESS") {
+            this.projectList = res.data.data.projectInfoList
           }
         })
       },
-      goInfo(projectId){
+
+      goInfo(projectId) {
         this.$router.push({
-          path:"/projectInfo",
-          query:{
-            projectId:projectId,
+          path: "/projectInfo",
+          query: {
+            projectId: projectId,
+          }
+        })
+      },
+
+      deleteProject(item){
+        item.cudType = "DELETE"
+        this.$axios({
+          url:this.Globel.requestUrl+"/project/projectCUD",
+          method:"POST",
+          data:item
+        }).then(res =>{
+          if(res.data.success){
+            this.$message.success(res.data.msg)
+            this.$axios({
+              url: this.Globel.requestUrl + "/project/projectListQuery",
+              method: "GET"
+            }).then(res => {
+              if (res.data.success) {
+                this.projectList = res.data.data.projectInfoList
+              }
+            })
+          }else{
+            this.$message.error(res.data.msg)
           }
         })
       }
@@ -205,13 +249,14 @@
     margin-top: 34px;
     margin-left: auto;
     margin-right: auto;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     /*background: rgba(238, 250, 222, 0.1);*/
   }
 
   .project_header {
     height: 40px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
   }
 
   .project_body {
@@ -221,12 +266,17 @@
   .project_header_projectName {
     text-align: left;
     cursor: pointer;
+    font-size: 20px;
+    font-weight: bolder;
   }
 
   .project_header_type {
     float: right;
+    /*font-weight: bolder;*/
+    font-size: 14px;
   }
-  .el-input{
+
+  .el-input {
     width: 70%;
   }
 </style>

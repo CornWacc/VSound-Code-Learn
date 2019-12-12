@@ -3,14 +3,8 @@ package com.corn.vsound.integration.code;
 
 import com.corn.boot.annotations.Log;
 import com.corn.vsound.facade.code.CodeFacade;
-import com.corn.vsound.facade.code.order.CodeCUDOrder;
-import com.corn.vsound.facade.code.order.CodeDetailQueryOrder;
-import com.corn.vsound.facade.code.order.CodeMethodCUDOrder;
-import com.corn.vsound.facade.code.order.CodeMethodListQueryOrder;
-import com.corn.vsound.facade.code.result.CodeCUDResult;
-import com.corn.vsound.facade.code.result.CodeDetailQueryResult;
-import com.corn.vsound.facade.code.result.CodeMethodCUDResult;
-import com.corn.vsound.facade.code.result.CodeMethodListQueryResult;
+import com.corn.vsound.facade.code.order.*;
+import com.corn.vsound.facade.code.result.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +38,27 @@ public class CodeFacadeClientimpl implements CodeFacadeClient {
         return codeFacade.codeMethodListQuery(order);
     }
 
+    @Override
+    @Log(name = "源码服务",des = "源码参数CUD操作")
+    public CodeParameterCUDResult codeParameterCUD(CodeParameterCUDOrder order) {
+        return codeFacade.codeParameterCUD(order);
+    }
 
+    @Override
+    @Log(name = "源码服务",des = "源码参数列表查询")
+    public CodeParameterListQueryResult codeParameterListQuery(CodeParameterListQueryOrder order) {
+        return codeFacade.codeParameterListQuery(order);
+    }
+
+    @Override
+    @Log(name = "源码服务",des = "源码外链CUD操作")
+    public CodeOutSideUrlCUDResult codeOutSideUrlCUD(CodeOutSideUrlCUDOrder order) {
+        return codeFacade.codeOutSideUrlCUD(order);
+    }
+
+    @Override
+    @Log(name = "源码服务",des = "源码外链列表查询")
+    public CodeOutSideUrlListQueryResult codeOutSideUrlListQuery(CodeOutSideUrlListQueryOrder order) {
+        return codeFacade.codeOutSideUrlListQuery(order);
+    }
 }

@@ -1,8 +1,10 @@
 package com.corn.vsound.web.project.ao;
 
+import com.corn.boot.enums.CudTypeEnum;
+
 public class ProjectCUDAO {
 
-    private String cudType;
+    private CudTypeEnum cudType;
 
     private String projectId;
 
@@ -21,11 +23,11 @@ public class ProjectCUDAO {
 //    private String createUserName;
 
 
-    public String getCudType() {
+    public CudTypeEnum getCudType() {
         return cudType;
     }
 
-    public void setCudType(String cudType) {
+    public void setCudType(CudTypeEnum cudType) {
         this.cudType = cudType;
     }
 

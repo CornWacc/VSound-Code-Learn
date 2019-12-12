@@ -1,8 +1,10 @@
 package com.corn.vsound.web.code.ao;
 
+import com.corn.boot.enums.CudTypeEnum;
+
 public class CodeMethodAO {
 
-    private String codeMethodId;
+    private String methodId;
 
     private String methodName;
 
@@ -18,7 +20,7 @@ public class CodeMethodAO {
 
     private String methodCommonUse;
 
-    private String cudType;
+    private CudTypeEnum cudType;
 
     private String fromCodeId;
 
@@ -30,20 +32,20 @@ public class CodeMethodAO {
         this.fromCodeId = fromCodeId;
     }
 
-    public String getCudType() {
+    public CudTypeEnum getCudType() {
         return cudType;
     }
 
-    public void setCudType(String cudType) {
+    public void setCudType(CudTypeEnum cudType) {
         this.cudType = cudType;
     }
 
-    public String getCodeMethodId() {
-        return codeMethodId;
+    public String getMethodId() {
+        return methodId;
     }
 
-    public void setCodeMethodId(String codeMethodId) {
-        this.codeMethodId = codeMethodId;
+    public void setMethodId(String methodId) {
+        this.methodId = methodId;
     }
 
     public String getMethodName() {

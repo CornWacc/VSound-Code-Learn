@@ -3,17 +3,13 @@ package com.corn.vsound.web.code;
 import com.corn.boot.annotations.RequestLog;
 import com.corn.boot.base.JsonResult;
 import com.corn.boot.util.AppUtils;
-import com.corn.vsound.facade.code.order.CodeCUDOrder;
-import com.corn.vsound.facade.code.order.CodeDetailQueryOrder;
-import com.corn.vsound.facade.code.order.CodeMethodCUDOrder;
-import com.corn.vsound.facade.code.order.CodeMethodListQueryOrder;
-import com.corn.vsound.facade.code.result.CodeCUDResult;
-import com.corn.vsound.facade.code.result.CodeDetailQueryResult;
-import com.corn.vsound.facade.code.result.CodeMethodCUDResult;
-import com.corn.vsound.facade.code.result.CodeMethodListQueryResult;
+import com.corn.vsound.facade.code.order.*;
+import com.corn.vsound.facade.code.result.*;
 import com.corn.vsound.integration.code.CodeFacadeClient;
 import com.corn.vsound.web.code.ao.CodeCUDAO;
 import com.corn.vsound.web.code.ao.CodeMethodAO;
+import com.corn.vsound.web.code.ao.CodeOutSideUrlCUDAO;
+import com.corn.vsound.web.code.ao.CodeParameterAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.web.bind.annotation.*;
@@ -67,6 +63,49 @@ public class CodeController {
         return new JsonResult(result);
     }
 
+    @PostMapping("/codeParameterCUD")
+    @RequestLog("源码参数CUD操作")
+    public JsonResult codeParameterCUD(@RequestBody CodeParameterAO ao){
+        CodeParameterCUDOrder order = new CodeParameterCUDOrder();
+        BeanCopier.create(CodeParameterAO.class,CodeParameterCUDOrder.class,false).copy(ao,order,null);
+        order.setSerialNo(AppUtils.appCode(""));
+
+        CodeParameterCUDResult result = codeFacadeClient.codeParameterCUD(order);
+        return new JsonResult(result);
+    }
+
+    @GetMapping("/codeParameterListQuery")
+    @RequestLog("源码参数列表查询")
+    public JsonResult codeParameterListQuery(String codeId){
+        CodeParameterListQueryOrder order = new CodeParameterListQueryOrder();
+        order.setCodeId(codeId);
+        order.setSerialNo(AppUtils.appCode(""));
+
+        CodeParameterListQueryResult result = codeFacadeClient.codeParameterListQuery(order);
+        return new JsonResult(result);
+    }
+
+    @PostMapping("/codeOutSideUrlCUD")
+    @RequestLog("源码外链CUD操作")
+    public JsonResult codeOutSideUrlCUD(@RequestBody CodeOutSideUrlCUDAO ao){
+        CodeOutSideUrlCUDOrder codeOutSideUrlCUDOrder = new CodeOutSideUrlCUDOrder();
+        BeanCopier.create(ao.getClass(),codeOutSideUrlCUDOrder.getClass(),false).copy(ao,codeOutSideUrlCUDOrder,null);
+        codeOutSideUrlCUDOrder.setSerialNo(AppUtils.appCode(""));
+
+        CodeOutSideUrlCUDResult codeOutSideUrlCUDResult = codeFacadeClient.codeOutSideUrlCUD(codeOutSideUrlCUDOrder);
+        return new JsonResult(codeOutSideUrlCUDResult);
+    }
+
+    @GetMapping("/codeOutSideUrlListQuery")
+    @RequestLog("源码参数列表查询")
+    public JsonResult codeOutSideUrlListQuery(String codeId){
+        CodeOutSideUrlListQueryOrder order = new CodeOutSideUrlListQueryOrder();
+        order.setCodeId(codeId);
+        order.setSerialNo(AppUtils.appCode(""));
+
+        CodeOutSideUrlListQueryResult result = codeFacadeClient.codeOutSideUrlListQuery(order);
+        return new JsonResult(result);
+    }
 
 
 }
