@@ -151,4 +151,12 @@
       </if>
     </where>
   </select>
+
+  <delete id="deleteCodeParametersByCodeIds">
+    delete from code_parameter
+    where from_code_id in
+    <foreach collection="codeIds" item="item" open="(" close=")" separator=",">
+      #{item}
+    </foreach>
+  </delete>
 </mapper>

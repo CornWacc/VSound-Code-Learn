@@ -161,4 +161,12 @@
       </if>
     </where>
   </select>
+
+  <delete id="deleteCodeMethodsByCodeIds">
+    delete from code_method
+    where from_code_id in
+    <foreach collection="codeIds" item="item" open="(" close=")" separator=",">
+      #{item}
+    </foreach>
+  </delete>
 </mapper>

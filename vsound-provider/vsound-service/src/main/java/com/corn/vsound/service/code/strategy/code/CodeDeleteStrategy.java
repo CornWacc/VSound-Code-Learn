@@ -4,16 +4,31 @@ import com.corn.boot.base.strategy.BaseCUDInterface;
 import com.corn.boot.error.BizError;
 import com.corn.vsound.dao.entity.CodeBase;
 import com.corn.vsound.dao.mapper.CodeBaseMapper;
+import com.corn.vsound.dao.mapper.CodeMethodMapper;
+import com.corn.vsound.dao.mapper.CodeOutSideUrlMapper;
+import com.corn.vsound.dao.mapper.CodeParameterMapper;
 import com.corn.vsound.facade.code.order.CodeCUDOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class CodeDeleteStrategy implements BaseCUDInterface<CodeCUDOrder> {
 
     @Autowired
     private CodeBaseMapper codeBaseMapper;
+
+    @Autowired
+    private CodeMethodMapper codeMethodMapper;
+
+    @Autowired
+    private CodeParameterMapper codeParameterMapper;
+
+    @Autowired
+    private CodeOutSideUrlMapper codeOutSideUrlMapper;
 
     @Override
     public void execute(CodeCUDOrder codeCUDOrder) {
@@ -26,6 +41,12 @@ public class CodeDeleteStrategy implements BaseCUDInterface<CodeCUDOrder> {
 
         codeBaseMapper.deleteByPrimaryKey(codeId);
 
-        //todo 还需要清除掉对应源码的扩展参数
+        List<String> codeIds = Arrays.asList(codeId);
+        codeMethodMapper.deleteCodeMethodsByCodeIds(codeIds);
+        codeParameterMapper.deleteCodeParametersByCodeIds(codeIds);
+        codeOutSideUrlMapper.deleteCodeOutSideUrlsByCodeIds(codeIds);
+
     }
+
+
 }

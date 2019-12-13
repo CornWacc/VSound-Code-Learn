@@ -1,7 +1,5 @@
 package com.corn.vsound.facade.code;
 
-import com.corn.boot.base.strategy.BaseCUDInterface;
-import com.corn.boot.base.strategy.CUDOrder;
 import com.corn.vsound.facade.code.order.*;
 import com.corn.vsound.facade.code.result.*;
 
@@ -22,4 +20,5 @@ public interface CodeFacade {
     CodeOutSideUrlCUDResult codeOutSideUrlCUD(CodeOutSideUrlCUDOrder order);
 
     CodeOutSideUrlListQueryResult codeOutSideUrlListQuery(CodeOutSideUrlListQueryOrder order);
+
 }

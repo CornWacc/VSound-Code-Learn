@@ -1,6 +1,7 @@
 package com.corn.vsound.dao.mapper;
 
 import com.corn.vsound.dao.entity.CodeMethod;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
@@ -25,4 +26,7 @@ public interface CodeMethodMapper {
     CodeMethod findCodeMethodByMethodId(@Param("methodId")String methodId);
 
     List<CodeMethod> findCodeMethodListByCodeId(@Param("codeId")String codeId);
+
+    int deleteCodeMethodsByCodeIds(@Param("codeIds")List<String> codeIds);
+
 }

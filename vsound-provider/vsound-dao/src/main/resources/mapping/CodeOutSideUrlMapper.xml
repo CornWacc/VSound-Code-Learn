@@ -102,4 +102,12 @@
       </if>
     </where>
   </select>
+
+  <delete id="deleteCodeOutSideUrlsByCodeIds">
+    delete from code_out_side_url
+    where from_code_id in
+    <foreach collection="codeIds" item="item" open="(" close=")" separator=",">
+      #{item}
+    </foreach>
+  </delete>
 </mapper>

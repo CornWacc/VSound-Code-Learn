@@ -28,4 +28,6 @@ public interface CodeBaseMapper {
     @Select("select * from code_base where code_id = #{codeId}")
     @ResultMap("BaseResultMap")
     CodeBase findCodeBaseByCodeId(@Param("codeId")String codeId);
+
+    int deleteCodesByCodeIds(@Param("codeIds")List<String> codeIds);
 }
