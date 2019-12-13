@@ -6,7 +6,7 @@
 
     <parent>
         <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-parent</artifactId>
+        <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.0.5.RELEASE</version>
     </parent>
 
@@ -26,6 +26,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <docker.image.prefix>docker_vsound</docker.image.prefix>
     </properties>
 
     <dependencies>
@@ -48,6 +49,42 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+
+<!--            &lt;!&ndash; docker构建插件 &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>com.spotify</groupId>-->
+<!--                <artifactId>docker-maven-plugin</artifactId>-->
+<!--                <version>1.0.0</version>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash; 生成的docker镜像名称  &ndash;&gt;-->
+<!--                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>-->
+<!--                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>-->
+<!--                    <resources>-->
+<!--                        <resource>-->
+<!--                            <targetPath>/</targetPath>-->
+<!--                            <directory>${project.build.directory}</directory>-->
+<!--                            <include>${project.build.finalName}.jar</include>-->
+<!--                        </resource>-->
+<!--                    </resources>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--            &lt;!&ndash; 复制jar包到指定目录 &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <artifactId>maven-antrun-plugin</artifactId>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>package</phase>-->
+<!--                        <configuration>-->
+<!--                            <tasks>-->
+<!--                                <copy todir="src/main/docker" file="target/${project.artifactId}-${project.version}.${project.packaging}"></copy>-->
+<!--                            </tasks>-->
+<!--                        </configuration>-->
+<!--                        <goals>-->
+<!--                            <goal>run</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 </project>

@@ -1,0 +1,7 @@
+From hub.c.163.com/library/java:8-jre
+
+ADD target/*.jar vsound-run-1.0-SNAPSHOT.jar
+
+EXPOSE 9527
+
+ENTRYPOINT ["java", "-jar", "vsound-run-1.0-SNAPSHOT.jar"]
