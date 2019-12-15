@@ -18,12 +18,12 @@
             <artifactId>vworld-facade</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>com.corn.vsound</groupId>
             <artifactId>vsound-facade</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
 
     </dependencies>
 </project>
