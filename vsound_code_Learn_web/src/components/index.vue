@@ -21,48 +21,49 @@
 </template>
 
 <script>
-    export default {
-        name: "index",
-        data() {
-            return {
-                loginForm: {
-                    userAccount: "",
-                    userPassword: "",
-                },
-                loginFormRules: {
-                    userAccount: [{
-                        required: true, message: "请输入登录账号", trigger: 'blur'
-                    }],
-                    userPassword: [{
-                        required: true, message: "请输入登录密码", trigger: 'blur'
-                    }],
-                },
-                labelPosition: "right"
-            }
+  export default {
+    name: "index",
+    data() {
+      return {
+        loginForm: {
+          userAccount: "",
+          userPassword: "",
+          loginOS:"VSOUND"
         },
-        methods: {
-            doLogin() {
-                this.$refs["loginForm"].validate((valid) => {
-                    if (valid) {
-                        this.$axios({
-                            url: this.Globel.requestUrl + "/base/user/userLogin",
-                            method: "post",
-                            data: this.loginForm
-                        }).then(res => {
-                            console.log(res)
-                            if (res.data.success) {
-                                this.$router.push('/main')
-                            } else {
-                                this.$message.error(res.data.msg)
-                            }
-                        })
-                    } else {
-                        this.$message.error('请正确输入登录账号密码哟！')
-                    }
-                })
-            }
-        }
+        loginFormRules: {
+          userAccount: [{
+            required: true, message: "请输入登录账号", trigger: 'blur'
+          }],
+          userPassword: [{
+            required: true, message: "请输入登录密码", trigger: 'blur'
+          }],
+        },
+        labelPosition: "right"
+      }
+    },
+    methods: {
+      doLogin() {
+        this.$refs["loginForm"].validate((valid) => {
+          if (valid) {
+            this.$axios({
+              url: this.Globel.requestUrl + "/user/userLogin",
+              method: "post",
+              data: this.loginForm
+            }).then(res => {
+              console.log(res)
+              if (res.data.success) {
+                this.$router.push('/main')
+              } else {
+                 this.$message.error(res.data.msg)
+              }
+            })
+          } else {
+            this.$message.error('请正确输入登录账号密码哟！')
+          }
+        })
+      }
     }
+  }
 </script>
 
 <style scoped>

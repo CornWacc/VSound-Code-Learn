@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.corn.vsound.dao.mapper.CodeBaseMapper" >
+  <resultMap id="BaseResultMap" type="com.corn.vsound.dao.entity.CodeBase" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code_id" property="codeId" jdbcType="VARCHAR" />
+    <result column="code_name" property="codeName" jdbcType="VARCHAR" />
+    <result column="code_type" property="codeType" jdbcType="VARCHAR" />
+    <result column="code_level" property="codeLevel" jdbcType="INTEGER" />
+    <result column="code_program" property="codeProgram" jdbcType="VARCHAR" />
+    <result column="use_position" property="usePosition" jdbcType="VARCHAR" />
+    <result column="code_remark" property="codeRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code_id, code_name, code_type, code_level, code_program
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from code_base
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from code_base
+    where code_id = #{codeId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.corn.vsound.dao.entity.CodeBase" >
+    insert into code_base (id, code_id, code_name, 
+      code_type, code_level, code_program
+      )
+    values (#{id,jdbcType=INTEGER}, #{codeId,jdbcType=VARCHAR}, #{codeName,jdbcType=VARCHAR}, 
+      #{codeType,jdbcType=VARCHAR}, #{codeLevel,jdbcType=INTEGER}, #{codeProgram,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.corn.vsound.dao.entity.CodeBase" >
+    insert into code_base
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="codeId != null" >
+        code_id,
+      </if>
+      <if test="codeName != null" >
+        code_name,
+      </if>
+      <if test="codeType != null" >
+        code_type,
+      </if>
+      <if test="codeLevel != null" >
+        code_level,
+      </if>
+      <if test="codeProgram != null" >
+        code_program,
+      </if>
+      <if test="codeRemark != null and codeRemark != ''">
+        code_remark,
+      </if>
+      <if test="usePosition != null and usePosition != ''">
+        use_position
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="codeId != null" >
+        #{codeId,jdbcType=VARCHAR},
+      </if>
+      <if test="codeName != null" >
+        #{codeName,jdbcType=VARCHAR},
+      </if>
+      <if test="codeType != null" >
+        #{codeType,jdbcType=VARCHAR},
+      </if>
+      <if test="codeLevel != null" >
+        #{codeLevel,jdbcType=INTEGER},
+      </if>
+      <if test="codeProgram != null" >
+        #{codeProgram,jdbcType=VARCHAR},
+      </if>
+      <if test="codeRemark != null and codeRemark != ''">
+        #{codeRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="usePosition != null and usePosition != ''">
+        #{usePosition,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.corn.vsound.dao.entity.CodeBase" >
+    update code_base
+    <set >
+      <if test="codeId != null" >
+        code_id = #{codeId,jdbcType=VARCHAR},
+      </if>
+      <if test="codeName != null" >
+        code_name = #{codeName,jdbcType=VARCHAR},
+      </if>
+      <if test="codeType != null" >
+        code_type = #{codeType,jdbcType=VARCHAR},
+      </if>
+      <if test="codeLevel != null" >
+        code_level = #{codeLevel,jdbcType=INTEGER},
+      </if>
+      <if test="codeProgram != null" >
+        code_program = #{codeProgram,jdbcType=VARCHAR},
+      </if>
+      <if test="codeRemark != null and codeRemark != ''">
+        code_remark = #{codeRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="usePosition != null and usePosition != ''">
+        use_position = #{usePosition,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where code_id = #{codeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.corn.vsound.dao.entity.CodeBase" >
+    update code_base
+    set code_id = #{codeId,jdbcType=VARCHAR},
+      code_name = #{codeName,jdbcType=VARCHAR},
+      code_type = #{codeType,jdbcType=VARCHAR},
+      code_level = #{codeLevel,jdbcType=INTEGER},
+      code_program = #{codeProgram,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="pageFindCodeBaseListByProjectIdOrKeyWord" resultMap="BaseResultMap">
+    select
+    code_id,
+    code_name,
+    code_type,
+    code_level,
+    code_program,
+    code_remark,
+    use_position
+    from
+    code_base
+    <where>
+      <if test="projectId != null and projectId != ''">
+        code_program = #{projectId}
+      </if>
+      <if test="keyWord != null and keyWord != ''">
+        and code_name like concat('%',#{keyWord},'%')
+      </if>
+      <if test="codeType != null and codeType != ''">
+        and code_type = #{codeType}
+      </if>
+    </where>
+  </select>
+
+  <delete id="deleteCodesByCodeIds">
+    delete from code_base
+    where code_id in
+    <foreach collection="codeIds" item="item" open="(" close=")" separator=",">
+      #{item}
+    </foreach>
+  </delete>
+</mapper>
