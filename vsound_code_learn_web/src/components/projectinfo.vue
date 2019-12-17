@@ -253,11 +253,11 @@
         </el-form-item>
         <el-form-item v-for="(item, index) in CUDCodeMethodForm.methodOrder"
                       :label="'方法入参 ' + index"
-                      :key="item.key"
+                      :key="index"
                       :prop="'methodOrder.' + index + '.value'"
                       >
-          <el-input placeholder="请输入方法入参" v-model="CUDCodeMethodForm.methodOrder" style="width: 300px"></el-input>
-          <el-button  icon="el-icon-plus" size="small" circle style="margin-left: 10px"></el-button>
+          <el-input placeholder="请输入方法入参" v-model="CUDCodeMethodForm.methodOrder[index]" style="width: 300px"></el-input>
+          <el-button @click="addMethodOrderInput()" icon="el-icon-plus" size="small" circle style="margin-left: 10px"></el-button>
         </el-form-item>
         <el-form-item label="方法反参:" prop="methodResult">
           <el-input placeholder="请输入方法反参" v-model="CUDCodeMethodForm.methodResult" style="width: 300px"></el-input>
@@ -725,12 +725,16 @@
 
       },
 
+      /**
+       * 新增一个方法入参的输入框
+       * */
+      addMethodOrderInput(){
+        this.CUDCodeMethodForm.methodOrder.push("")
+      },
       cancelDialog() {
         this.doSearch()
         this.dialog.dialogVisible = false
-        if (this.form.reset) {
-          this.$refs[this.form.formName].resetFields()
-        }
+        this.$refs["CUDCodeMethodForm"].resetFields()
       },
 
       drawerInputChange() {
