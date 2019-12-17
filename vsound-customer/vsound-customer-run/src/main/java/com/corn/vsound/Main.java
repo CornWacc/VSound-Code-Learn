@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.web.bind.annotation.RestController;
 
-@Runner(port = "9522", active = "mac")
+@Runner(port = "9528", active = "dev")
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class,com.corn.boot.configuration.DataSourceAutoConfiguration.class, DataSourcePropertiesAutoConfiguration.class})
 @ImportResource("classpath:dubbo-admin.xml")
 //@Import(LogAop.class)
