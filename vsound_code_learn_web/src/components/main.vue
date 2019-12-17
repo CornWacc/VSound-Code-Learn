@@ -2,10 +2,10 @@
   <el-container class="container">
     <el-header class="header">
       <el-button @click="addNewProject" round type="primary" size="small"
-                 style="margin-top: 14px;width: 80px;font-size: 12px">新 增
+                 style="margin-top: 14px;width: 80px;font-size: 12px;margin-left: 30px">新 增
       </el-button>
       <el-row style="float:right;width: 400px;margin-top: 10px;">
-        <el-col :span="12">
+        <el-col :span="12" :offset="6">
           <div class="header_search">
             <el-input v-model="searchInput" class="header_search_input" placeholder="框架名称/类型/所属框架"
                       @keyup.native.enter="doSearch">
@@ -13,18 +13,6 @@
             </el-input>
           </div>
         </el-col>
-        <!--        <el-col :span="8">-->
-        <!--          <div class="header_user">-->
-        <!--            <el-dropdown @command="handleCommand">-->
-        <!--              <el-avatar></el-avatar>-->
-        <!--              <el-dropdown-menu slot="dropdown">-->
-        <!--                <el-dropdown-item command="userInfo">个人资料</el-dropdown-item>-->
-        <!--                <el-dropdown-item command="backStage">后台管理</el-dropdown-item>-->
-        <!--                <el-dropdown-item command="loginOut">退出登录</el-dropdown-item>-->
-        <!--              </el-dropdown-menu>-->
-        <!--            </el-dropdown>-->
-        <!--          </div>-->
-        <!--        </el-col>-->
       </el-row>
     </el-header>
     <el-main id="main">
@@ -65,9 +53,6 @@
         <el-form-item label="源码项目类型:" prop="projectType">
           <el-input v-model="addProjectForm.projectType"></el-input>
         </el-form-item>
-        <el-form-item label="源码所属框架:" prop="projectAffiliation">
-          <el-input v-model="addProjectForm.projectAffiliation"></el-input>
-        </el-form-item>
         <el-form-item label="源码适用范围:" prop="usePosition">
           <el-input v-model="addProjectForm.usePosition"></el-input>
         </el-form-item>
@@ -95,7 +80,6 @@
         addProjectForm: {
           projectName: "",
           projectType: "",
-          projectAffiliation: "",
           usePosition: "",
           remark: "",
           cudType: "CREATE"
@@ -266,8 +250,9 @@
   .project_header_projectName {
     text-align: left;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bolder;
+    font-family: "宋体";
   }
 
   .project_header_type {

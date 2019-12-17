@@ -12,11 +12,8 @@
     <el-container>
       <el-main class="main">
         <el-row>
-          <el-col :span="2">
+          <el-col :span="3">
             <el-input placeholder="源码名称" v-model="codeSearch.codeName"></el-input>
-          </el-col>
-          <el-col :span="2" style="margin-left: 10px">
-            <el-input placeholder="继承级别" v-model="codeSearch.codeLevel"></el-input>
           </el-col>
           <el-col :span="2" style="margin-left: 10px">
             <el-select v-model="codeSearch.codeType" clearable placeholder="类型">
@@ -29,14 +26,15 @@
             </el-select>
           </el-col>
           <el-col :span="2" style="margin-left: 10px">
-            <el-button @click="doSearch">查询</el-button>
+            <el-button @click="doSearch" type="primary">查 询</el-button>
           </el-col>
         </el-row>
-        <el-table :data="tableData" style="margin-top: 10px">
+        <el-table :data="tableData" style="margin-top: 10px;background-color: rgba(0,0,0,0.1)">
           <el-table-column
             label="名称"
             align="center"
-            prop="codeName">
+            prop="codeName"
+            width="280">
           </el-table-column>
           <el-table-column
             label="类型"
@@ -44,7 +42,17 @@
             prop="codeType">
           </el-table-column>
           <el-table-column
-            label="继承级别"
+            label="方法数量"
+            align="center"
+            prop="codeLevel">
+          </el-table-column>
+          <el-table-column
+            label="Field数量"
+            align="center"
+            prop="codeLevel">
+          </el-table-column>
+          <el-table-column
+            label="外链数量"
             align="center"
             prop="codeLevel">
           </el-table-column>
@@ -52,7 +60,7 @@
             label="详情"
             align="center">
             <template slot-scope="scope">
-              <el-button size="mini" @click="viewDetails(scope.row)">查看详情</el-button>
+              <el-button size="mini" @click="viewDetails(scope.row)" type="primary">查看详情</el-button>
             </template>
           </el-table-column>
           <el-table-column
@@ -77,30 +85,14 @@
             <div class="drawer_form_model">
               <el-row>
                 <el-col :span="4"><span style="font-size: 18px;font-weight: bolder">名称:</span></el-col>
-                <el-col :span="4"><span style="font-size: 14px">{{drawerData.codeName}}</span></el-col>
+                <el-col :span="4"><span style="font-size: 20px">{{drawerData.codeName}}</span></el-col>
               </el-row>
               <el-row>
                 <el-col :span="4"><span style="font-size: 18px;font-weight: bolder">类型:</span></el-col>
                 <el-col :span="4"><span style="font-size: 14px">{{drawerData.codeType}}</span></el-col>
               </el-row>
               <el-row>
-                <el-col :span="4"><span style="font-size: 18px;font-weight: bolder">继承级别:</span></el-col>
-                <el-col :span="4"><span style="font-size: 14px">{{drawerData.codeLevel}}</span></el-col>
-              </el-row>
-              <el-row :gutter="24">
-                <el-col :span="4"><span style="font-size: 18px;line-height: 40px;font-weight: bolder">应用范围:</span>
-                </el-col>
-                <el-col :span="20">
-                  <el-row :gutter="24">
-                    <el-col :span="10">
-                      <el-input placeholder="应用范围" @change="drawerInputChange" v-model="drawerData.usePosition"
-                                class="drawer_form_model_useposition_input"></el-input>
-                    </el-col>
-                  </el-row>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="4"><span style="font-size: 18px">简介:</span></el-col>
+                <el-col :span="4"><span style="font-size: 18px;font-weight: bolder">简介:</span></el-col>
               </el-row>
               <el-input type="textarea" @change="drawerInputChange" :autosize="{minRows:16,maxRows:16}"
                         class="drawer_form_model_remark" v-model="drawerData.codeRemark" maxlength="50" show-word-limit>
@@ -117,47 +109,32 @@
                   </el-col>
                 </el-row>
                 <el-table :data="drawerData.codeMethodInfoList" class="code_methods_table" border>
-                  <el-table-column type="expand">
-                    <template slot-scope="scope">
-                      <el-form label-position="left" inline class="code_methods_expand">
-                        <el-form-item label="方法名称：">
-                          <span>{{ scope.row.methodName }}</span>
-                        </el-form-item>
-                        <el-form-item label="方法用处：">
-                          <span>{{ scope.row.methodUsage }}</span>
-                        </el-form-item>
-                        <el-form-item label="方法理解：">
-                          <span>{{ scope.row.methodNotice }}</span>
-                        </el-form-item>
-                        <el-form-item label="方法入参：">
-                          <span>{{ scope.row.methodOrder }}</span>
-                        </el-form-item>
-                        <el-form-item label="方法出参：">
-                          <span>{{ scope.row.methodResult }}</span>
-                        </el-form-item>
-                        <el-form-item label="是否为静态方法：">
-                          <span>{{ scope.row.isAbstract }}</span>
-                        </el-form-item>
-                        <el-form-item label="是否常用：">
-                          <span>{{ scope.row.methodCommonUse }}</span>
-                        </el-form-item>
-                      </el-form>
-                    </template>
-                  </el-table-column>
                   <el-table-column
                     label="方法名称"
                     align="center"
                     prop="methodName">
                   </el-table-column>
                   <el-table-column
-                    label="方法用处"
+                    label="基础属性"
                     align="center"
-                    prop="methodUsage">
+                    prop="methodBasic">
+                  </el-table-column>
+                  <el-table-column
+                    label="作用域"
+                    align="center"
+                    prop="methodAction">
                   </el-table-column>
                   <el-table-column
                     label="是否常用"
                     align="center"
                     prop="methodCommonUse">
+                  </el-table-column>
+                  <el-table-column label="详情" align="center">
+                    <template slot-scope="scope">
+                      <el-button size="mini" type="primary" v-if="scope.row.type !== 'new'"
+                                 @click="">查看详情
+                      </el-button>
+                    </template>
                   </el-table-column>
                   <el-table-column label="操作" align="center" style="text-align: center">
                     <template slot-scope="scope">
@@ -183,30 +160,6 @@
                   </el-col>
                 </el-row>
                 <el-table :data="drawerData.codeParameterInfos" class="outside_url_table" border>
-                  <el-table-column type="expand">
-                    <template slot-scope="scope">
-                      <el-form label-position="left" inline class="code_methods_expand">
-                        <el-form-item label="参数名称：">
-                          <span>{{ scope.row.parameterName }}</span>
-                        </el-form-item>
-                        <el-form-item label="参数注释：">
-                          <span>{{ scope.row.parameterRemark }}</span>
-                        </el-form-item>
-                        <el-form-item label="参数类型：">
-                          <span>{{ scope.row.parameterType }}</span>
-                        </el-form-item>
-                        <el-form-item label="是否为常量：">
-                          <span>{{ scope.row.isFinal }}</span>
-                        </el-form-item>
-                        <el-form-item label="是否Autowire：">
-                          <span>{{ scope.row.isAutowire }}</span>
-                        </el-form-item>
-                        <el-form-item label="是否为接口：">
-                          <span>{{ scope.row.isInterface }}</span>
-                        </el-form-item>
-                      </el-form>
-                    </template>
-                  </el-table-column>
                   <el-table-column
                     label="参数名称"
                     align="center"
@@ -292,41 +245,31 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="继承等级:" prop="codeLevel">
-          <el-input placeholder="请输入源码继承等级" v-model="CUDCodeForm.codeLevel" style="width: 300px"></el-input>
-        </el-form-item>
       </el-form>
       <el-form v-else-if="dialog.dialogType=='METHOD'" ref="CUDCodeMethodForm" label-width="100px"
                :model="CUDCodeMethodForm" :label-position="labelPosition">
         <el-form-item label="方法名称:" prop="methodName">
           <el-input placeholder="请输入方法名称" v-model="CUDCodeMethodForm.methodName" style="width: 300px"></el-input>
         </el-form-item>
-        <el-form-item label="方法注释:" prop="methodNotice">
-          <el-input placeholder="请输入方法注释" v-model="CUDCodeMethodForm.methodNotice" style="width: 300px"></el-input>
-        </el-form-item>
-        <el-form-item label="方法入参:" prop="methodOrder">
+        <el-form-item v-for="(item, index) in CUDCodeMethodForm.methodOrder"
+                      :label="'方法入参 ' + index"
+                      :key="item.key"
+                      :prop="'methodOrder.' + index + '.value'"
+                      >
           <el-input placeholder="请输入方法入参" v-model="CUDCodeMethodForm.methodOrder" style="width: 300px"></el-input>
+          <el-button  icon="el-icon-plus" size="small" circle style="margin-left: 10px"></el-button>
         </el-form-item>
         <el-form-item label="方法反参:" prop="methodResult">
           <el-input placeholder="请输入方法反参" v-model="CUDCodeMethodForm.methodResult" style="width: 300px"></el-input>
         </el-form-item>
-        <el-form-item label="是否为抽象:" prop="isAbstract">
-          <el-switch
-            v-model="CUDCodeMethodForm.isAbstract"
-            active-color="#ff4949"
-            inactive-color="#13ce66"
-            active-value="N"
-            inactive-value="Y">
-          </el-switch>
+        <el-form-item label="基础属性:" prop="methodBasic">
+          <el-radio v-model="CUDCodeMethodForm.methodBasic" label="1">静态</el-radio>
+          <el-radio v-model="CUDCodeMethodForm.methodBasic" label="2">抽象</el-radio>
         </el-form-item>
-        <el-form-item label="是否常用:" prop="methodCommonUse">
-          <el-switch
-            v-model="CUDCodeMethodForm.methodCommonUse"
-            active-color="#ff4949"
-            inactive-color="#13ce66"
-            active-value="N"
-            inactive-value="Y">
-          </el-switch>
+        <el-form-item label="作用域:" prop="methodAction">
+          <el-radio v-model="CUDCodeMethodForm.methodAction" label="1">公开</el-radio>
+          <el-radio v-model="CUDCodeMethodForm.methodAction" label="2">私有</el-radio>
+          <el-radio v-model="CUDCodeMethodForm.methodAction" label="3">子类</el-radio>
         </el-form-item>
         <el-form-item label="用法:" prop="methodUsage">
           <el-input type="textarea" show-word-limit maxlength="50" v-model="CUDCodeMethodForm.methodUsage"
@@ -424,13 +367,14 @@
         CUDCodeMethodForm: {
           methodId: "",
           methodName: "",
-          methodNotice: "",
-          methodOrder: "",
+          methodOrder: [""],
           methodResult: "",
           isAbstract: "",
           methodCommonUse: "",
           cudType: "",
-          fromCodeId: ""
+          fromCodeId: "",
+          methodBasic: "",
+          methodAction: ""
         },
         CUDCodeParameterForm: {
           isAutowire: "",
@@ -503,7 +447,6 @@
         method: "GET"
       }).then(res => {
         if (res.data.success) {
-          console.log(res)
           this.projectForm.projectName = res.data.data.projectName
           this.tableData = res.data.data.codeInfoList
         } else {
@@ -540,7 +483,6 @@
           method: "GET"
         }).then(res => {
           if (res.data.success) {
-            console.log(res)
             this.projectForm.projectName = res.data.data.projectName
             this.tableData = res.data.data.codeInfoList
           } else {
@@ -628,7 +570,6 @@
         }
         if (type === "PARAMETER") {
           this.CUDCodeParameterForm = row;
-          console.log(row)
           this.sureCUDCodeParameter()
         }
         if (type === "URL") {
@@ -661,7 +602,6 @@
       sureCUDCode() {
         this.CUDCodeForm.cudType = this.dialog.cudType;
         this.CUDCodeForm.codeProgram = this.$route.query.projectId;
-        console.log(this.CUDCodeForm)
         this.$axios({
           url: this.Globel.requestUrl + "/code/codeCUD",
           data: this.CUDCodeForm,
@@ -697,7 +637,7 @@
             this.dialog.dialogVisible = false
             this.$refs["CUDCodeMethodForm"].resetFields()
             this.codeMethodListQuery(this.drawerData.codeId)
-          }else{
+          } else {
             this.$message.error(res.data.msg)
           }
         });
@@ -719,12 +659,12 @@
             this.$message.success("操作成功！")
             this.dialog.dialogVisible = false
             this.$axios({
-              url:this.Globel.requestUrl+"/code/codeParameterListQuery?codeId="+this.CUDCodeParameterForm.fromCodeId,
-              method:"GET"
-            }).then(res =>{
-              if(res.data.success){
+              url: this.Globel.requestUrl + "/code/codeParameterListQuery?codeId=" + this.CUDCodeParameterForm.fromCodeId,
+              method: "GET"
+            }).then(res => {
+              if (res.data.success) {
                 this.drawerData.codeParameterInfos = res.data.data.codeParameterInfoList
-              }else{
+              } else {
                 this.$message.error("获取方法列表失败!")
               }
             })
@@ -816,12 +756,13 @@
   }
 
   .header_title {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
     position: relative;
-    left: 30px;
+    left: 40px;
     height: 60px;
     line-height: 60px;
+    font-family: "宋体";
   }
 
   .el-collapse-item >>> .el-collapse-item__header {
