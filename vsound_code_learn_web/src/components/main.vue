@@ -43,7 +43,7 @@
     <el-dialog
       title="源码研究新增"
       :visible.sync="disableDialog"
-      width="50%"
+      width="40%"
       :before-close="handleClose">
       <el-form ref="addProjectForm" :model="addProjectForm" :rules="rules"
                :hide-required-asterisk="hideRequiredAsterisk" style="margin-left: 40px;">
@@ -54,7 +54,8 @@
           <el-input v-model="addProjectForm.projectType"></el-input>
         </el-form-item>
         <el-form-item label="源码适用范围:" prop="usePosition">
-          <el-input v-model="addProjectForm.usePosition"></el-input>
+<!--          <el-input v-model="addProjectForm.usePosition"></el-input>-->
+<!--          todo 这里做成选项 Web 全局 持久层 工具-->
         </el-form-item>
         <el-form-item label="源码项目简介:" prop="remark">
           <el-input type="textarea" v-model="addProjectForm.remark" maxlength="30" show-word-limit></el-input>
@@ -103,7 +104,6 @@
         url: this.Globel.requestUrl + "/project/projectListQuery",
         method: "get"
       }).then(res => {
-        console.log(res)
         if (res.data.success) {
           this.projectList = res.data.data.projectInfoList
         }
@@ -111,17 +111,6 @@
     },
 
     methods: {
-      handleCommand(c) {
-        console.log(c);
-        if (c === "userInfo") {
-
-        } else if (c === "backStage") {
-          this.$router.push("/backStage")
-        } else {
-          this.$router.push("/")
-        }
-      },
-
       addNewProject() {
         this.disableDialog = true
       },
@@ -160,7 +149,7 @@
           url: this.Globel.requestUrl + "/project/projectListQuery?keyWord=" + this.searchInput,
           method: "GET"
         }).then(res => {
-          if (res.data.status == "SUCCESS") {
+          if (res.data.success) {
             this.projectList = res.data.data.projectInfoList
           }
         })

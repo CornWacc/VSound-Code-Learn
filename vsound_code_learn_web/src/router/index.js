@@ -8,7 +8,7 @@ export default new Router({
   routes: [
 
     {
-      path: '/main',
+      path: '/',
       name: 'main',
       component : main
     },
