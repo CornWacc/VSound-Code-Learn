@@ -12,8 +12,8 @@ import com.corn.vworld.facade.user.login.UserLoginResult;
  * */
 public interface UserFacadeClient {
 
-    UserLoginResult userLogin(UserLoginOrder order);
-
-    UserInfoQueryResult userInfoQuery(UserInfoQueryOrder order);
+//    UserLoginResult userLogin(UserLoginOrder order);
+//
+//    UserInfoQueryResult userInfoQuery(UserInfoQueryOrder order);
 
 }

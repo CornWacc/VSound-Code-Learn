@@ -17,17 +17,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserFacadeClientImpl implements UserFacadeClient {
 
-    @Autowired
-    private UserFacade userFacade;
-
-    @Log(name = "用户服务",des = "用户登录")
-    public UserLoginResult userLogin(UserLoginOrder order) {
-        UserLoginResult userLoginResult = userFacade.userLogin(order);
-        return userLoginResult;
-    }
-
-    @Log(name = "用户服务",des = "用户基础信息查询")
-    public UserInfoQueryResult userInfoQuery(UserInfoQueryOrder order) {
-        return null;
-    }
+//    @Autowired
+//    private UserFacade userFacade;
+//
+//    @Log(name = "用户服务",des = "用户登录")
+//    public UserLoginResult userLogin(UserLoginOrder order) {
+//        UserLoginResult userLoginResult = userFacade.userLogin(order);
+//        return userLoginResult;
+//    }
+//
+//    @Log(name = "用户服务",des = "用户基础信息查询")
+//    public UserInfoQueryResult userInfoQuery(UserInfoQueryOrder order) {
+//        return null;
+//    }
 }

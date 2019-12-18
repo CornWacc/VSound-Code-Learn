@@ -30,18 +30,19 @@ public class UserController {
     @PostMapping("/userLogin")
     public JsonResult userLogin(@RequestBody @Valid UserLoginAO userLoginAo){
 
-        UserLoginOrder order = new UserLoginOrder();
-        order.setUserAccount(userLoginAo.getUserAccount());
-        order.setUserPassword(userLoginAo.getUserPassword());
-        order.setSerialNo(AppUtils.appCode(""));
-        order.setLoginOS(userLoginAo.getLoginOS());
-
-        UserLoginResult result = userFacadeClient.userLogin(order);
-
-        //设置用户本地缓存
-        if(result.isSuccess()){
-            accountCache.setUserCache(result);
-        }
-        return new JsonResult(result);
+//        UserLoginOrder order = new UserLoginOrder();
+//        order.setUserAccount(userLoginAo.getUserAccount());
+//        order.setUserPassword(userLoginAo.getUserPassword());
+//        order.setSerialNo(AppUtils.appCode(""));
+//        order.setLoginOS(userLoginAo.getLoginOS());
+//
+//        UserLoginResult result = userFacadeClient.userLogin(order);
+//
+//        //设置用户本地缓存
+//        if(result.isSuccess()){
+//            accountCache.setUserCache(result);
+//        }
+//        return new JsonResult(result);
+        return new JsonResult("");
     }
 }
