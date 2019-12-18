@@ -9,13 +9,9 @@ public class CodeBase {
 
     private String codeType;
 
-    private Integer codeLevel;
-
-    private String codeProgram;
+    private String fromProjectId;
 
     private String codeRemark;
-
-    private String usePosition;
 
     public String getCodeRemark() {
         return codeRemark;
@@ -23,14 +19,6 @@ public class CodeBase {
 
     public void setCodeRemark(String codeRemark) {
         this.codeRemark = codeRemark;
-    }
-
-    public String getUsePosition() {
-        return usePosition;
-    }
-
-    public void setUsePosition(String usePosition) {
-        this.usePosition = usePosition;
     }
 
     public Integer getId() {
@@ -65,33 +53,11 @@ public class CodeBase {
         this.codeType = codeType == null ? null : codeType.trim();
     }
 
-    public Integer getCodeLevel() {
-        return codeLevel;
+    public String getFromProjectId() {
+        return fromProjectId;
     }
 
-    public void setCodeLevel(Integer codeLevel) {
-        this.codeLevel = codeLevel;
-    }
-
-    public String getCodeProgram() {
-        return codeProgram;
-    }
-
-    public void setCodeProgram(String codeProgram) {
-        this.codeProgram = codeProgram == null ? null : codeProgram.trim();
-    }
-
-    @Override
-    public String toString() {
-        return "CodeBase{" +
-                "id=" + id +
-                ", codeId='" + codeId + '\'' +
-                ", codeName='" + codeName + '\'' +
-                ", codeType='" + codeType + '\'' +
-                ", codeLevel=" + codeLevel +
-                ", codeProgram='" + codeProgram + '\'' +
-                ", codeRemark='" + codeRemark + '\'' +
-                ", usePosition='" + usePosition + '\'' +
-                '}';
+    public void setFromProjectId(String fromProjectId) {
+        this.fromProjectId = fromProjectId;
     }
 }

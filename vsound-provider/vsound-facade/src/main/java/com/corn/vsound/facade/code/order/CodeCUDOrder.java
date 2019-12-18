@@ -19,7 +19,7 @@ public class CodeCUDOrder extends CUDOrder {
 
     private Integer codeLevel;
 
-    private String codeProgram;
+    private String fromProjectId;
 
     private String codeRemark;
 
@@ -73,11 +73,11 @@ public class CodeCUDOrder extends CUDOrder {
         this.codeLevel = codeLevel;
     }
 
-    public String getCodeProgram() {
-        return codeProgram;
+    public String getFromProjectId() {
+        return fromProjectId;
     }
 
-    public void setCodeProgram(String codeProgram) {
-        this.codeProgram = codeProgram;
+    public void setFromProjectId(String fromProjectId) {
+        this.fromProjectId = fromProjectId;
     }
 }

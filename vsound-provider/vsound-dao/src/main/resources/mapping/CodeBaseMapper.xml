@@ -6,13 +6,11 @@
     <result column="code_id" property="codeId" jdbcType="VARCHAR" />
     <result column="code_name" property="codeName" jdbcType="VARCHAR" />
     <result column="code_type" property="codeType" jdbcType="VARCHAR" />
-    <result column="code_level" property="codeLevel" jdbcType="INTEGER" />
-    <result column="code_program" property="codeProgram" jdbcType="VARCHAR" />
-    <result column="use_position" property="usePosition" jdbcType="VARCHAR" />
+    <result column="from_project_id" property="fromProjectId" jdbcType="VARCHAR" />
     <result column="code_remark" property="codeRemark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, code_id, code_name, code_type, code_level, code_program
+    id, code_id, code_name, code_type,from_project_id,code_remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -47,17 +45,11 @@
       <if test="codeType != null" >
         code_type,
       </if>
-      <if test="codeLevel != null" >
-        code_level,
-      </if>
-      <if test="codeProgram != null" >
-        code_program,
+      <if test="fromProjectId != null" >
+        from_project_id,
       </if>
       <if test="codeRemark != null and codeRemark != ''">
-        code_remark,
-      </if>
-      <if test="usePosition != null and usePosition != ''">
-        use_position
+        code_remark
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -73,17 +65,11 @@
       <if test="codeType != null" >
         #{codeType,jdbcType=VARCHAR},
       </if>
-      <if test="codeLevel != null" >
-        #{codeLevel,jdbcType=INTEGER},
-      </if>
-      <if test="codeProgram != null" >
-        #{codeProgram,jdbcType=VARCHAR},
+      <if test="fromProjectId != null" >
+        #{fromProjectId,jdbcType=VARCHAR},
       </if>
       <if test="codeRemark != null and codeRemark != ''">
         #{codeRemark,jdbcType=VARCHAR},
-      </if>
-      <if test="usePosition != null and usePosition != ''">
-        #{usePosition,jdbcType=VARCHAR}
       </if>
     </trim>
   </insert>
@@ -99,17 +85,11 @@
       <if test="codeType != null" >
         code_type = #{codeType,jdbcType=VARCHAR},
       </if>
-      <if test="codeLevel != null" >
-        code_level = #{codeLevel,jdbcType=INTEGER},
-      </if>
-      <if test="codeProgram != null" >
-        code_program = #{codeProgram,jdbcType=VARCHAR},
+      <if test="fromProjectId != null" >
+        from_project_id = #{fromProjectId,jdbcType=VARCHAR},
       </if>
       <if test="codeRemark != null and codeRemark != ''">
         code_remark = #{codeRemark,jdbcType=VARCHAR},
-      </if>
-      <if test="usePosition != null and usePosition != ''">
-        use_position = #{usePosition,jdbcType=VARCHAR}
       </if>
     </set>
     where code_id = #{codeId,jdbcType=VARCHAR}
@@ -129,15 +109,13 @@
     code_id,
     code_name,
     code_type,
-    code_level,
     code_program,
     code_remark,
-    use_position
     from
     code_base
     <where>
       <if test="projectId != null and projectId != ''">
-        code_program = #{projectId}
+        from_project_id = #{projectId}
       </if>
       <if test="keyWord != null and keyWord != ''">
         and code_name like concat('%',#{keyWord},'%')
