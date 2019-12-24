@@ -106,6 +106,4 @@ public class CodeController {
         CodeOutSideUrlListQueryResult result = codeFacadeClient.codeOutSideUrlListQuery(order);
         return new JsonResult(result);
     }
-
-
 }
