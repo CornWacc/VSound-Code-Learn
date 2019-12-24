@@ -29,7 +29,8 @@
                   <el-tag class="project_header_type" v-if="item.projectType != null">{{item.projectType}}</el-tag>
                 </el-col>
                 <el-col :span="2" :offset="1">
-                  <el-button @click="deleteProject(item)" type="danger" icon="el-icon-delete" size="mini" circle></el-button>
+                  <el-button @click="deleteProject(item)" type="danger" icon="el-icon-delete" size="mini"
+                             circle></el-button>
                 </el-col>
               </el-row>
             </div>
@@ -51,11 +52,24 @@
           <el-input v-model="addProjectForm.projectName"></el-input>
         </el-form-item>
         <el-form-item label="源码项目类型:" prop="projectType">
-          <el-input v-model="addProjectForm.projectType"></el-input>
+          <el-select v-model="addProjectForm.projectType" placeholder="请选择源码项目类型">
+            <el-option
+              v-for="item in projectType"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="源码适用范围:" prop="usePosition">
-<!--          <el-input v-model="addProjectForm.usePosition"></el-input>-->
-<!--          todo 这里做成选项 Web 全局 持久层 工具-->
+          <el-select v-model="addProjectForm.usePosition" placeholder="请选择源码项目类型">
+            <el-option
+              v-for="item in usePosition"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="源码项目简介:" prop="remark">
           <el-input type="textarea" v-model="addProjectForm.remark" maxlength="30" show-word-limit></el-input>
@@ -80,11 +94,47 @@
         projectList: [],
         addProjectForm: {
           projectName: "",
-          projectType: "",
-          usePosition: "",
+          projectType:"",
+          usePosition:"",
           remark: "",
           cudType: "CREATE"
         },
+        projectType: [
+          {
+            label:"Java",
+            value:"JAVA"
+          },
+          {
+            label:"Python",
+            value:"PYTHON"
+          }
+        ],
+        usePosition: [
+          {
+            label:"全局",
+            value:"ALL"
+          },
+          {
+            label: "远程调用",
+            value: "RPC",
+          },
+          {
+            label:"网络",
+            value:"WEB"
+          },
+          {
+            label:"持久层",
+            value:"DAO"
+          },
+          {
+            label:"序列化",
+            value:"SERIALIZE"
+          },
+          {
+            label:"工具",
+            value:"UTIL"
+          }
+        ],
         rules: {
           projectName: [{
             required: true, message: "项目名称不能为空", trigger: "blur"
@@ -164,14 +214,14 @@
         })
       },
 
-      deleteProject(item){
+      deleteProject(item) {
         item.cudType = "DELETE"
         this.$axios({
-          url:this.Globel.requestUrl+"/project/projectCUD",
-          method:"POST",
-          data:item
-        }).then(res =>{
-          if(res.data.success){
+          url: this.Globel.requestUrl + "/project/projectCUD",
+          method: "POST",
+          data: item
+        }).then(res => {
+          if (res.data.success) {
             this.$message.success(res.data.msg)
             this.$axios({
               url: this.Globel.requestUrl + "/project/projectListQuery",
@@ -181,7 +231,7 @@
                 this.projectList = res.data.data.projectInfoList
               }
             })
-          }else{
+          } else {
             this.$message.error(res.data.msg)
           }
         })
@@ -212,10 +262,6 @@
     float: right;
   }
 
-  .main {
-
-  }
-
   .project {
     width: 400px !important;
     height: 400px;
@@ -224,7 +270,6 @@
     margin-right: auto;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(0, 0, 0, 0.1);
-    /*background: rgba(238, 250, 222, 0.1);*/
   }
 
   .project_header {
@@ -246,7 +291,6 @@
 
   .project_header_type {
     float: right;
-    /*font-weight: bolder;*/
     font-size: 14px;
   }
 

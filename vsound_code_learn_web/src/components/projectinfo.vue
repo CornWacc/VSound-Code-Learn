@@ -12,13 +12,13 @@
     <el-container>
       <el-main class="main">
         <el-row>
-          <el-col :span="3">
+          <el-col :span="4">
             <el-input placeholder="源码名称" v-model="codeSearch.codeName"></el-input>
           </el-col>
           <el-col :span="2" style="margin-left: 10px">
             <el-select v-model="codeSearch.codeType" clearable placeholder="类型">
               <el-option
-                v-for="item in options"
+                v-for="item in codeType"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value">
@@ -246,85 +246,10 @@
           </el-select>
         </el-form-item>
       </el-form>
-      <el-form v-else-if="dialog.dialogType=='METHOD'" ref="CUDCodeMethodForm" label-width="100px"
-               :model="CUDCodeMethodForm" :label-position="labelPosition">
-        <el-form-item label="方法名称:" prop="methodName">
-          <el-input placeholder="请输入方法名称" v-model="CUDCodeMethodForm.methodName" style="width: 300px"></el-input>
-        </el-form-item>
-        <el-form-item v-for="(item, index) in CUDCodeMethodForm.methodOrder"
-                      :label="'方法入参 ' + index"
-                      :key="index"
-                      :prop="'methodOrder.' + index + '.value'"
-                      >
-          <el-input placeholder="请输入方法入参" v-model="CUDCodeMethodForm.methodOrder[index]" style="width: 300px"></el-input>
-          <el-button @click="addMethodOrderInput()" icon="el-icon-plus" size="small" circle style="margin-left: 10px"></el-button>
-        </el-form-item>
-        <el-form-item label="方法反参:" prop="methodResult">
-          <el-input placeholder="请输入方法反参" v-model="CUDCodeMethodForm.methodResult" style="width: 300px"></el-input>
-        </el-form-item>
-        <el-form-item label="基础属性:" prop="methodBasic">
-          <el-radio v-model="CUDCodeMethodForm.methodBasic" label="1">静态</el-radio>
-          <el-radio v-model="CUDCodeMethodForm.methodBasic" label="2">抽象</el-radio>
-        </el-form-item>
-        <el-form-item label="作用域:" prop="methodAction">
-          <el-radio v-model="CUDCodeMethodForm.methodAction" label="1">公开</el-radio>
-          <el-radio v-model="CUDCodeMethodForm.methodAction" label="2">私有</el-radio>
-          <el-radio v-model="CUDCodeMethodForm.methodAction" label="3">子类</el-radio>
-        </el-form-item>
-        <el-form-item label="用法:" prop="methodUsage">
-          <el-input type="textarea" show-word-limit maxlength="50" v-model="CUDCodeMethodForm.methodUsage"
-                    style="width: 300px"></el-input>
-        </el-form-item>
-      </el-form>
-      <el-form v-else-if="dialog.dialogType=='PARAMETER'" ref="CUDCodeParameterForm" label-width="100px"
-               :model="CUDCodeParameterForm" :label-position="labelPosition">
-        <el-form-item label="参数名称:" prop="parameterName">
-          <el-input placeholder="请输入参数名称" v-model="CUDCodeParameterForm.parameterName" style="width: 300px"></el-input>
-        </el-form-item>
-        <el-form-item label="参数类型:" prop="parameterType">
-          <el-input placeholder="请输入参数类型" v-model="CUDCodeParameterForm.parameterType" style="width: 300px"></el-input>
-        </el-form-item>
-        <el-form-item label="是否常量:" prop="isFinal">
-          <el-switch
-            v-model="CUDCodeParameterForm.isFinal"
-            active-color="#ff4949"
-            inactive-color="#13ce66"
-            active-value="N"
-            inactive-value="Y">
-          </el-switch>
-        </el-form-item>
-        <el-form-item label="是否Autowire:" prop="isAutowire">
-          <el-switch
-            v-model="CUDCodeParameterForm.isAutowire"
-            active-color="#ff4949"
-            inactive-color="#13ce66"
-            active-value="N"
-            inactive-value="Y">
-          </el-switch>
-        </el-form-item>
-        <el-form-item label="是否接口:" prop="isInterface">
-          <el-switch
-            v-model="CUDCodeParameterForm.isInterface"
-            active-color="#ff4949"
-            inactive-color="#13ce66"
-            active-value="N"
-            inactive-value="Y">
-          </el-switch>
-        </el-form-item>
-        <el-form-item label="参数理解:" prop="parameterRemark">
-          <el-input type="textarea" show-word-limit maxlength="50" v-model="CUDCodeParameterForm.parameterRemark"
-                    style="width: 300px"></el-input>
-        </el-form-item>
-      </el-form>
-      <el-form v-else-if="dialog.dialogType=='URL'" ref="CUDCodeUrlForm" label-width="100px" :model="CUDCodeUrlForm"
-               :label-position="labelPosition">
-        <el-form-item label="链接注释:" prop="urlRemark">
-          <el-input placeholder="请输入链接注释" v-model="CUDCodeUrlForm.urlRemark" style="width: 300px"></el-input>
-        </el-form-item>
-        <el-form-item label="链接地址:" prop="urlPath">
-          <el-input placeholder="请输入链接地址" v-model="CUDCodeUrlForm.urlPath" style="width: 300px"></el-input>
-        </el-form-item>
-      </el-form>
+      <code-method-c-u-d-form :CUDCodeMethodForm="CUDCodeMethodForm" :dialog="dialog"></code-method-c-u-d-form>
+      <code-parameter-c-u-d-form :CUDCodeParameterForm="CUDCodeParameterForm"
+                                 :dialog="dialog"></code-parameter-c-u-d-form>
+      <code-out-side-url-c-u-d-form :CUDCodeUrlForm="CUDCodeUrlForm" :dialog="dialog"></code-out-side-url-c-u-d-form>
       <span slot="footer" class="dialog-footer">
     <el-button @click="cancelDialog">取 消</el-button>
     <el-button type="primary" @click="doCodeParameterCUD">确 定</el-button>
@@ -336,8 +261,13 @@
 </template>
 
 <script>
+  import CodeMethodCUDForm from "./formwidget/CodeMethodCUDForm";
+  import CodeParameterCUDForm from "./formwidget/CodeParameterCUDForm";
+  import CodeOutSideUrlCUDForm from "./formwidget/CodeOutSideUrlCUDForm";
+
   export default {
     name: "projectinfo",
+    components: {CodeOutSideUrlCUDForm, CodeParameterCUDForm, CodeMethodCUDForm},
     data() {
       return {
         drawer: false,
@@ -367,14 +297,15 @@
         CUDCodeMethodForm: {
           methodId: "",
           methodName: "",
-          methodOrder: [""],
+          methodOrder: [{parameterName: "asdas"}],
           methodResult: "",
-          isAbstract: "",
-          methodCommonUse: "",
           cudType: "",
           fromCodeId: "",
+          methodUsage: "",
           methodBasic: "",
-          methodAction: ""
+          methodAction: "",
+          methodType: false,
+          isOverwrite: false
         },
         CUDCodeParameterForm: {
           isAutowire: "",
@@ -393,7 +324,7 @@
           fromCodeId: ""
         },
         tableData: [],
-        options: [
+        codeType: [
           {
             label: "Class",
             value: "CLASS"
@@ -722,15 +653,8 @@
         } else {
           done()
         }
-
       },
 
-      /**
-       * 新增一个方法入参的输入框
-       * */
-      addMethodOrderInput(){
-        this.CUDCodeMethodForm.methodOrder.push("")
-      },
       cancelDialog() {
         this.doSearch()
         this.dialog.dialogVisible = false
