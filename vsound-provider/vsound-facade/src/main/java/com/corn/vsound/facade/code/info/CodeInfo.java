@@ -10,9 +10,37 @@ public class CodeInfo extends Base {
 
     private String codeType;
 
-    private Integer codeLevel;
+    private String fromProjectId;
 
-    private String codeProgram;
+    private Integer methodCount;
+
+    private Integer parameterCount;
+
+    private Integer outSideUrlCount;
+
+    public Integer getMethodCount() {
+        return methodCount;
+    }
+
+    public void setMethodCount(Integer methodCount) {
+        this.methodCount = methodCount;
+    }
+
+    public Integer getParameterCount() {
+        return parameterCount;
+    }
+
+    public void setParameterCount(Integer parameterCount) {
+        this.parameterCount = parameterCount;
+    }
+
+    public Integer getOutSideUrlCount() {
+        return outSideUrlCount;
+    }
+
+    public void setOutSideUrlCount(Integer outSideUrlCount) {
+        this.outSideUrlCount = outSideUrlCount;
+    }
 
     public String getCodeId() {
         return codeId;
@@ -38,19 +66,11 @@ public class CodeInfo extends Base {
         this.codeType = codeType;
     }
 
-    public Integer getCodeLevel() {
-        return codeLevel;
+    public String getFromProjectId() {
+        return fromProjectId;
     }
 
-    public void setCodeLevel(Integer codeLevel) {
-        this.codeLevel = codeLevel;
-    }
-
-    public String getCodeProgram() {
-        return codeProgram;
-    }
-
-    public void setCodeProgram(String codeProgram) {
-        this.codeProgram = codeProgram;
+    public void setFromProjectId(String fromProjectId) {
+        this.fromProjectId = fromProjectId;
     }
 }

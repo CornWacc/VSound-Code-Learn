@@ -109,8 +109,8 @@
     code_id,
     code_name,
     code_type,
-    code_program,
-    code_remark,
+    from_project_id,
+    code_remark
     from
     code_base
     <where>
