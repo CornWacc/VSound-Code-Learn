@@ -228,9 +228,9 @@
     <el-dialog
       :title="dialog.dialogTitle"
       :visible.sync="dialog.dialogVisible"
-      width="40%"
+      width="28%"
       :before-close="handleClose">
-      <el-form ref="codeForm" :model="codeForm" :rules="rules" style="margin-left: 10px;"
+      <el-form ref="codeForm" :model="codeForm" :rules="rules" style="margin-left: auto;margin-right: auto; width: 80%;"
                v-if="dialog.dialogType == 'CODE'">
         <el-form-item label="源码名称:" prop="codeName">
           <el-input placeholder="请输入源码名称" v-model="CUDCodeForm.codeName" style="width: 300px"></el-input>
@@ -238,7 +238,7 @@
         <el-form-item label="源码类型:" prop="codeType">
           <el-select v-model="CUDCodeForm.codeType" clearable style="width: 300px" placeholder="请选择源码类型">
             <el-option
-              v-for="item in options"
+              v-for="item in codeType"
               :key="item.value"
               :label="item.label"
               :value="item.value">
@@ -246,6 +246,7 @@
           </el-select>
         </el-form-item>
       </el-form>
+
       <code-method-c-u-d-form :CUDCodeMethodForm="CUDCodeMethodForm" :dialog="dialog"></code-method-c-u-d-form>
       <code-parameter-c-u-d-form :CUDCodeParameterForm="CUDCodeParameterForm"
                                  :dialog="dialog"></code-parameter-c-u-d-form>
@@ -707,7 +708,7 @@
   .header_buttons {
     float: right;
     margin-top: 14px;
-    margin-right: 10px;
+    margin-right: 25px;
   }
 
   .drawer_form_model {
