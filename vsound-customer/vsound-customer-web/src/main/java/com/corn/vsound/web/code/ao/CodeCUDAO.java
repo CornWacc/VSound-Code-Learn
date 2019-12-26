@@ -12,7 +12,7 @@ public class CodeCUDAO {
 
     private Integer codeLevel;
 
-    private String codeProgram;
+    private String fromProjectId;
 
     private String codeId;
 
@@ -76,11 +76,11 @@ public class CodeCUDAO {
         this.codeLevel = codeLevel;
     }
 
-    public String getCodeProgram() {
-        return codeProgram;
+    public String getFromProjectId() {
+        return fromProjectId;
     }
 
-    public void setCodeProgram(String codeProgram) {
-        this.codeProgram = codeProgram;
+    public void setFromProjectId(String fromProjectId) {
+        this.fromProjectId = fromProjectId;
     }
 }
