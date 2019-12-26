@@ -51,6 +51,11 @@
       return {
         labelPosition: "left"
       }
+    },
+    methods:{
+      reset(){
+        this.$refs["CUDCodeParameterForm"].resetFields()
+      }
     }
   }
 </script>

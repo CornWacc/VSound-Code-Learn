@@ -253,7 +253,7 @@
       </el-form>
 
       <code-method-c-u-d-form :CUDCodeMethodForm="CUDCodeMethodForm" :dialog="dialog"></code-method-c-u-d-form>
-      <code-parameter-c-u-d-form :CUDCodeParameterForm="CUDCodeParameterForm"
+      <code-parameter-c-u-d-form ref="CUDCodeParameterForm" :CUDCodeParameterForm="CUDCodeParameterForm"
                                  :dialog="dialog"
                                  :drawerData="drawerData"
       ></code-parameter-c-u-d-form>
@@ -665,7 +665,19 @@
 
       cancelDialog() {
         this.doSearch()
-        this.$refs["CUDCodeForm"].resetFields()
+        console.log(this.dialog)
+        if(this.dialog.dialogType == "CODE"){
+          this.$refs["CUDCodeForm"].resetFields()
+        }
+        if(this.dialog.dialogType == "METHOD"){
+          this.$refs["CUDCodeMETHODForm"].resetFields()
+        }
+        if(this.dialog.dialogType == "PARAMETER"){
+          this.$refs["CUDCodeParameterForm"].reset()
+        }
+        if(this.dialog.dialogType == "URL"){
+          this.$refs["CUDCodeUrlForm"].resetFields()
+        }
         this.dialog.dialogVisible = false
       },
 
