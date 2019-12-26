@@ -84,11 +84,11 @@
           <div>
             <div class="drawer_form_model">
               <el-row>
-                <el-col :span="4"><span style="font-size: 18px;font-weight: bolder">名称:</span></el-col>
+                <el-col :span="2"><span style="font-size: 18px;font-weight: bolder">名称:</span></el-col>
                 <el-col :span="4"><span style="font-size: 20px">{{drawerData.codeName}}</span></el-col>
               </el-row>
               <el-row>
-                <el-col :span="4"><span style="font-size: 18px;font-weight: bolder">类型:</span></el-col>
+                <el-col :span="2"><span style="font-size: 18px;font-weight: bolder">类型:</span></el-col>
                 <el-col :span="4"><span style="font-size: 14px">{{drawerData.codeType}}</span></el-col>
               </el-row>
               <el-row>
@@ -175,6 +175,11 @@
                     align="center"
                     prop="parameterRemark">
                   </el-table-column>
+                  <el-table-column label="查看" align="center">
+                    <template slot-scope="scope">
+                      <el-button size="mini" type="primary" @click="updateCodeParameters(scope.row,'PARAMETER')">查看详情</el-button>
+                    </template>
+                  </el-table-column>
                   <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
                       <el-button size="mini" type="primary" @click="updateCodeParameters(scope.row,'PARAMETER')"
@@ -230,7 +235,7 @@
       :visible.sync="dialog.dialogVisible"
       width="28%"
       :before-close="handleClose">
-      <el-form ref="codeForm" :model="codeForm" :rules="rules" style="margin-left: auto;margin-right: auto; width: 80%;"
+      <el-form ref="CUDCodeForm" :model="CUDCodeForm" :rules="rules" style="margin-left: auto;margin-right: auto; width: 80%;"
                v-if="dialog.dialogType == 'CODE'">
         <el-form-item label="源码名称:" prop="codeName">
           <el-input placeholder="请输入源码名称" v-model="CUDCodeForm.codeName" style="width: 300px"></el-input>
@@ -249,7 +254,9 @@
 
       <code-method-c-u-d-form :CUDCodeMethodForm="CUDCodeMethodForm" :dialog="dialog"></code-method-c-u-d-form>
       <code-parameter-c-u-d-form :CUDCodeParameterForm="CUDCodeParameterForm"
-                                 :dialog="dialog"></code-parameter-c-u-d-form>
+                                 :dialog="dialog"
+                                 :drawerData="drawerData"
+      ></code-parameter-c-u-d-form>
       <code-out-side-url-c-u-d-form :CUDCodeUrlForm="CUDCodeUrlForm" :dialog="dialog"></code-out-side-url-c-u-d-form>
       <span slot="footer" class="dialog-footer">
     <el-button @click="cancelDialog">取 消</el-button>
@@ -369,7 +376,7 @@
           codeRemark: "",
           usePosition: "",
           cudType: "",
-          codeProgram: ""
+          fromProjectId: ""
         },
       }
     },
@@ -389,7 +396,7 @@
 
     methods: {
       goBack() {
-        this.$router.push("/main")
+        this.$router.push("/")
       },
 
       codeMethodListQuery(codeId) {
@@ -442,7 +449,7 @@
       createCodeParameters(type) {
         this.dialog.dialogVisible = true
         this.dialog.cudType = "CREATE"
-
+        console.log(this.drawerData.codeType)
         if (type === "CODE") {
           this.dialog.dialogTitle = "源码新增";
           this.dialog.dialogType = "CODE";
@@ -533,7 +540,7 @@
        * */
       sureCUDCode() {
         this.CUDCodeForm.cudType = this.dialog.cudType;
-        this.CUDCodeForm.codeProgram = this.$route.query.projectId;
+        this.CUDCodeForm.fromProjectId = this.$route.query.projectId;
         this.$axios({
           url: this.Globel.requestUrl + "/code/codeCUD",
           data: this.CUDCodeForm,
@@ -567,7 +574,7 @@
           if (res.data.success) {
             this.$message.success(res.data.msg)
             this.dialog.dialogVisible = false
-            this.$refs["CUDCodeMethodForm"].resetFields()
+            this.$refs["CUDCodeMethodForm"].resetField()
             this.codeMethodListQuery(this.drawerData.codeId)
           } else {
             this.$message.error(res.data.msg)
@@ -658,8 +665,8 @@
 
       cancelDialog() {
         this.doSearch()
+        this.$refs["CUDCodeForm"].resetFields()
         this.dialog.dialogVisible = false
-        this.$refs["CUDCodeMethodForm"].resetFields()
       },
 
       drawerInputChange() {

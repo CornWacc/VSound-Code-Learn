@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form v-if="dialog.dialogType=='METHOD'" ref="CUDCodeMethodForm" label-width="100px"
+    <el-form v-if="dialog.dialogType=='METHOD'" ref="CUDCodeMethodForm" label-width="100px" style="margin-right: auto;margin-left: auto;"
              :model="CUDCodeMethodForm" :label-position="labelPosition">
       <el-form-item label="方法名称:" prop="methodName">
         <el-input placeholder="请输入方法名称" v-model="CUDCodeMethodForm.methodName" style="width: 300px"></el-input>
