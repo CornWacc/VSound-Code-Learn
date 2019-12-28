@@ -6,16 +6,19 @@
     <result column="method_id" property="methodId" jdbcType="VARCHAR" />
     <result column="method_name" property="methodName" jdbcType="VARCHAR" />
     <result column="method_usage" property="methodUsage" jdbcType="VARCHAR" />
-    <result column="method_notice" property="methodNotice" jdbcType="VARCHAR" />
-    <result column="method_order" property="methodOrder" jdbcType="VARCHAR" />
     <result column="method_result" property="methodResult" jdbcType="VARCHAR" />
-    <result column="is_abstract" property="isAbstract" jdbcType="VARCHAR" />
+    <result column="methoid_base_type" property="methoidBaseType" jdbcType="VARCHAR" />
     <result column="method_common_use" property="methodCommonUse" jdbcType="VARCHAR" />
+    <result column="method_is_overwrite" property="methodIsOverwrite" jdbcType="CHAR" />
+    <result column="method_is_construct" property="methodIsConstruct" jdbcType="CHAR" />
+    <result column="method_action_scope" property="methodActionScope" jdbcType="VARCHAR" />
     <result column="from_code_id" property="fromCodeId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, method_id, method_name, method_usage, method_notice, method_order, method_result, 
-    is_abstract, method_common_use, from_code_id
+    method_id, method_name, method_usage, method_result, methoid_base_type, method_common_use,
+    method_is_overwrite, method_is_construct, method_action_scope, from_code_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -23,19 +26,21 @@
     from code_method
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from code_method
     where method_id = #{methodId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.corn.vsound.dao.entity.CodeMethod" >
     insert into code_method (id, method_id, method_name, 
-      method_usage, method_notice, method_order, 
-      method_result, is_abstract, method_common_use, 
-      from_code_id)
+      method_usage, method_result, methoid_base_type, 
+      method_common_use, method_is_overwrite, method_is_construct, 
+      method_action_scope, from_code_id, create_time, 
+      update_time)
     values (#{id,jdbcType=INTEGER}, #{methodId,jdbcType=VARCHAR}, #{methodName,jdbcType=VARCHAR}, 
-      #{methodUsage,jdbcType=VARCHAR}, #{methodNotice,jdbcType=VARCHAR}, #{methodOrder,jdbcType=VARCHAR}, 
-      #{methodResult,jdbcType=VARCHAR}, #{isAbstract,jdbcType=VARCHAR}, #{methodCommonUse,jdbcType=VARCHAR}, 
-      #{fromCodeId,jdbcType=VARCHAR})
+      #{methodUsage,jdbcType=VARCHAR}, #{methodResult,jdbcType=VARCHAR}, #{methoidBaseType,jdbcType=VARCHAR}, 
+      #{methodCommonUse,jdbcType=VARCHAR}, #{methodIsOverwrite,jdbcType=CHAR}, #{methodIsConstruct,jdbcType=CHAR}, 
+      #{methodActionScope,jdbcType=VARCHAR}, #{fromCodeId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.corn.vsound.dao.entity.CodeMethod" >
     insert into code_method
@@ -52,23 +57,32 @@
       <if test="methodUsage != null" >
         method_usage,
       </if>
-      <if test="methodNotice != null" >
-        method_notice,
-      </if>
-      <if test="methodOrder != null" >
-        method_order,
-      </if>
       <if test="methodResult != null" >
         method_result,
       </if>
-      <if test="isAbstract != null" >
-        is_abstract,
+      <if test="methoidBaseType != null" >
+        methoid_base_type,
       </if>
       <if test="methodCommonUse != null" >
         method_common_use,
       </if>
+      <if test="methodIsOverwrite != null" >
+        method_is_overwrite,
+      </if>
+      <if test="methodIsConstruct != null" >
+        method_is_construct,
+      </if>
+      <if test="methodActionScope != null" >
+        method_action_scope,
+      </if>
       <if test="fromCodeId != null" >
         from_code_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -84,55 +98,70 @@
       <if test="methodUsage != null" >
         #{methodUsage,jdbcType=VARCHAR},
       </if>
-      <if test="methodNotice != null" >
-        #{methodNotice,jdbcType=VARCHAR},
-      </if>
-      <if test="methodOrder != null" >
-        #{methodOrder,jdbcType=VARCHAR},
-      </if>
       <if test="methodResult != null" >
         #{methodResult,jdbcType=VARCHAR},
       </if>
-      <if test="isAbstract != null" >
-        #{isAbstract,jdbcType=VARCHAR},
+      <if test="methoidBaseType != null" >
+        #{methoidBaseType,jdbcType=VARCHAR},
       </if>
       <if test="methodCommonUse != null" >
         #{methodCommonUse,jdbcType=VARCHAR},
       </if>
+      <if test="methodIsOverwrite != null" >
+        #{methodIsOverwrite,jdbcType=CHAR},
+      </if>
+      <if test="methodIsConstruct != null" >
+        #{methodIsConstruct,jdbcType=CHAR},
+      </if>
+      <if test="methodActionScope != null" >
+        #{methodActionScope,jdbcType=VARCHAR},
+      </if>
       <if test="fromCodeId != null" >
         #{fromCodeId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.corn.vsound.dao.entity.CodeMethod" >
     update code_method
     <set >
-      <if test="methodId != null" >
-        method_id = #{methodId,jdbcType=VARCHAR},
-      </if>
       <if test="methodName != null" >
         method_name = #{methodName,jdbcType=VARCHAR},
       </if>
       <if test="methodUsage != null" >
         method_usage = #{methodUsage,jdbcType=VARCHAR},
       </if>
-      <if test="methodNotice != null" >
-        method_notice = #{methodNotice,jdbcType=VARCHAR},
-      </if>
-      <if test="methodOrder != null" >
-        method_order = #{methodOrder,jdbcType=VARCHAR},
-      </if>
       <if test="methodResult != null" >
         method_result = #{methodResult,jdbcType=VARCHAR},
       </if>
-      <if test="isAbstract != null" >
-        is_abstract = #{isAbstract,jdbcType=VARCHAR},
+      <if test="methoidBaseType != null" >
+        methoid_base_type = #{methoidBaseType,jdbcType=VARCHAR},
       </if>
       <if test="methodCommonUse != null" >
         method_common_use = #{methodCommonUse,jdbcType=VARCHAR},
       </if>
+      <if test="methodIsOverwrite != null" >
+        method_is_overwrite = #{methodIsOverwrite,jdbcType=CHAR},
+      </if>
+      <if test="methodIsConstruct != null" >
+        method_is_construct = #{methodIsConstruct,jdbcType=CHAR},
+      </if>
+      <if test="methodActionScope != null" >
+        method_action_scope = #{methodActionScope,jdbcType=VARCHAR},
+      </if>
       <if test="fromCodeId != null" >
         from_code_id = #{fromCodeId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where method_id = #{methodId,jdbcType=VARCHAR}
@@ -142,30 +171,40 @@
     set method_id = #{methodId,jdbcType=VARCHAR},
       method_name = #{methodName,jdbcType=VARCHAR},
       method_usage = #{methodUsage,jdbcType=VARCHAR},
-      method_notice = #{methodNotice,jdbcType=VARCHAR},
-      method_order = #{methodOrder,jdbcType=VARCHAR},
       method_result = #{methodResult,jdbcType=VARCHAR},
-      is_abstract = #{isAbstract,jdbcType=VARCHAR},
+      methoid_base_type = #{methoidBaseType,jdbcType=VARCHAR},
       method_common_use = #{methodCommonUse,jdbcType=VARCHAR},
-      from_code_id = #{fromCodeId,jdbcType=VARCHAR}
-    where method_id = #{methodId,jdbcType=VARCHAR}
+      method_is_overwrite = #{methodIsOverwrite,jdbcType=CHAR},
+      method_is_construct = #{methodIsConstruct,jdbcType=CHAR},
+      method_action_scope = #{methodActionScope,jdbcType=VARCHAR},
+      from_code_id = #{fromCodeId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="findCodeMethodListByCodeId" resultMap="BaseResultMap">
+  <select id="findCodeMethodListByCodeId">
     select
     <include refid="Base_Column_List"></include>
-    from code_method
-    <where>
-      <if test="codeId != null and codeId != ''">
-        from_code_id = #{codeId}
-      </if>
-    </where>
+    from
+    code_method
+    where
+    from_code_id = #{codeId}
+  </select>
+
+  <select id="findCodeMethodByMethodId">
+    select
+    <include refid="Base_Column_List"></include>
+    from
+    code_method
+    where
+    method_id = #{methodId}
   </select>
 
   <delete id="deleteCodeMethodsByCodeIds">
     delete from code_method
-    where from_code_id in
-    <foreach collection="codeIds" item="item" open="(" close=")" separator=",">
+    where code_id in
+    <foreach collection="codeIds" item="item" separator="," open="(" close=")">
       #{item}
     </foreach>
   </delete>
