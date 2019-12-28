@@ -20,6 +20,11 @@
       return{
         labelPosition:"left"
       }
+    },
+    methods:{
+      reset(){
+        this.$refs["CUDCodeUrlForm"].resetFields()
+      }
     }
   }
 </script>

@@ -3,7 +3,7 @@
     <el-form v-if="dialog.dialogType=='METHOD'" ref="CUDCodeMethodForm" label-width="100px" style="margin-right: auto;margin-left: auto;"
              :model="CUDCodeMethodForm" :label-position="labelPosition">
       <el-form-item label="方法名称:" prop="methodName">
-        <el-input placeholder="请输入方法名称" v-model="CUDCodeMethodForm.methodName" style="width: 300px"></el-input>
+        <el-input placeholder="请输入方法名称" v-model="CUDCodeMethodForm.methodName" ></el-input>
       </el-form-item>
 
       <el-form-item label="方法入参" prop="methodOrder">
@@ -11,7 +11,7 @@
       </el-form-item>
 
       <el-form-item label="方法反参:" prop="methodResult">
-        <el-input placeholder="请输入方法反参" v-model="CUDCodeMethodForm.methodResult" style="width: 300px"></el-input>
+        <el-input placeholder="请输入方法反参" v-model="CUDCodeMethodForm.methodResult"></el-input>
       </el-form-item>
 
       <el-form-item label="构造方法:" prop="methodType">
@@ -43,8 +43,7 @@
 
 
       <el-form-item label="使用方式:" prop="methodUsage">
-        <el-input type="textarea" show-word-limit maxlength="50" v-model="CUDCodeMethodForm.methodUsage"
-                  style="width: 300px"></el-input>
+        <el-input type="textarea" show-word-limit maxlength="50" v-model="CUDCodeMethodForm.methodUsage"></el-input>
       </el-form-item>
     </el-form>
 
@@ -124,6 +123,10 @@
       deleteMethodOrderInput(index) {
         this.CUDCodeMethodForm.methodOrder.splice(index, 1)
       },
+
+      reset(){
+        this.$refs["CUDCodeMethodForm"].resetFields()
+      }
     }
   }
 </script>

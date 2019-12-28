@@ -233,7 +233,7 @@
     <el-dialog
       :title="dialog.dialogTitle"
       :visible.sync="dialog.dialogVisible"
-      width="28%"
+      width="38%"
       :before-close="handleClose">
       <el-form ref="CUDCodeForm" :model="CUDCodeForm" :rules="rules" style="margin-left: auto;margin-right: auto; width: 80%;"
                v-if="dialog.dialogType == 'CODE'">
@@ -252,12 +252,12 @@
         </el-form-item>
       </el-form>
 
-      <code-method-c-u-d-form :CUDCodeMethodForm="CUDCodeMethodForm" :dialog="dialog"></code-method-c-u-d-form>
+      <code-method-c-u-d-form ref="CUDCodeMethodForm" :CUDCodeMethodForm="CUDCodeMethodForm" :dialog="dialog"></code-method-c-u-d-form>
       <code-parameter-c-u-d-form ref="CUDCodeParameterForm" :CUDCodeParameterForm="CUDCodeParameterForm"
                                  :dialog="dialog"
                                  :drawerData="drawerData"
       ></code-parameter-c-u-d-form>
-      <code-out-side-url-c-u-d-form :CUDCodeUrlForm="CUDCodeUrlForm" :dialog="dialog"></code-out-side-url-c-u-d-form>
+      <code-out-side-url-c-u-d-form ref="CUDCodeUrlForm" :CUDCodeUrlForm="CUDCodeUrlForm" :dialog="dialog"></code-out-side-url-c-u-d-form>
       <span slot="footer" class="dialog-footer">
     <el-button @click="cancelDialog">取 消</el-button>
     <el-button type="primary" @click="doCodeParameterCUD">确 定</el-button>
@@ -665,18 +665,17 @@
 
       cancelDialog() {
         this.doSearch()
-        console.log(this.dialog)
         if(this.dialog.dialogType == "CODE"){
-          this.$refs["CUDCodeForm"].resetFields()
+          this.$refs["CUDCodeForm"].reset()
         }
         if(this.dialog.dialogType == "METHOD"){
-          this.$refs["CUDCodeMETHODForm"].resetFields()
+          this.$refs["CUDCodeMethodForm"].reset()
         }
         if(this.dialog.dialogType == "PARAMETER"){
           this.$refs["CUDCodeParameterForm"].reset()
         }
         if(this.dialog.dialogType == "URL"){
-          this.$refs["CUDCodeUrlForm"].resetFields()
+          this.$refs["CUDCodeUrlForm"].reset()
         }
         this.dialog.dialogVisible = false
       },
