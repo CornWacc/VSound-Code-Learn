@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.corn.vsound.dao.mapper.CodeMethodOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.corn.vsound.dao.entity.CodeMethodOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code_method_order_id" property="codeMethodOrderId" jdbcType="VARCHAR" />
+    <result column="code_method_order_name" property="codeMethodOrderName" jdbcType="VARCHAR" />
+    <result column="code_method_order_class_type" property="codeMethodOrderClassType" jdbcType="VARCHAR" />
+    <result column="code_method_order_type" property="codeMethodOrderType" jdbcType="VARCHAR" />
+    <result column="code_method_id" property="codeMethodId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code_method_order_id, code_method_order_name, code_method_order_class_type, code_method_order_type, 
+    code_method_id, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from code_method_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from code_method_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.corn.vsound.dao.entity.CodeMethodOrder" >
+    insert into code_method_order (id, code_method_order_id, code_method_order_name, 
+      code_method_order_class_type, code_method_order_type, 
+      code_method_id, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{codeMethodOrderId,jdbcType=VARCHAR}, #{codeMethodOrderName,jdbcType=VARCHAR}, 
+      #{codeMethodOrderClassType,jdbcType=VARCHAR}, #{codeMethodOrderType,jdbcType=VARCHAR}, 
+      #{codeMethodId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.corn.vsound.dao.entity.CodeMethodOrder" >
+    insert into code_method_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="codeMethodOrderId != null" >
+        code_method_order_id,
+      </if>
+      <if test="codeMethodOrderName != null" >
+        code_method_order_name,
+      </if>
+      <if test="codeMethodOrderClassType != null" >
+        code_method_order_class_type,
+      </if>
+      <if test="codeMethodOrderType != null" >
+        code_method_order_type,
+      </if>
+      <if test="codeMethodId != null" >
+        code_method_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="codeMethodOrderId != null" >
+        #{codeMethodOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="codeMethodOrderName != null" >
+        #{codeMethodOrderName,jdbcType=VARCHAR},
+      </if>
+      <if test="codeMethodOrderClassType != null" >
+        #{codeMethodOrderClassType,jdbcType=VARCHAR},
+      </if>
+      <if test="codeMethodOrderType != null" >
+        #{codeMethodOrderType,jdbcType=VARCHAR},
+      </if>
+      <if test="codeMethodId != null" >
+        #{codeMethodId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.corn.vsound.dao.entity.CodeMethodOrder" >
+    update code_method_order
+    <set >
+      <if test="codeMethodOrderId != null" >
+        code_method_order_id = #{codeMethodOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="codeMethodOrderName != null" >
+        code_method_order_name = #{codeMethodOrderName,jdbcType=VARCHAR},
+      </if>
+      <if test="codeMethodOrderClassType != null" >
+        code_method_order_class_type = #{codeMethodOrderClassType,jdbcType=VARCHAR},
+      </if>
+      <if test="codeMethodOrderType != null" >
+        code_method_order_type = #{codeMethodOrderType,jdbcType=VARCHAR},
+      </if>
+      <if test="codeMethodId != null" >
+        code_method_id = #{codeMethodId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.corn.vsound.dao.entity.CodeMethodOrder" >
+    update code_method_order
+    set code_method_order_id = #{codeMethodOrderId,jdbcType=VARCHAR},
+      code_method_order_name = #{codeMethodOrderName,jdbcType=VARCHAR},
+      code_method_order_class_type = #{codeMethodOrderClassType,jdbcType=VARCHAR},
+      code_method_order_type = #{codeMethodOrderType,jdbcType=VARCHAR},
+      code_method_id = #{codeMethodId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,5 +1,7 @@
 package com.corn.vsound.dao.entity;
 
+import java.util.Date;
+
 public class CodeMethod {
     private Integer id;
 
@@ -9,17 +11,23 @@ public class CodeMethod {
 
     private String methodUsage;
 
-    private String methodNotice;
-
-    private String methodOrder;
-
     private String methodResult;
 
-    private String isAbstract;
+    private String methoidBaseType;
 
     private String methodCommonUse;
 
+    private String methodIsOverwrite;
+
+    private String methodIsConstruct;
+
+    private String methodActionScope;
+
     private String fromCodeId;
+
+    private Date createTime;
+
+    private Date updateTime;
 
     public Integer getId() {
         return id;
@@ -53,22 +61,6 @@ public class CodeMethod {
         this.methodUsage = methodUsage == null ? null : methodUsage.trim();
     }
 
-    public String getMethodNotice() {
-        return methodNotice;
-    }
-
-    public void setMethodNotice(String methodNotice) {
-        this.methodNotice = methodNotice == null ? null : methodNotice.trim();
-    }
-
-    public String getMethodOrder() {
-        return methodOrder;
-    }
-
-    public void setMethodOrder(String methodOrder) {
-        this.methodOrder = methodOrder == null ? null : methodOrder.trim();
-    }
-
     public String getMethodResult() {
         return methodResult;
     }
@@ -77,12 +69,12 @@ public class CodeMethod {
         this.methodResult = methodResult == null ? null : methodResult.trim();
     }
 
-    public String getIsAbstract() {
-        return isAbstract;
+    public String getMethoidBaseType() {
+        return methoidBaseType;
     }
 
-    public void setIsAbstract(String isAbstract) {
-        this.isAbstract = isAbstract == null ? null : isAbstract.trim();
+    public void setMethoidBaseType(String methoidBaseType) {
+        this.methoidBaseType = methoidBaseType == null ? null : methoidBaseType.trim();
     }
 
     public String getMethodCommonUse() {
@@ -93,11 +85,51 @@ public class CodeMethod {
         this.methodCommonUse = methodCommonUse == null ? null : methodCommonUse.trim();
     }
 
+    public String getMethodIsOverwrite() {
+        return methodIsOverwrite;
+    }
+
+    public void setMethodIsOverwrite(String methodIsOverwrite) {
+        this.methodIsOverwrite = methodIsOverwrite == null ? null : methodIsOverwrite.trim();
+    }
+
+    public String getMethodIsConstruct() {
+        return methodIsConstruct;
+    }
+
+    public void setMethodIsConstruct(String methodIsConstruct) {
+        this.methodIsConstruct = methodIsConstruct == null ? null : methodIsConstruct.trim();
+    }
+
+    public String getMethodActionScope() {
+        return methodActionScope;
+    }
+
+    public void setMethodActionScope(String methodActionScope) {
+        this.methodActionScope = methodActionScope == null ? null : methodActionScope.trim();
+    }
+
     public String getFromCodeId() {
         return fromCodeId;
     }
 
     public void setFromCodeId(String fromCodeId) {
         this.fromCodeId = fromCodeId == null ? null : fromCodeId.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
