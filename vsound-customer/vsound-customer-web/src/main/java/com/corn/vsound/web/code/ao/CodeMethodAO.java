@@ -1,6 +1,12 @@
 package com.corn.vsound.web.code.ao;
 
 import com.corn.boot.enums.CudTypeEnum;
+import com.corn.vsound.facade.code.info.CodeMethodOrderInfo;
+import com.corn.vsound.facade.enums.ActionScopeEnum;
+import com.corn.vsound.facade.enums.CodeMethodBaseTypeEnum;
+import com.corn.vsound.facade.enums.YNEnum;
+
+import java.util.List;
 
 public class CodeMethodAO {
 
@@ -10,27 +16,23 @@ public class CodeMethodAO {
 
     private String methodUsage;
 
-    private String methodNotice;
-
-    private String methodOrder;
-
     private String methodResult;
 
-    private String isAbstract;
+    private CodeMethodBaseTypeEnum methodBaseType;
 
-    private String methodCommonUse;
+    private YNEnum methodCommonUse;
 
-    private CudTypeEnum cudType;
+    private YNEnum methodIsOverwrite;
+
+    private YNEnum methodIsConstruct;
+
+    private ActionScopeEnum methodActionScope;
 
     private String fromCodeId;
 
-    public String getFromCodeId() {
-        return fromCodeId;
-    }
+    private List<CodeMethodOrderInfo> methodOrders;
 
-    public void setFromCodeId(String fromCodeId) {
-        this.fromCodeId = fromCodeId;
-    }
+    private CudTypeEnum cudType;
 
     public CudTypeEnum getCudType() {
         return cudType;
@@ -64,22 +66,6 @@ public class CodeMethodAO {
         this.methodUsage = methodUsage;
     }
 
-    public String getMethodNotice() {
-        return methodNotice;
-    }
-
-    public void setMethodNotice(String methodNotice) {
-        this.methodNotice = methodNotice;
-    }
-
-    public String getMethodOrder() {
-        return methodOrder;
-    }
-
-    public void setMethodOrder(String methodOrder) {
-        this.methodOrder = methodOrder;
-    }
-
     public String getMethodResult() {
         return methodResult;
     }
@@ -88,19 +74,59 @@ public class CodeMethodAO {
         this.methodResult = methodResult;
     }
 
-    public String getIsAbstract() {
-        return isAbstract;
+    public CodeMethodBaseTypeEnum getMethodBaseType() {
+        return methodBaseType;
     }
 
-    public void setIsAbstract(String isAbstract) {
-        this.isAbstract = isAbstract;
+    public void setMethodBaseType(CodeMethodBaseTypeEnum methodBaseType) {
+        this.methodBaseType = methodBaseType;
     }
 
-    public String getMethodCommonUse() {
+    public YNEnum getMethodCommonUse() {
         return methodCommonUse;
     }
 
-    public void setMethodCommonUse(String methodCommonUse) {
+    public void setMethodCommonUse(YNEnum methodCommonUse) {
         this.methodCommonUse = methodCommonUse;
+    }
+
+    public YNEnum getMethodIsOverwrite() {
+        return methodIsOverwrite;
+    }
+
+    public void setMethodIsOverwrite(YNEnum methodIsOverwrite) {
+        this.methodIsOverwrite = methodIsOverwrite;
+    }
+
+    public YNEnum getMethodIsConstruct() {
+        return methodIsConstruct;
+    }
+
+    public void setMethodIsConstruct(YNEnum methodIsConstruct) {
+        this.methodIsConstruct = methodIsConstruct;
+    }
+
+    public ActionScopeEnum getMethodActionScope() {
+        return methodActionScope;
+    }
+
+    public void setMethodActionScope(ActionScopeEnum methodActionScope) {
+        this.methodActionScope = methodActionScope;
+    }
+
+    public String getFromCodeId() {
+        return fromCodeId;
+    }
+
+    public void setFromCodeId(String fromCodeId) {
+        this.fromCodeId = fromCodeId;
+    }
+
+    public List<CodeMethodOrderInfo> getMethodOrders() {
+        return methodOrders;
+    }
+
+    public void setMethodOrders(List<CodeMethodOrderInfo> methodOrders) {
+        this.methodOrders = methodOrders;
     }
 }
