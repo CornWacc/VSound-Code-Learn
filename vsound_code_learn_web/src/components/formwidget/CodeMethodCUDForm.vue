@@ -14,33 +14,37 @@
         <el-input placeholder="请输入方法反参" v-model="CUDCodeMethodForm.methodResult"></el-input>
       </el-form-item>
 
-      <el-form-item label="构造方法:" prop="methodType">
+      <el-form-item label="构造方法:" prop="methodIsConstruct">
         <el-switch
-          v-model="CUDCodeMethodForm.methodType"
-          active-text="true"
-          inactive-text="false">
+          v-model="CUDCodeMethodForm.methodIsConstruct"
+          active-text="是"
+          inactive-text="否"
+          active-value="Y"
+          inactive-value="N">
         </el-switch>
       </el-form-item>
 
-      <el-form-item label="作用域:" prop="methodAction">
-        <el-radio v-model="CUDCodeMethodForm.methodAction" label="1">公开</el-radio>
-        <el-radio v-model="CUDCodeMethodForm.methodAction" label="2">私有</el-radio>
-        <el-radio v-model="CUDCodeMethodForm.methodAction" label="3" v-if="!CUDCodeMethodForm.methodType">子类</el-radio>
+      <el-form-item label="作用域:" prop="methodActionScope">
+        <el-radio v-model="CUDCodeMethodForm.methodActionScope" label="PUBLIC">公开</el-radio>
+        <el-radio v-model="CUDCodeMethodForm.methodActionScope" label="PRIVATE">私有</el-radio>
+        <el-radio v-model="CUDCodeMethodForm.methodActionScope" label="PROTECTED">子类</el-radio>
       </el-form-item>
 
-      <el-form-item label="方法属性:" prop="methodBasic" v-if="!CUDCodeMethodForm.methodType">
-        <el-radio v-model="CUDCodeMethodForm.methodBasic" label="1">静态</el-radio>
-        <el-radio v-model="CUDCodeMethodForm.methodBasic" label="2">抽象</el-radio>
+      <el-form-item label="方法属性:" prop="methodBasic" v-if="CUDCodeMethodForm.methodIsConstruct == 'N'">
+        <el-radio v-model="CUDCodeMethodForm.methodBaseType" label="COMMON">正常</el-radio>
+        <el-radio v-model="CUDCodeMethodForm.methodBaseType" label="STATIC">静态</el-radio>
+        <el-radio v-model="CUDCodeMethodForm.methodBaseType" label="ABSTRACT">抽象</el-radio>
       </el-form-item>
 
-      <el-form-item label="是否重写:" prop="isOverwrite" v-if="!CUDCodeMethodForm.methodType">
+      <el-form-item label="是否重写:" prop="methodIsOverwrite" v-if="CUDCodeMethodForm.methodIsConstruct == 'N'">
         <el-switch
-          v-model="CUDCodeMethodForm.isOverwrite"
-          active-text="true"
-          inactive-text="false">
+          v-model="CUDCodeMethodForm.methodIsOverwrite"
+          active-text="是"
+          inactive-text="否"
+          active-value="Y"
+          inactive-value="N">
         </el-switch>
       </el-form-item>
-
 
       <el-form-item label="使用方式:" prop="methodUsage">
         <el-input type="textarea" show-word-limit maxlength="50" v-model="CUDCodeMethodForm.methodUsage"></el-input>
@@ -49,7 +53,7 @@
 
     <el-dialog title="参数列表" :visible.sync="methodParamesDialog.isShow" :modal="false" width="50%">
       <el-table
-        :data="CUDCodeMethodForm.methodOrder"
+        :data="CUDCodeMethodForm.methodOrders"
         border
         style="width: 100%">
         <el-table-column
@@ -62,10 +66,20 @@
           prop="parameterName"
           label="参数名称"
           align="center"
-          width="400"
+          width="200"
         >
           <template slot-scope="scope">
-            <el-input v-model="scope.row.parameterName" clearable></el-input>
+            <el-input v-model="scope.row.codeMethodOrderName" clearable></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="parameterType"
+          label="参数类型"
+          align="center"
+          width="200"
+        >
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.codeMethodOrderClassType" clearable></el-input>
           </template>
         </el-table-column>
         <el-table-column
@@ -84,7 +98,7 @@
       <el-button type="primary" style="margin-top: 14px" size="mini" @click="addMethodOrderInput">新 增</el-button>
       <div slot="footer" class="dialog-footer">
         <el-button @click="methodParamesDialog.isShow = false">取 消</el-button>
-        <el-button type="primary" @click="methodParamesDialog.isShow = true">确 定</el-button>
+        <el-button type="primary" @click="methodParamesDialog.isShow = false">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -114,18 +128,19 @@
        * 新增一个方法入参的输入框
        * */
       addMethodOrderInput() {
-        this.CUDCodeMethodForm.methodOrder.push({})
+        this.CUDCodeMethodForm.methodOrders.push({})
       },
 
       /**
        * 删除一个方法入参的输入框
        * */
       deleteMethodOrderInput(index) {
-        this.CUDCodeMethodForm.methodOrder.splice(index, 1)
+        this.CUDCodeMethodForm.methodOrders.splice(index, 1)
       },
 
       reset(){
         this.$refs["CUDCodeMethodForm"].resetFields()
+        this.CUDCodeMethodForm.methodOrders = [];
       }
     }
   }

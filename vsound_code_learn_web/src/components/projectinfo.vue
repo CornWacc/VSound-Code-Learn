@@ -117,7 +117,7 @@
                   <el-table-column
                     label="基础属性"
                     align="center"
-                    prop="methodBasic">
+                    prop="methodBasicType">
                   </el-table-column>
                   <el-table-column
                     label="作用域"
@@ -177,7 +177,8 @@
                   </el-table-column>
                   <el-table-column label="查看" align="center">
                     <template slot-scope="scope">
-                      <el-button size="mini" type="primary" @click="updateCodeParameters(scope.row,'PARAMETER')">查看详情</el-button>
+                      <el-button size="mini" type="primary" @click="updateCodeParameters(scope.row,'PARAMETER')">查看详情
+                      </el-button>
                     </template>
                   </el-table-column>
                   <el-table-column label="操作" align="center">
@@ -235,7 +236,8 @@
       :visible.sync="dialog.dialogVisible"
       width="38%"
       :before-close="handleClose">
-      <el-form ref="CUDCodeForm" :model="CUDCodeForm" :rules="rules" style="margin-left: auto;margin-right: auto; width: 80%;"
+      <el-form ref="CUDCodeForm" :model="CUDCodeForm" :rules="rules"
+               style="margin-left: auto;margin-right: auto; width: 80%;"
                v-if="dialog.dialogType == 'CODE'">
         <el-form-item label="源码名称:" prop="codeName">
           <el-input placeholder="请输入源码名称" v-model="CUDCodeForm.codeName" style="width: 300px"></el-input>
@@ -252,12 +254,14 @@
         </el-form-item>
       </el-form>
 
-      <code-method-c-u-d-form ref="CUDCodeMethodForm" :CUDCodeMethodForm="CUDCodeMethodForm" :dialog="dialog"></code-method-c-u-d-form>
+      <code-method-c-u-d-form ref="CUDCodeMethodForm" :CUDCodeMethodForm="CUDCodeMethodForm"
+                              :dialog="dialog"></code-method-c-u-d-form>
       <code-parameter-c-u-d-form ref="CUDCodeParameterForm" :CUDCodeParameterForm="CUDCodeParameterForm"
                                  :dialog="dialog"
                                  :drawerData="drawerData"
       ></code-parameter-c-u-d-form>
-      <code-out-side-url-c-u-d-form ref="CUDCodeUrlForm" :CUDCodeUrlForm="CUDCodeUrlForm" :dialog="dialog"></code-out-side-url-c-u-d-form>
+      <code-out-side-url-c-u-d-form ref="CUDCodeUrlForm" :CUDCodeUrlForm="CUDCodeUrlForm"
+                                    :dialog="dialog"></code-out-side-url-c-u-d-form>
       <span slot="footer" class="dialog-footer">
     <el-button @click="cancelDialog">取 消</el-button>
     <el-button type="primary" @click="doCodeParameterCUD">确 定</el-button>
@@ -305,15 +309,15 @@
         CUDCodeMethodForm: {
           methodId: "",
           methodName: "",
-          methodOrder: [{parameterName: "asdas"}],
+          methodOrders: [],
           methodResult: "",
           cudType: "",
           fromCodeId: "",
           methodUsage: "",
-          methodBasic: "",
-          methodAction: "",
-          methodType: false,
-          isOverwrite: false
+          methodBaseType: "COMMON",
+          methodActionScope: "PUBLIC",
+          methodIsOverwrite: false,
+          methodIsConstruct: false
         },
         CUDCodeParameterForm: {
           isAutowire: "",
@@ -572,10 +576,10 @@
           data: this.CUDCodeMethodForm
         }).then(res => {
           if (res.data.success) {
-            this.$message.success(res.data.msg)
-            this.dialog.dialogVisible = false
-            this.$refs["CUDCodeMethodForm"].resetField()
-            this.codeMethodListQuery(this.drawerData.codeId)
+            this.$message.success(res.data.msg);
+            this.dialog.dialogVisible = false;
+            this.codeMethodListQuery(this.drawerData.codeId);
+            this.$refs["CUDCodeMethodForm"].reset();
           } else {
             this.$message.error(res.data.msg)
           }
@@ -665,16 +669,16 @@
 
       cancelDialog() {
         this.doSearch()
-        if(this.dialog.dialogType == "CODE"){
+        if (this.dialog.dialogType == "CODE") {
           this.$refs["CUDCodeForm"].reset()
         }
-        if(this.dialog.dialogType == "METHOD"){
+        if (this.dialog.dialogType == "METHOD") {
           this.$refs["CUDCodeMethodForm"].reset()
         }
-        if(this.dialog.dialogType == "PARAMETER"){
+        if (this.dialog.dialogType == "PARAMETER") {
           this.$refs["CUDCodeParameterForm"].reset()
         }
-        if(this.dialog.dialogType == "URL"){
+        if (this.dialog.dialogType == "URL") {
           this.$refs["CUDCodeUrlForm"].reset()
         }
         this.dialog.dialogVisible = false
