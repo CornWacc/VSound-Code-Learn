@@ -1,32 +1,46 @@
 package com.corn.vsound.facade.code.order;
 
-import com.corn.boot.annotations.CudParamsCheck;
 import com.corn.boot.base.strategy.CUDOrder;
-import com.corn.boot.enums.CudTypeEnum;
+import com.corn.vsound.facade.code.info.CodeMethodOrderInfo;
+import com.corn.vsound.facade.enums.ActionScopeEnum;
+import com.corn.vsound.facade.enums.CodeMethodBaseTypeEnum;
+import com.corn.vsound.facade.enums.YNEnum;
+
+import java.util.List;
 
 public class CodeMethodCUDOrder extends CUDOrder {
 
     private static final long serialVersionUID = -2585905066420707215L;
 
-    @CudParamsCheck(cudTypes = {CudTypeEnum.UPDATE,CudTypeEnum.DELETE},errorMsg = "方法id不能为空")
     private String methodId;
 
-    @CudParamsCheck(cudTypes = {CudTypeEnum.CREATE},errorMsg = "方法名称不能为空")
     private String methodName;
 
     private String methodUsage;
 
-    private String methodNotice;
-
-    private String methodOrder;
-
     private String methodResult;
 
-    private String isAbstract;
+    private CodeMethodBaseTypeEnum methodBaseType;
 
-    private String methodCommonUse;
+    private YNEnum methodCommonUse;
+
+    private YNEnum methodIsOverwrite;
+
+    private YNEnum methodIsConstruct;
+
+    private ActionScopeEnum methodActionScope;
 
     private String fromCodeId;
+
+    private List<CodeMethodOrderInfo> methodOrders;
+
+    public List<CodeMethodOrderInfo> getMethodOrders() {
+        return methodOrders;
+    }
+
+    public void setMethodOrders(List<CodeMethodOrderInfo> methodOrders) {
+        this.methodOrders = methodOrders;
+    }
 
     public String getMethodId() {
         return methodId;
@@ -52,22 +66,6 @@ public class CodeMethodCUDOrder extends CUDOrder {
         this.methodUsage = methodUsage;
     }
 
-    public String getMethodNotice() {
-        return methodNotice;
-    }
-
-    public void setMethodNotice(String methodNotice) {
-        this.methodNotice = methodNotice;
-    }
-
-    public String getMethodOrder() {
-        return methodOrder;
-    }
-
-    public void setMethodOrder(String methodOrder) {
-        this.methodOrder = methodOrder;
-    }
-
     public String getMethodResult() {
         return methodResult;
     }
@@ -76,20 +74,44 @@ public class CodeMethodCUDOrder extends CUDOrder {
         this.methodResult = methodResult;
     }
 
-    public String getIsAbstract() {
-        return isAbstract;
+    public CodeMethodBaseTypeEnum getMethodBaseType() {
+        return methodBaseType;
     }
 
-    public void setIsAbstract(String isAbstract) {
-        this.isAbstract = isAbstract;
+    public void setMethodBaseType(CodeMethodBaseTypeEnum methodBaseType) {
+        this.methodBaseType = methodBaseType;
     }
 
-    public String getMethodCommonUse() {
+    public YNEnum getMethodCommonUse() {
         return methodCommonUse;
     }
 
-    public void setMethodCommonUse(String methodCommonUse) {
+    public void setMethodCommonUse(YNEnum methodCommonUse) {
         this.methodCommonUse = methodCommonUse;
+    }
+
+    public YNEnum getMethodIsOverwrite() {
+        return methodIsOverwrite;
+    }
+
+    public void setMethodIsOverwrite(YNEnum methodIsOverwrite) {
+        this.methodIsOverwrite = methodIsOverwrite;
+    }
+
+    public YNEnum getMethodIsConstruct() {
+        return methodIsConstruct;
+    }
+
+    public void setMethodIsConstruct(YNEnum methodIsConstruct) {
+        this.methodIsConstruct = methodIsConstruct;
+    }
+
+    public ActionScopeEnum getMethodActionScope() {
+        return methodActionScope;
+    }
+
+    public void setMethodActionScope(ActionScopeEnum methodActionScope) {
+        this.methodActionScope = methodActionScope;
     }
 
     public String getFromCodeId() {

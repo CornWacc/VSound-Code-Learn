@@ -7,6 +7,7 @@ package com.corn.vsound.facade.enums;
  */
 public enum CodeMethodBaseTypeEnum  {
 
+    COMMON("COMMON","正常"),
     ABSTRACT("ABSTRACT","抽象方法"),
     STATIC("STATIC","静态方法");
 

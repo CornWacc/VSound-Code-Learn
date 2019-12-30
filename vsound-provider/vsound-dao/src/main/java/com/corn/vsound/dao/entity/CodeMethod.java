@@ -1,5 +1,9 @@
 package com.corn.vsound.dao.entity;
 
+import com.corn.vsound.facade.enums.ActionScopeEnum;
+import com.corn.vsound.facade.enums.CodeMethodBaseTypeEnum;
+import com.corn.vsound.facade.enums.YNEnum;
+
 import java.util.Date;
 
 public class CodeMethod {
@@ -13,15 +17,15 @@ public class CodeMethod {
 
     private String methodResult;
 
-    private String methoidBaseType;
+    private CodeMethodBaseTypeEnum methodBaseType;
 
-    private String methodCommonUse;
+    private YNEnum methodCommonUse;
 
-    private String methodIsOverwrite;
+    private YNEnum methodIsOverwrite;
 
-    private String methodIsConstruct;
+    private YNEnum methodIsConstruct;
 
-    private String methodActionScope;
+    private ActionScopeEnum methodActionScope;
 
     private String fromCodeId;
 
@@ -69,44 +73,44 @@ public class CodeMethod {
         this.methodResult = methodResult == null ? null : methodResult.trim();
     }
 
-    public String getMethoidBaseType() {
-        return methoidBaseType;
+    public CodeMethodBaseTypeEnum getMethodBaseType() {
+        return methodBaseType;
     }
 
-    public void setMethoidBaseType(String methoidBaseType) {
-        this.methoidBaseType = methoidBaseType == null ? null : methoidBaseType.trim();
+    public void setMethodBaseType(CodeMethodBaseTypeEnum methodBaseType) {
+        this.methodBaseType = methodBaseType;
     }
 
-    public String getMethodCommonUse() {
+    public YNEnum getMethodCommonUse() {
         return methodCommonUse;
     }
 
-    public void setMethodCommonUse(String methodCommonUse) {
-        this.methodCommonUse = methodCommonUse == null ? null : methodCommonUse.trim();
+    public void setMethodCommonUse(YNEnum methodCommonUse) {
+        this.methodCommonUse = methodCommonUse;
     }
 
-    public String getMethodIsOverwrite() {
+    public YNEnum getMethodIsOverwrite() {
         return methodIsOverwrite;
     }
 
-    public void setMethodIsOverwrite(String methodIsOverwrite) {
-        this.methodIsOverwrite = methodIsOverwrite == null ? null : methodIsOverwrite.trim();
+    public void setMethodIsOverwrite(YNEnum methodIsOverwrite) {
+        this.methodIsOverwrite = methodIsOverwrite;
     }
 
-    public String getMethodIsConstruct() {
+    public YNEnum getMethodIsConstruct() {
         return methodIsConstruct;
     }
 
-    public void setMethodIsConstruct(String methodIsConstruct) {
-        this.methodIsConstruct = methodIsConstruct == null ? null : methodIsConstruct.trim();
+    public void setMethodIsConstruct(YNEnum methodIsConstruct) {
+        this.methodIsConstruct = methodIsConstruct;
     }
 
-    public String getMethodActionScope() {
+    public ActionScopeEnum getMethodActionScope() {
         return methodActionScope;
     }
 
-    public void setMethodActionScope(String methodActionScope) {
-        this.methodActionScope = methodActionScope == null ? null : methodActionScope.trim();
+    public void setMethodActionScope(ActionScopeEnum methodActionScope) {
+        this.methodActionScope = methodActionScope;
     }
 
     public String getFromCodeId() {

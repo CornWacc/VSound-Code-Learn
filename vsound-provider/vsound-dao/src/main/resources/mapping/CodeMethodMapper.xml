@@ -7,7 +7,7 @@
     <result column="method_name" property="methodName" jdbcType="VARCHAR" />
     <result column="method_usage" property="methodUsage" jdbcType="VARCHAR" />
     <result column="method_result" property="methodResult" jdbcType="VARCHAR" />
-    <result column="methoid_base_type" property="methoidBaseType" jdbcType="VARCHAR" />
+    <result column="method_base_type" property="methodBaseTypee" jdbcType="VARCHAR" />
     <result column="method_common_use" property="methodCommonUse" jdbcType="VARCHAR" />
     <result column="method_is_overwrite" property="methodIsOverwrite" jdbcType="CHAR" />
     <result column="method_is_construct" property="methodIsConstruct" jdbcType="CHAR" />
@@ -17,7 +17,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    method_id, method_name, method_usage, method_result, methoid_base_type, method_common_use,
+    method_id, method_name, method_usage, method_result, method_base_type, method_common_use,
     method_is_overwrite, method_is_construct, method_action_scope, from_code_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -32,12 +32,12 @@
   </delete>
   <insert id="insert" parameterType="com.corn.vsound.dao.entity.CodeMethod" >
     insert into code_method (id, method_id, method_name, 
-      method_usage, method_result, methoid_base_type, 
+      method_usage, method_result, method_base_type, 
       method_common_use, method_is_overwrite, method_is_construct, 
       method_action_scope, from_code_id, create_time, 
       update_time)
     values (#{id,jdbcType=INTEGER}, #{methodId,jdbcType=VARCHAR}, #{methodName,jdbcType=VARCHAR}, 
-      #{methodUsage,jdbcType=VARCHAR}, #{methodResult,jdbcType=VARCHAR}, #{methoidBaseType,jdbcType=VARCHAR}, 
+      #{methodUsage,jdbcType=VARCHAR}, #{methodResult,jdbcType=VARCHAR}, #{methodBaseType,jdbcType=VARCHAR}, 
       #{methodCommonUse,jdbcType=VARCHAR}, #{methodIsOverwrite,jdbcType=CHAR}, #{methodIsConstruct,jdbcType=CHAR}, 
       #{methodActionScope,jdbcType=VARCHAR}, #{fromCodeId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP})
@@ -60,8 +60,8 @@
       <if test="methodResult != null" >
         method_result,
       </if>
-      <if test="methoidBaseType != null" >
-        methoid_base_type,
+      <if test="methodBaseType != null" >
+        method_base_type,
       </if>
       <if test="methodCommonUse != null" >
         method_common_use,
@@ -101,8 +101,8 @@
       <if test="methodResult != null" >
         #{methodResult,jdbcType=VARCHAR},
       </if>
-      <if test="methoidBaseType != null" >
-        #{methoidBaseType,jdbcType=VARCHAR},
+      <if test="methodBaseType != null" >
+        #{methodBaseType,jdbcType=VARCHAR},
       </if>
       <if test="methodCommonUse != null" >
         #{methodCommonUse,jdbcType=VARCHAR},
@@ -139,8 +139,8 @@
       <if test="methodResult != null" >
         method_result = #{methodResult,jdbcType=VARCHAR},
       </if>
-      <if test="methoidBaseType != null" >
-        methoid_base_type = #{methoidBaseType,jdbcType=VARCHAR},
+      <if test="methodBaseType != null" >
+        method_base_type = #{methodBaseType,jdbcType=VARCHAR},
       </if>
       <if test="methodCommonUse != null" >
         method_common_use = #{methodCommonUse,jdbcType=VARCHAR},
@@ -172,7 +172,7 @@
       method_name = #{methodName,jdbcType=VARCHAR},
       method_usage = #{methodUsage,jdbcType=VARCHAR},
       method_result = #{methodResult,jdbcType=VARCHAR},
-      methoid_base_type = #{methoidBaseType,jdbcType=VARCHAR},
+      method_base_type = #{methodBaseType,jdbcType=VARCHAR},
       method_common_use = #{methodCommonUse,jdbcType=VARCHAR},
       method_is_overwrite = #{methodIsOverwrite,jdbcType=CHAR},
       method_is_construct = #{methodIsConstruct,jdbcType=CHAR},

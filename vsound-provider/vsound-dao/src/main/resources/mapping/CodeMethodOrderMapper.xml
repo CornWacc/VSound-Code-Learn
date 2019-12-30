@@ -6,13 +6,12 @@
     <result column="code_method_order_id" property="codeMethodOrderId" jdbcType="VARCHAR" />
     <result column="code_method_order_name" property="codeMethodOrderName" jdbcType="VARCHAR" />
     <result column="code_method_order_class_type" property="codeMethodOrderClassType" jdbcType="VARCHAR" />
-    <result column="code_method_order_type" property="codeMethodOrderType" jdbcType="VARCHAR" />
     <result column="code_method_id" property="codeMethodId" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, code_method_order_id, code_method_order_name, code_method_order_class_type, code_method_order_type, 
+    id, code_method_order_id, code_method_order_name, code_method_order_class_type,
     code_method_id, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -50,9 +49,6 @@
       <if test="codeMethodOrderClassType != null" >
         code_method_order_class_type,
       </if>
-      <if test="codeMethodOrderType != null" >
-        code_method_order_type,
-      </if>
       <if test="codeMethodId != null" >
         code_method_id,
       </if>
@@ -75,9 +71,6 @@
       </if>
       <if test="codeMethodOrderClassType != null" >
         #{codeMethodOrderClassType,jdbcType=VARCHAR},
-      </if>
-      <if test="codeMethodOrderType != null" >
-        #{codeMethodOrderType,jdbcType=VARCHAR},
       </if>
       <if test="codeMethodId != null" >
         #{codeMethodId,jdbcType=VARCHAR},
@@ -102,9 +95,6 @@
       <if test="codeMethodOrderClassType != null" >
         code_method_order_class_type = #{codeMethodOrderClassType,jdbcType=VARCHAR},
       </if>
-      <if test="codeMethodOrderType != null" >
-        code_method_order_type = #{codeMethodOrderType,jdbcType=VARCHAR},
-      </if>
       <if test="codeMethodId != null" >
         code_method_id = #{codeMethodId,jdbcType=VARCHAR},
       </if>
@@ -122,10 +112,22 @@
     set code_method_order_id = #{codeMethodOrderId,jdbcType=VARCHAR},
       code_method_order_name = #{codeMethodOrderName,jdbcType=VARCHAR},
       code_method_order_class_type = #{codeMethodOrderClassType,jdbcType=VARCHAR},
-      code_method_order_type = #{codeMethodOrderType,jdbcType=VARCHAR},
       code_method_id = #{codeMethodId,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <insert id="batchInsert">
+    insert into code_method_order
+    (code_method_order_id, code_method_order_name, code_method_order_class_type,
+    code_method_id, create_time)
+    <foreach collection="orderList" item="item" open="values(" close=")" separator=",">
+      #{item.codeMethodOrderId},
+      #{item.codeMethodOrderName},
+      #{item.codeMethodOrderClassType},
+      #{item.codeMethodId},
+      #{item.createTime}
+    </foreach>
+  </insert>
 </mapper>

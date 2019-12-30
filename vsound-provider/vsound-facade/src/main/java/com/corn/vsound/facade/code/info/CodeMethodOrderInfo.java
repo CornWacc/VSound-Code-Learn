@@ -2,6 +2,8 @@ package com.corn.vsound.facade.code.info;
 
 import com.corn.boot.base.pojobase.Base;
 
+import java.util.Date;
+
 /**
  * @author yyc
  * @apiNote 方法入参实体
@@ -27,14 +29,19 @@ public class CodeMethodOrderInfo extends Base {
     private String codeMethodOrderClassType;
 
     /**
-     * 方法入参类型
-     * */
-    private String codeMethodOrderType;
-
-    /**
      * 所属方法id
      * */
     private String codeMethodId;
+
+    private Date createTime;
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     public String getCodeMethodOrderId() {
         return codeMethodOrderId;
@@ -58,14 +65,6 @@ public class CodeMethodOrderInfo extends Base {
 
     public void setCodeMethodOrderClassType(String codeMethodOrderClassType) {
         this.codeMethodOrderClassType = codeMethodOrderClassType;
-    }
-
-    public String getCodeMethodOrderType() {
-        return codeMethodOrderType;
-    }
-
-    public void setCodeMethodOrderType(String codeMethodOrderType) {
-        this.codeMethodOrderType = codeMethodOrderType;
     }
 
     public String getCodeMethodId() {
