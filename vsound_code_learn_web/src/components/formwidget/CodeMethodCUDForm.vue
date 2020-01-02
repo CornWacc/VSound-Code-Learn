@@ -53,7 +53,7 @@
 
     <el-dialog title="参数列表" :visible.sync="methodParamesDialog.isShow" :modal="false" width="50%">
       <el-table
-        :data="CUDCodeMethodForm.methodOrders"
+        :data="CUDCodeMethodForm.orderList"
         border
         style="width: 100%">
         <el-table-column
@@ -128,7 +128,7 @@
        * 新增一个方法入参的输入框
        * */
       addMethodOrderInput() {
-        this.CUDCodeMethodForm.methodOrders.push({})
+        this.CUDCodeMethodForm.orderList.push({})
       },
 
       /**

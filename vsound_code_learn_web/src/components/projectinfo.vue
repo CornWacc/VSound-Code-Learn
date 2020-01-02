@@ -117,12 +117,12 @@
                   <el-table-column
                     label="基础属性"
                     align="center"
-                    prop="methodBasicType">
+                    prop="methodBaseType">
                   </el-table-column>
                   <el-table-column
                     label="作用域"
                     align="center"
-                    prop="methodAction">
+                    prop="methodActionScope">
                   </el-table-column>
                   <el-table-column
                     label="是否常用"
@@ -132,7 +132,7 @@
                   <el-table-column label="详情" align="center">
                     <template slot-scope="scope">
                       <el-button size="mini" type="primary" v-if="scope.row.type !== 'new'"
-                                 @click="">查看详情
+                                 @click="updateCodeParameters(scope.row,type = 'METHOD')">查看详情
                       </el-button>
                     </template>
                   </el-table-column>
@@ -309,13 +309,13 @@
         CUDCodeMethodForm: {
           methodId: "",
           methodName: "",
-          methodOrders: [],
+          orderList: [],
           methodResult: "",
           cudType: "",
           fromCodeId: "",
           methodUsage: "",
-          methodBaseType: "COMMON",
-          methodActionScope: "PUBLIC",
+          methodBaseType: "",
+          methodActionScope: "",
           methodIsOverwrite: false,
           methodIsConstruct: false
         },
@@ -443,7 +443,11 @@
           url: this.Globel.requestUrl + "/code/codeDetailQuery?codeId=" + row.codeId,
           method: "GET",
         }).then(res => {
-          this.drawerData = res.data.data
+          if(res.data.success){
+            this.drawerData = res.data.data
+          }else{
+            this.$message.error(res.data.msg)
+          }
         })
       },
 
