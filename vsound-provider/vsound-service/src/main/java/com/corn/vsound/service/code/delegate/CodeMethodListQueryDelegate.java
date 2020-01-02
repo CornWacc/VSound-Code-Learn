@@ -2,6 +2,7 @@ package com.corn.vsound.service.code.delegate;
 
 import com.corn.boot.base.AbstractBizService;
 import com.corn.boot.error.BizError;
+import com.corn.vsound.dao.dto.CodeMethodOrderDto;
 import com.corn.vsound.dao.entity.CodeMethod;
 import com.corn.vsound.dao.mapper.CodeMethodMapper;
 import com.corn.vsound.facade.code.info.CodeMethodInfo;
@@ -39,14 +40,16 @@ public class CodeMethodListQueryDelegate extends AbstractBizService<CodeMethodLi
     @Override
     protected void appBiz(CodeMethodListQueryOrder order, CodeMethodListQueryResult result) {
 
-        List<CodeMethod> codeMethodList = codeMethodMapper.findCodeMethodListByCodeId(order.getCodeId());
+        List<CodeMethodOrderDto> codeMethodList = codeMethodMapper.findCodeMethodListByCodeId(order.getCodeId());
         if(!ObjectUtils.isEmpty(codeMethodList)){
             List<CodeMethodInfo> codeMethodInfos = new ArrayList<>();
-            for(CodeMethod codeMethod : codeMethodList){
+            for(CodeMethodOrderDto codeMethod : codeMethodList){
                 CodeMethodInfo codeMethodInfo = new CodeMethodInfo();
                 BeanCopier.create(CodeMethod.class,CodeMethodInfo.class,false).copy(codeMethod,codeMethodInfo,null);
                 codeMethodInfos.add(codeMethodInfo);
             }
+
+
             result.setCodeMethodInfoList(codeMethodInfos);
         }else{
             result.setCodeMethodInfoList(new ArrayList<>());

@@ -1,6 +1,7 @@
-package com.corn.vsound.facade.code.info;
+package com.corn.vsound.dao.dto;
 
 import com.corn.boot.base.pojobase.Base;
+import com.corn.vsound.dao.info.CodeMethodOrderDtoInfo;
 import com.corn.vsound.facade.enums.ActionScopeEnum;
 import com.corn.vsound.facade.enums.CodeMethodBaseTypeEnum;
 import com.corn.vsound.facade.enums.YNEnum;
@@ -9,66 +10,32 @@ import java.util.List;
 
 /**
  * @author yyc
- * @apiNote 源码方法实体
- * */
-public class CodeMethodInfo extends Base {
+ * @apiNote 方法与入参对应DTO
+ * @createTime 2020/1/2
+ */
+public class CodeMethodOrderDto extends Base {
 
-    private static final long serialVersionUID = 6567091441455143861L;
-
-    /**
-     * 方法id
-     * */
     private String methodId;
 
-    /**
-     * 方法名称
-     * */
     private String methodName;
 
-    /**
-     * 方法使用方式(注释)
-     * */
     private String methodUsage;
 
-    /**
-     * 方法返回参数
-     * */
     private String methodResult;
 
-    /**
-     * 方法基础类型
-     * */
     private CodeMethodBaseTypeEnum methodBaseType;
 
-    /**
-     * 方法是否常用
-     * */
     private YNEnum methodCommonUse;
 
-    /**
-     * 方法是否为构造方法
-     * */
-    private YNEnum methodIsConstruct;
-
-    /**
-     * 方法是否重写
-     * */
     private YNEnum methodIsOverwrite;
 
-    /**
-     * 方法作用域
-     * */
+    private YNEnum methodIsConstruct;
+
     private ActionScopeEnum methodActionScope;
 
-    /**
-     * 所属源码id
-     * */
     private String fromCodeId;
 
-    /**
-     * 方法入参
-     * */
-    private List<CodeMethodOrderInfo> orderList;
+    private List<CodeMethodOrderDtoInfo> orderList;
 
     public String getMethodId() {
         return methodId;
@@ -118,20 +85,20 @@ public class CodeMethodInfo extends Base {
         this.methodCommonUse = methodCommonUse;
     }
 
-    public YNEnum getMethodIsConstruct() {
-        return methodIsConstruct;
-    }
-
-    public void setMethodIsConstruct(YNEnum methodIsConstruct) {
-        this.methodIsConstruct = methodIsConstruct;
-    }
-
     public YNEnum getMethodIsOverwrite() {
         return methodIsOverwrite;
     }
 
     public void setMethodIsOverwrite(YNEnum methodIsOverwrite) {
         this.methodIsOverwrite = methodIsOverwrite;
+    }
+
+    public YNEnum getMethodIsConstruct() {
+        return methodIsConstruct;
+    }
+
+    public void setMethodIsConstruct(YNEnum methodIsConstruct) {
+        this.methodIsConstruct = methodIsConstruct;
     }
 
     public ActionScopeEnum getMethodActionScope() {
@@ -150,11 +117,11 @@ public class CodeMethodInfo extends Base {
         this.fromCodeId = fromCodeId;
     }
 
-    public List<CodeMethodOrderInfo> getOrderList() {
+    public List<CodeMethodOrderDtoInfo> getOrderList() {
         return orderList;
     }
 
-    public void setOrderList(List<CodeMethodOrderInfo> orderList) {
+    public void setOrderList(List<CodeMethodOrderDtoInfo> orderList) {
         this.orderList = orderList;
     }
 }

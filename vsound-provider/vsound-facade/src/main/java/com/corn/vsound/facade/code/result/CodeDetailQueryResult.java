@@ -7,18 +7,19 @@ import com.corn.vsound.facade.code.info.CodeParameterInfo;
 
 import java.util.List;
 
+/**
+ * @author yyc
+ * @apiNote 源码详情查看出参
+ * */
 public class CodeDetailQueryResult extends BaseRes {
+
     private static final long serialVersionUID = -8279680553541657492L;
 
     private String codeName;
 
     private String codeId;
 
-    private String usePosition;
-
     private String codeRemark;
-
-    private Integer codeLevel;
 
     private String codeType;
 
@@ -68,28 +69,12 @@ public class CodeDetailQueryResult extends BaseRes {
         this.codeId = codeId;
     }
 
-    public String getUsePosition() {
-        return usePosition;
-    }
-
-    public void setUsePosition(String usePosition) {
-        this.usePosition = usePosition;
-    }
-
     public String getCodeRemark() {
         return codeRemark;
     }
 
     public void setCodeRemark(String codeRemark) {
         this.codeRemark = codeRemark;
-    }
-
-    public Integer getCodeLevel() {
-        return codeLevel;
-    }
-
-    public void setCodeLevel(Integer codeLevel) {
-        this.codeLevel = codeLevel;
     }
 
     public List<CodeMethodInfo> getCodeMethodInfoList() {

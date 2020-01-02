@@ -2,6 +2,7 @@ package com.corn.vsound.service.code.delegate;
 
 import com.corn.boot.base.AbstractBizService;
 import com.corn.boot.error.BizError;
+import com.corn.vsound.dao.dto.CodeMethodOrderDto;
 import com.corn.vsound.dao.entity.CodeBase;
 import com.corn.vsound.dao.entity.CodeMethod;
 import com.corn.vsound.dao.entity.CodeOutSideUrl;
@@ -15,6 +16,7 @@ import com.corn.vsound.facade.code.info.CodeOutSideUrlInfo;
 import com.corn.vsound.facade.code.info.CodeParameterInfo;
 import com.corn.vsound.facade.code.order.CodeDetailQueryOrder;
 import com.corn.vsound.facade.code.result.CodeDetailQueryResult;
+import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanCopier;
@@ -68,15 +70,15 @@ public class CodeDetailQueryDelegate extends AbstractBizService<CodeDetailQueryO
     }
 
     private List<CodeMethodInfo> getCodeMethodInfoList(String codeId){
-        List<CodeMethod> codeMethods = codeMethodMapper.findCodeMethodListByCodeId(codeId);
+        List<CodeMethodOrderDto> codeMethods = codeMethodMapper.findCodeMethodListByCodeId(codeId);
         if(ObjectUtils.isEmpty(codeMethods)){
             return new ArrayList<>();
         }
-
+        System.out.println(new Gson().toJson(codeMethods));
         List<CodeMethodInfo> codeMethodInfos = new ArrayList<>();
-        for(CodeMethod codeMethod : codeMethods){
+        for(CodeMethodOrderDto codeMethod : codeMethods){
             CodeMethodInfo codeMethodInfo = new CodeMethodInfo();
-            BeanCopier.create(CodeMethod.class,CodeMethodInfo.class,false).copy(codeMethod,codeMethodInfo,null);
+            BeanCopier.create(CodeMethodOrderDto.class,CodeMethodInfo.class,false).copy(codeMethod,codeMethodInfo,null);
             codeMethodInfos.add(codeMethodInfo);
         }
         return codeMethodInfos;

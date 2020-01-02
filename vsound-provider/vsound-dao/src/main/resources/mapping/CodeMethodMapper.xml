@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.corn.vsound.dao.mapper.CodeMethodMapper" >
+
   <resultMap id="BaseResultMap" type="com.corn.vsound.dao.entity.CodeMethod" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="method_id" property="methodId" jdbcType="VARCHAR" />
+    <result column="method_id" property="methodId" jdbcType="VARCHAR" javaType="String" />
     <result column="method_name" property="methodName" jdbcType="VARCHAR" />
     <result column="method_usage" property="methodUsage" jdbcType="VARCHAR" />
     <result column="method_result" property="methodResult" jdbcType="VARCHAR" />
-    <result column="method_base_type" property="methodBaseTypee" jdbcType="VARCHAR" />
+    <result column="method_base_type" property="methodBaseType" jdbcType="VARCHAR" />
     <result column="method_common_use" property="methodCommonUse" jdbcType="VARCHAR" />
     <result column="method_is_overwrite" property="methodIsOverwrite" jdbcType="CHAR" />
     <result column="method_is_construct" property="methodIsConstruct" jdbcType="CHAR" />
@@ -16,6 +17,27 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
+
+  <resultMap id="CodeMethodOrderResultMap" type="com.corn.vsound.dao.dto.CodeMethodOrderDto">
+    <result column="method_id" property="methodId" jdbcType="VARCHAR" javaType="String" />
+    <result column="method_name" property="methodName" jdbcType="VARCHAR" />
+    <result column="method_usage" property="methodUsage" jdbcType="VARCHAR" />
+    <result column="method_result" property="methodResult" jdbcType="VARCHAR" />
+    <result column="method_base_type" property="methodBaseType" jdbcType="VARCHAR" />
+    <result column="method_common_use" property="methodCommonUse" jdbcType="VARCHAR" />
+    <result column="method_is_overwrite" property="methodIsOverwrite" jdbcType="CHAR" />
+    <result column="method_is_construct" property="methodIsConstruct" jdbcType="CHAR" />
+    <result column="method_action_scope" property="methodActionScope" jdbcType="VARCHAR" />
+    <result column="from_code_id" property="fromCodeId" jdbcType="VARCHAR" />
+    <collection column="code_method_id" property="orderList" ofType="com.corn.vsound.dao.info.CodeMethodOrderDtoInfo">
+      <result column="code_method_order_id" property="codeMethodOrderId" jdbcType="VARCHAR"></result>
+      <result column="code_method_order_name" property="codeMethodOrderName" jdbcType="VARCHAR"></result>
+      <result column="code_method_order_class_type" property="codeMethodOrderClassType" jdbcType="VARCHAR"></result>
+      <result column="code_method_order_type" property="codeMethodOrderType" jdbcType="VARCHAR"></result>
+      <result column="code_method_id" property="codeMethodId" jdbcType="VARCHAR"></result>
+    </collection>
+  </resultMap>
+
   <sql id="Base_Column_List" >
     method_id, method_name, method_usage, method_result, method_base_type, method_common_use,
     method_is_overwrite, method_is_construct, method_action_scope, from_code_id
@@ -26,7 +48,7 @@
     from code_method
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from code_method
     where method_id = #{methodId,jdbcType=VARCHAR}
   </delete>
@@ -127,7 +149,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.corn.vsound.dao.entity.CodeMethod" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.corn.vsound.dao.dto.CodeMethodOrderDto" >
     update code_method
     <set >
       <if test="methodName != null" >
@@ -183,20 +205,50 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="findCodeMethodListByCodeId">
-    select
-    <include refid="Base_Column_List"></include>
+  <select id="findCodeMethodListByCodeId" resultMap="CodeMethodOrderResultMap">
+   select
+    cm.method_id,
+    cm.method_name,
+    cm.method_usage,
+    cm.method_result,
+    cm.method_base_type,
+    cm.method_common_use,
+    cm.method_is_overwrite,
+    cm.method_is_construct,
+    cm.method_action_scope,
+    cm.from_code_id,
+    cmo.code_method_id,
+    cmo.code_method_order_class_type,
+    cmo.code_method_order_id,
+    cmo.code_method_order_name
     from
-    code_method
+    code_method cm
+    left join
+    code_method_order cmo on cm.method_id = cmo.code_method_id
     where
-    from_code_id = #{codeId}
+    cm.from_code_id = #{codeId}
   </select>
 
-  <select id="findCodeMethodByMethodId">
+  <select id="findCodeMethodByMethodId" resultMap="CodeMethodOrderResultMap">
     select
-    <include refid="Base_Column_List"></include>
+    cm.method_id,
+    cm.method_name,
+    cm.method_usage,
+    cm.method_result,
+    cm.method_base_type,
+    cm.method_common_use,
+    cm.method_is_overwrite,
+    cm.method_is_construct,
+    cm.method_action_scope,
+    cm.from_code_id,
+    cmo.code_method_id,
+    cmo.code_method_order_class_type,
+    cmo.code_method_order_id,
+    cmo.code_method_order_name
     from
-    code_method
+    code_method cm
+    inner join
+    code_method_order cmo on cm.method_id = cmo.code_method_id
     where
     method_id = #{methodId}
   </select>

@@ -32,14 +32,14 @@ public class CodeMethodCUDOrder extends CUDOrder {
 
     private String fromCodeId;
 
-    private List<CodeMethodOrderInfo> methodOrders;
+    private List<CodeMethodOrderInfo> orderList;
 
-    public List<CodeMethodOrderInfo> getMethodOrders() {
-        return methodOrders;
+    public List<CodeMethodOrderInfo> getOrderList() {
+        return orderList;
     }
 
-    public void setMethodOrders(List<CodeMethodOrderInfo> methodOrders) {
-        this.methodOrders = methodOrders;
+    public void setOrderList(List<CodeMethodOrderInfo> orderList) {
+        this.orderList = orderList;
     }
 
     public String getMethodId() {
