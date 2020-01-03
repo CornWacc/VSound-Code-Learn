@@ -10,6 +10,7 @@ import com.corn.vsound.dao.info.CodeMethodOrderDtoInfo;
 import com.corn.vsound.dao.mapper.CodeMethodMapper;
 import com.corn.vsound.dao.mapper.CodeMethodOrderMapper;
 import com.corn.vsound.facade.code.order.CodeMethodCUDOrder;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,7 @@ public class CodeMethodUpdateStrategy implements BaseCUDInterface<CodeMethodCUDO
         BeanCopier.create(CodeMethodCUDOrder.class, CodeMethodOrderDto.class, false).copy(order, codeMethodOrderDto, null);
         codeMethodMapper.updateByPrimaryKeySelective(codeMethodOrderDto);
 
+        System.out.println(codeMethodOrderDto);
         List<CodeMethodOrderDtoInfo> codeMethodOrders  = codeMethodOrderDto.getOrderList();
         if (!ObjectUtils.isEmpty(codeMethodOrders)) {
 

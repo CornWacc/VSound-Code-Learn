@@ -1,6 +1,7 @@
 package com.corn.vsound.dao.mapper;
 
 import com.corn.vsound.dao.entity.CodeMethodOrder;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
@@ -25,4 +26,9 @@ public interface CodeMethodOrderMapper {
     @Select("select * from code_method_order where code_method_id = #{methodId}")
     @ResultMap("BaseResultMap")
     List<CodeMethodOrder> findCodeMethodOrderListByMethodId(@Param("methodId")String methodId);
+
+    int replaceMethodOrder(@Param("methodOrderList")List<CodeMethodOrder> methodOrders);
+
+    @Delete("delete from code_method_order where code_method_id = #{methodId}")
+    int batchDeleteMethodOrder(@Param("methodId")String methodId);
 }

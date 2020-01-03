@@ -6,6 +6,7 @@ import com.corn.boot.error.BizError;
 import com.corn.vsound.dao.dto.CodeMethodOrderDto;
 import com.corn.vsound.dao.entity.CodeMethod;
 import com.corn.vsound.dao.mapper.CodeMethodMapper;
+import com.corn.vsound.dao.mapper.CodeMethodOrderMapper;
 import com.corn.vsound.facade.code.order.CodeMethodCUDOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ public class CodeMethodDeleteStrategy implements BaseCUDInterface<CodeMethodCUDO
     @Autowired
     private CodeMethodMapper codeMethodMapper;
 
+    @Autowired
+    private CodeMethodOrderMapper codeMethodOrderMapper;
+
     @Override
     public void execute(CodeMethodCUDOrder order) {
 
@@ -26,5 +30,9 @@ public class CodeMethodDeleteStrategy implements BaseCUDInterface<CodeMethodCUDO
         }
 
         codeMethodMapper.deleteByPrimaryKey(order.getMethodId());
+
+        if(!ObjectUtils.isEmpty(codeMethod.getOrderList())){
+            codeMethodOrderMapper.batchDeleteMethodOrder(order.getMethodId());
+        }
     }
 }

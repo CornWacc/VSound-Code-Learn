@@ -69,14 +69,21 @@ public class CodeDetailQueryDelegate extends AbstractBizService<CodeDetailQueryO
         result.setCodeOutSideUrlInfos(getCodeOutSideUrlInfoList(codeId));
     }
 
+    /**
+     * @author yyc
+     * @apiNote 源码方法获取列表
+     * @date 2020/1/3
+     **/
     private List<CodeMethodInfo> getCodeMethodInfoList(String codeId){
-        List<CodeMethodOrderDto> codeMethods = codeMethodMapper.findCodeMethodListByCodeId(codeId);
+        List<CodeMethod> codeMethods = codeMethodMapper.findCodeMethodListByCodeId(codeId);
         if(ObjectUtils.isEmpty(codeMethods)){
             return new ArrayList<>();
         }
-        System.out.println(new Gson().toJson(codeMethods));
+
+        List<CodeMethodOrderDto> dtos = codeMethodMapper.findCodeMethodByMethodIds(codeMethods);
+        System.out.println(new Gson().toJson(dtos));
         List<CodeMethodInfo> codeMethodInfos = new ArrayList<>();
-        for(CodeMethodOrderDto codeMethod : codeMethods){
+        for(CodeMethodOrderDto codeMethod : dtos){
             CodeMethodInfo codeMethodInfo = new CodeMethodInfo();
             BeanCopier.create(CodeMethodOrderDto.class,CodeMethodInfo.class,false).copy(codeMethod,codeMethodInfo,null);
             codeMethodInfos.add(codeMethodInfo);
@@ -84,6 +91,11 @@ public class CodeDetailQueryDelegate extends AbstractBizService<CodeDetailQueryO
         return codeMethodInfos;
     }
 
+    /**
+     * @author yyc
+     * @apiNote 源码参数列表
+     * @date 2020/1/3
+     **/
     private List<CodeParameterInfo> getCodeParameterInfoList(String codeId){
         List<CodeParameter> codeParameters = codeParameterMapper.findCodeParameterListByCodeId(codeId);
         if(ObjectUtils.isEmpty(codeParameters)){
@@ -99,6 +111,11 @@ public class CodeDetailQueryDelegate extends AbstractBizService<CodeDetailQueryO
         return codeParameterInfos;
     }
 
+    /**
+     * @author yyc
+     * @apiNote 源码外链列表
+     * @date 2020/1/3
+     **/
     private List<CodeOutSideUrlInfo> getCodeOutSideUrlInfoList(String codeId){
         List<CodeOutSideUrl> codeOutSideUrls = codeOutSideUrlMapper.findCodeOutSideUrlByCodeId(codeId);
         if(ObjectUtils.isEmpty(codeOutSideUrls)){

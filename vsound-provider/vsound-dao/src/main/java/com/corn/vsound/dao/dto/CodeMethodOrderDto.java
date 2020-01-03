@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class CodeMethodOrderDto extends Base {
 
+    private Integer id;
+
     private String methodId;
 
     private String methodName;
@@ -36,6 +38,14 @@ public class CodeMethodOrderDto extends Base {
     private String fromCodeId;
 
     private List<CodeMethodOrderDtoInfo> orderList;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getMethodId() {
         return methodId;
@@ -123,5 +133,23 @@ public class CodeMethodOrderDto extends Base {
 
     public void setOrderList(List<CodeMethodOrderDtoInfo> orderList) {
         this.orderList = orderList;
+    }
+
+    @Override
+    public String toString() {
+        return "CodeMethodOrderDto{" +
+                "id=" + id +
+                ", methodId='" + methodId + '\'' +
+                ", methodName='" + methodName + '\'' +
+                ", methodUsage='" + methodUsage + '\'' +
+                ", methodResult='" + methodResult + '\'' +
+                ", methodBaseType=" + methodBaseType +
+                ", methodCommonUse=" + methodCommonUse +
+                ", methodIsOverwrite=" + methodIsOverwrite +
+                ", methodIsConstruct=" + methodIsConstruct +
+                ", methodActionScope=" + methodActionScope +
+                ", fromCodeId='" + fromCodeId + '\'' +
+                ", orderList=" + orderList +
+                '}';
     }
 }

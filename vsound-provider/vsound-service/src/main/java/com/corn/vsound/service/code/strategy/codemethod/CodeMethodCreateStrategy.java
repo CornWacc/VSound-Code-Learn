@@ -34,7 +34,7 @@ public class CodeMethodCreateStrategy implements BaseCUDInterface<CodeMethodCUDO
         codeMethod.setMethodId("mtd"+ DateUtils.dateForMateForConnect(new Date()));
         codeMethodMapper.insertSelective(codeMethod);
 
-        List<CodeMethodOrderInfo> codeMethodOrderInfos = order.getMethodOrders();
+        List<CodeMethodOrderInfo> codeMethodOrderInfos = order.getOrderList();
         if(!ObjectUtils.isEmpty(codeMethodOrderInfos)){
             for(CodeMethodOrderInfo info : codeMethodOrderInfos){
                 info.setCodeMethodOrderId("mord"+DateUtils.dateForMateForConnect(new Date()));

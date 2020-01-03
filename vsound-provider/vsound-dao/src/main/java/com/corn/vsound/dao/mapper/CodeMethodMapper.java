@@ -23,7 +23,7 @@ public interface CodeMethodMapper {
     /**
      * 根据所属源码id查询方法列表
      * */
-    List<CodeMethodOrderDto> findCodeMethodListByCodeId(@Param("codeId")String codeId);
+    List<CodeMethod> findCodeMethodListByCodeId(@Param("codeId")String codeId);
 
     /**
      * 根据方法id查询方法
@@ -34,4 +34,6 @@ public interface CodeMethodMapper {
      * 根据源码Ids删除对应的方法
      * */
     int deleteCodeMethodsByCodeIds(@Param("codeIds")List<String> codeIds);
+
+    List<CodeMethodOrderDto> findCodeMethodByMethodIds(@Param("methods") List<CodeMethod> codeMethods);
 }

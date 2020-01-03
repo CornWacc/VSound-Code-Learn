@@ -36,7 +36,7 @@
       <result column="code_method_order_type" property="codeMethodOrderType" jdbcType="VARCHAR"></result>
       <result column="code_method_id" property="codeMethodId" jdbcType="VARCHAR"></result>
     </collection>
-  </resultMap>
+    </resultMap>
 
   <sql id="Base_Column_List" >
     method_id, method_name, method_usage, method_result, method_base_type, method_common_use,
@@ -149,9 +149,9 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.corn.vsound.dao.dto.CodeMethodOrderDto" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.corn.vsound.dao.dto.CodeMethodOrderDto">
     update code_method
-    <set >
+    <set>
       <if test="methodName != null" >
         method_name = #{methodName,jdbcType=VARCHAR},
       </if>
@@ -179,12 +179,6 @@
       <if test="fromCodeId != null" >
         from_code_id = #{fromCodeId,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
     </set>
     where method_id = #{methodId,jdbcType=VARCHAR}
   </update>
@@ -205,7 +199,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="findCodeMethodListByCodeId" resultMap="CodeMethodOrderResultMap">
+  <select id="findCodeMethodListByCodeId" resultMap="BaseResultMap">
    select
     cm.method_id,
     cm.method_name,
@@ -216,15 +210,9 @@
     cm.method_is_overwrite,
     cm.method_is_construct,
     cm.method_action_scope,
-    cm.from_code_id,
-    cmo.code_method_id,
-    cmo.code_method_order_class_type,
-    cmo.code_method_order_id,
-    cmo.code_method_order_name
+    cm.from_code_id
     from
     code_method cm
-    left join
-    code_method_order cmo on cm.method_id = cmo.code_method_id
     where
     cm.from_code_id = #{codeId}
   </select>
@@ -247,10 +235,38 @@
     cmo.code_method_order_name
     from
     code_method cm
-    inner join
+    left join
     code_method_order cmo on cm.method_id = cmo.code_method_id
     where
     method_id = #{methodId}
+  </select>
+
+  <select id="findCodeMethodByMethodIds" resultMap="CodeMethodOrderResultMap">
+    select
+    cm.method_id,
+    cm.method_name,
+    cm.method_usage,
+    cm.method_result,
+    cm.method_base_type,
+    cm.method_common_use,
+    cm.method_is_overwrite,
+    cm.method_is_construct,
+    cm.method_action_scope,
+    cm.from_code_id,
+    cmo.code_method_id,
+    cmo.code_method_order_class_type,
+    cmo.code_method_order_id,
+    cmo.code_method_order_name
+    from
+    code_method cm
+    left join
+    code_method_order cmo on cm.method_id = cmo.code_method_id
+    where
+    cm.method_id
+    in
+    <foreach collection="methods" open="(" close=")" item="item" separator=",">
+      #{item.methodId}
+    </foreach>
   </select>
 
   <delete id="deleteCodeMethodsByCodeIds">
