@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import main from '@/components/main'
-import projectinfo from '@/components/projectinfo'
+import Main from '@/components/Main'
 Vue.use(Router)
 
 export default new Router({
@@ -9,13 +8,8 @@ export default new Router({
 
     {
       path: '/',
-      name: 'main',
-      component : main
-    },
-    {
-      path: '/projectinfo',
-      name: 'projectinfo',
-      component : projectinfo
+      name: 'Main',
+      component : Main
     },
   ]
 })
