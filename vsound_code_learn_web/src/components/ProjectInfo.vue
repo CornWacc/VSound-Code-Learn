@@ -1,13 +1,202 @@
 <template>
+  <el-container class="containers">
 
+    <el-header class="header">
+      <el-row :gutter="24" class="header_row">
+        <el-col :span="22" class="header_row_project_name">
+          <span>{{projectBase.projectName}}</span>
+        </el-col>
+        <el-col :span="1">
+          <el-button>返回主页</el-button>
+        </el-col>
+      </el-row>
+
+    </el-header>
+
+    <el-main>
+      <div class="main_base_control">
+        <el-row :gutter="24">
+          <el-col :span="6">
+            <mu-text-field :full-width="true" v-model="baseControl.codeName" placeholder="请输入源码名称..."></mu-text-field>
+          </el-col>
+          <el-col :span="6">
+            <el-select v-model="baseControl.codeType" placeholder="请选择源码类型" clearable>
+              <el-option
+                v-for="item in baseControl.codeTypes"
+                :key="item.index"
+                :label="item.label"
+                :value="item.value"
+              >
+                <span style="float: left">{{ item.label }}</span>
+                <span style="float: right; color: #8492a6;">{{ item.value }}</span>
+              </el-option>
+            </el-select>
+          </el-col>
+          <el-col :xl="{span:3}" :lg="{span:4}">
+            <el-button type="primary" style="font-weight: bolder; margin-left: -16px">搜 索 <i class="el-icon-search"></i>
+            </el-button>
+          </el-col>
+          <el-col :lg="{span:3}" :xl="{span:3}" style="margin-left: -28px">
+            <el-button type="primary" style="font-weight: bolder;">新 增 <i class="el-icon-edit"></i></el-button>
+          </el-col>
+        </el-row>
+      </div>
+
+      <el-table :data="codeList" style="width: 100%">
+        <el-table-column prop="codeId" label="源码id" align="center">
+        </el-table-column>
+        <el-table-column prop="codeName" label="源码名称" align="center">
+        </el-table-column>
+        <el-table-column prop="codeType" label="源码类型" align="center">
+          <template slot-scope="scope">
+            <el-tag>{{scope.row.codeType}}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="详情" align="center">
+          <template slot-scope="scope">
+            <el-row>
+              <el-col>
+                <mu-button small color="info" style="font-weight: bolder">查看详情</mu-button>
+              </el-col>
+            </el-row>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" align="center">
+          <template slot-scope="scope">
+            <el-row :gutter="20" style="margin-left: auto;margin-right: auto;width:80%">
+              <el-col :span="12">
+                <mu-button small color="primary">编辑
+                  <mu-icon value="edit" right></mu-icon>
+                </mu-button>
+              </el-col>
+              <el-col :span="10">
+                <mu-button small color="error">删除
+                  <mu-icon value="delete" right></mu-icon>
+                </mu-button>
+              </el-col>
+            </el-row>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-main>
+
+    <el-dialog
+      title="新增源码"
+      :visible.sync="configurationInfo.dialogIsShow"
+      width="30%"
+      :before-close="handleClose">
+      <el-form :model="codeForm" :label-position="configurationInfo.labelPosition" ref="codeForm" :label-width="100">
+        <el-form-item label="源码名称:">
+          <el-input v-model="codeForm.codeName" style="width: 70%" placeholder="请输入源码名称"></el-input>
+        </el-form-item>
+        <el-form-item label="源码类型:">
+          <el-select v-model="codeForm.codeType" placeholder="请选择源码类型" clearable>
+            <el-option
+              v-for="item in baseControl.codeTypes"
+              :key="item.index"
+              :label="item.label"
+              :value="item.value"
+            >
+              <span style="float: left">{{ item.label }}</span>
+              <span style="float: right; color: #8492a6;">{{ item.value }}</span>
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="源码备注:">
+          <el-input type="textarea" maxlength="30" show-word-limit v-model="codeForm.codeRemark" style="width: 70%" placeholder="请输入源码名称"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="configurationInfo.dialogIsShow = false">取 消</el-button>
+    <el-button type="primary" @click="configurationInfo.dialogIsShow = false">确 定</el-button></span>
+    </el-dialog>
+  </el-container>
 </template>
 
+
 <script>
-    export default {
-        name: "ProjectInfo"
-    }
+  export default {
+    name: "ProjectInfo",
+    data() {
+      return {
+        configurationInfo: {
+          dialogIsShow: true,
+          labelPosition: "left"
+        },
+        projectBase: {
+          projectId: "",
+          projectName: "测试"
+        },
+        codeList: [
+          {
+            codeId: "123",
+            codeName: "测试",
+            codeType: "CLASS"
+          }
+        ],
+        baseControl: {
+          codeName: "",
+          codeType: "",
+          codeTypes: [
+            {
+              label: "类",
+              value: "CLASS",
+              index: 1
+            },
+            {
+              label: "枚举",
+              value: "ENUM",
+              index: 2
+            },
+            {
+              label: "接口",
+              value: "INTERFACE",
+              index: 3
+            },
+            {
+              label: "注解",
+              value: "ANNOTATION",
+              index: 4
+            },
+          ]
+        },
+        codeForm:{
+          codeName:"",
+          codeType:"",
+          codeRemark:""
+        }
+      }
+    },
+    methods: {}
+  }
 </script>
 
-<style scoped>
 
+<style scoped>
+  .header {
+    border-bottom: 1px solid aquamarine;
+  }
+
+  .header_row {
+    line-height: 60px;
+    height: 60px;
+  }
+
+  .header_row_project_name {
+    font-size: 32px;
+    font-weight: bolder;
+  }
+
+  .button-wrapper {
+    text-align: center;
+  }
+
+  .mu-button {
+    margin: 8px;
+    vertical-align: top;
+  }
+
+  .main_base_control {
+    width: 48%;
+  }
 </style>

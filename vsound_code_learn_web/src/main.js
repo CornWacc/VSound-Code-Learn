@@ -8,7 +8,10 @@ import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios'
 import  Globel from './Globel'
 
+import MuseUI from 'muse-ui';
+import 'muse-ui/dist/muse-ui.css';
 
+Vue.use(MuseUI);
 Vue.use(ElementUI)
 Vue.prototype.$axios = axios
 Vue.prototype.Globel = Globel

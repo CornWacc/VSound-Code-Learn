@@ -1,5 +1,5 @@
 <template>
-  <el-container class="container">
+  <div class="containers">
     <el-header class="header">
       <el-button @click="addNewProject" round type="primary" size="small"
                  style="margin-top: 14px;width: 80px;font-size: 12px;margin-left: 30px">新 增
@@ -80,7 +80,7 @@
     <el-button type="primary" @click="addProject()">确 定</el-button>
   </span>
     </el-dialog>
-  </el-container>
+  </div>
 </template>
 
 <script>
@@ -91,7 +91,12 @@
         hideRequiredAsterisk: true,
         searchInput: "",
         disableDialog: false,
-        projectList: [],
+        projectList: [
+          {
+            projectName:"测试",
+            projectType:"JAVA"
+          }
+        ],
         addProjectForm: {
           projectName: "",
           projectType:"",
@@ -241,10 +246,11 @@
 </script>
 
 <style scoped>
-  .container {
+  .containers {
     width: 100%;
     height: 100%;
     background: linear-gradient(#F8F8FF, #BBFFFF);
+
   }
 
   .header {
@@ -297,4 +303,5 @@
   .el-input {
     width: 70%;
   }
+
 </style>
