@@ -37,7 +37,7 @@
             </el-button>
           </el-col>
           <el-col :lg="{span:3}" :xl="{span:3}" style="margin-left: -28px">
-            <el-button type="primary" style="font-weight: bolder;">新 增 <i class="el-icon-edit"></i></el-button>
+            <el-button type="primary" style="font-weight: bolder;" @click="addNewCode(cudType='CREATE')">新 增 <i class="el-icon-edit"></i></el-button>
           </el-col>
         </el-row>
       </div>
@@ -81,7 +81,7 @@
     </el-main>
 
     <el-dialog
-      title="新增源码"
+      :title="dialog.title"
       :visible.sync="configurationInfo.dialogIsShow"
       width="30%"
       :before-close="handleClose">
@@ -121,7 +121,11 @@
       return {
         configurationInfo: {
           dialogIsShow: true,
-          labelPosition: "left"
+          labelPosition: "left",
+        },
+        dialog:{
+          title:"",
+          cudType:""
         },
         projectBase: {
           projectId: "",
@@ -167,7 +171,50 @@
         }
       }
     },
-    methods: {}
+    mounted() {
+      this.$axios({
+        url:this.Globel.requestUrl+"/project/projectQuery?projectId="+this.$route.query.projectId,
+      }).then(res =>{
+        if(res.data.success){
+          this.codeList = res.data.data.codeInfoList;
+        }else{
+          this.$message.error(res.data.msg)
+        }
+      })
+    },
+    methods: {
+
+      /**
+       * dialog关闭
+       * */
+      handleClose(){
+        this.$refs["codeForm"].resetFields();
+      },
+
+      /**
+       * 打开新增源码的dialog
+       * */
+      addNewCode(){
+        this.configurationInfo.dialogIsShow = true;
+        this.dialog.title = "新增源码"
+        this.dialog.cudType = "CREATE"
+      },
+
+      /**
+       * 确认新增源码
+       * */
+      cudCode(){
+        this.$axios({
+          url:this.Globel.requestUrl+"/code/codeCUD",
+          data:this.codeForm,
+          method:"POST"
+        }).then(res =>{
+          if(res.data.success){
+            this.$message.success("操作成功")
+          }
+        })
+      }
+    }
   }
 </script>
 
