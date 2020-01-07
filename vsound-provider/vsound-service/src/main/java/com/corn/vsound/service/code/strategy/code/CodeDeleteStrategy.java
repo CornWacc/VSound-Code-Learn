@@ -42,9 +42,9 @@ public class CodeDeleteStrategy implements BaseCUDInterface<CodeCUDOrder> {
         codeBaseMapper.deleteByPrimaryKey(codeId);
 
         List<String> codeIds = Arrays.asList(codeId);
-        codeMethodMapper.deleteCodeMethodsByCodeIds(codeIds);
-        codeParameterMapper.deleteCodeParametersByCodeIds(codeIds);
-        codeOutSideUrlMapper.deleteCodeOutSideUrlsByCodeIds(codeIds);
+//        codeMethodMapper.deleteCodeMethodsByCodeIds(codeIds);
+//        codeParameterMapper.deleteCodeParametersByCodeIds(codeIds);
+//        codeOutSideUrlMapper.deleteCodeOutSideUrlsByCodeIds(codeIds);
 
     }
 

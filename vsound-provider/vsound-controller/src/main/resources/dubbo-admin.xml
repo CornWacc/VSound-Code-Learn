@@ -15,12 +15,12 @@
     <dubbo:metadata-report address="zookeeper://${zookeeper.host}"></dubbo:metadata-report>
 
     <!-- 用dubbo协议在20880端口暴露服务 -->
-    <dubbo:protocol name="dubbo" port="20883"/>
+    <dubbo:protocol name="dubbo" port="20884"/>
 
-    <dubbo:service interface="com.corn.vsound.facade.project.ProjectFacade" version="1.0.0" id="projectService" ref="projectFacadeImpl"></dubbo:service>
+    <dubbo:service interface="com.corn.vsound.facade.project.ProjectFacade" version="1.0.1" id="projectService" ref="projectFacadeImpl"></dubbo:service>
     <bean id="projectFacadeImpl" class="com.corn.vsound.service.project.ProjectFacadeImpl"></bean>
 
-    <dubbo:service interface="com.corn.vsound.facade.code.CodeFacade" version="1.0.0" id="codeFacade" ref="codeFacadeImpl"></dubbo:service>
+    <dubbo:service interface="com.corn.vsound.facade.code.CodeFacade" version="1.0.1" id="codeFacade" ref="codeFacadeImpl"></dubbo:service>
     <bean id="codeFacadeImpl" class="com.corn.vsound.service.code.CodeFacadeImpl"></bean>
 
 </beans>
