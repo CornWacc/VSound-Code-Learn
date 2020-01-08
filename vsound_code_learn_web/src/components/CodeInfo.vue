@@ -2,11 +2,14 @@
   <el-container class="containers">
     <el-header class="header">
       <el-row :gutter="24" class="header_row">
-        <el-col :span="22" class="header_row_project_name">
+        <el-col :span="20" class="header_row_project_name">
           <span>{{codeBase.codeName}}</span>
         </el-col>
+        <el-col :span="2">
+          <mu-button @click="toMain" color="#82A6F5" small>源码列表</mu-button>
+        </el-col>
         <el-col :span="1">
-          <el-button @click="toMain" type="primary" size="medium">返回主页</el-button>
+          <mu-button @click="toMain" color="#82A6F5" small>返回主页</mu-button>
         </el-col>
       </el-row>
     </el-header>
@@ -14,7 +17,7 @@
     <el-main class="main">
       <div style="margin-bottom: 10px">
         <p style="font-size: 20px;;margin-bottom: 4px">源码参数:</p>
-        <mu-button small color="#008B8B">新增</mu-button>
+        <mu-button small color="#008B8B" @click="cudDialogShow('CREATE','PARAMETER')">新增</mu-button>
       </div>
 
       <el-table :data="codeBase.codeParameterInfos">
@@ -24,12 +27,24 @@
         <el-table-column align="center" label="是否为常量" prop="isFinal"></el-table-column>
         <el-table-column align="center" label="是否Autowire引入" prop="isAutowire"></el-table-column>
         <el-table-column align="center" label="参数类型是否为接口" prop="isInterface"></el-table-column>
+        <el-table-column align="center" label="参数备注" prop="parameterRemark">
+          <template slot-scope="scope">
+            <el-popover
+              placement="top"
+              title="备注"
+              width="240"
+              trigger="hover"
+              :content="scope.row.parameterRemark">
+              <el-button type="text" slot="reference">参数理解</el-button>
+            </el-popover>
+          </template>
+        </el-table-column>
         <el-table-column align="center" label="操作">
           <template slot-scope="scope">
-            <mu-button icon color="primary">
+            <mu-button icon color="primary" @click="cudDialogShow('UPDATE','PARAMETER',scope.row)">
               <mu-icon value="edit"></mu-icon>
             </mu-button>
-            <mu-button icon color="error">
+            <mu-button icon color="error" @click="deletStrategy('PARAMETER',scope.row)">
               <mu-icon value="delete"></mu-icon>
             </mu-button>
           </template>
@@ -38,12 +53,12 @@
 
       <div style="margin-bottom: 10px">
         <p style="font-size: 20px;margin-bottom: 4px">源码方法:</p>
-        <mu-button small color="#008B8B">新增</mu-button>
+        <mu-button small color="#008B8B" @click="cudDialogShow('CREATE','METHOD')">新增</mu-button>
       </div>
 
       <el-table :data="codeBase.codeMethodInfoList">
         <el-table-column align="center" label="方法名称" prop="methodName"></el-table-column>
-        <el-table-column align="center" label="方法返回参数" prop="methodResult"></el-table-column>
+        <el-table-column align="center" label="方法返回类型" prop="methodResult"></el-table-column>
         <el-table-column align="center" label="方法基础类型" prop="methodBaseType"></el-table-column>
         <el-table-column align="center" label="是否常用" prop="methodCommonUse"></el-table-column>
         <el-table-column align="center" label="是否为构造方法" prop="methodIsConstruct"></el-table-column>
@@ -51,10 +66,10 @@
         <el-table-column align="center" label="方法作用域" prop="methodActionScope"></el-table-column>
         <el-table-column align="center" label="操作">
           <template slot-scope="scope">
-            <mu-button icon color="primary">
+            <mu-button icon color="primary" @click="cudDialogShow('UPDATE','METHOD',scope.row)">
               <mu-icon value="edit"></mu-icon>
             </mu-button>
-            <mu-button icon color="error">
+            <mu-button icon color="error" @click="deletStrategy('METHOD',scope.row)">
               <mu-icon value="delete"></mu-icon>
             </mu-button>
           </template>
@@ -64,24 +79,39 @@
 
       <div style="margin-bottom: 10px">
         <p style="font-size: 20px;;margin-bottom: 4px">源码解析链接:</p>
-        <mu-button small color="#008B8B">新增</mu-button>
+        <mu-button small color="#008B8B" @click="cudDialogShow('CREATE','URL')">新增</mu-button>
       </div>
 
       <el-table :data="codeBase.codeOutSideUrlInfos">
-        <el-table-column align="center" label="链接id" prop="urlId"></el-table-column>
         <el-table-column align="center" label="链接地址" prop="urlPath">
           <template slot-scope="scope">
-            <el-link type="primary" :href="scope.row.urlPath">{{scope.row.urlPath}}</el-link>
+            <el-link type="primary" :href="'http://'+scope.row.urlPath" v-if="scope.row.urlPath != ''">
+              {{scope.row.urlPath}}
+            </el-link>
+            <el-input style="width: 350px" v-else v-model="scope.row.urlPath">
+              <template slot="prepend">Http://</template>
+            </el-input>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="链接备注" prop="urlRemark"></el-table-column>
+        <el-table-column align="center" label="链接备注" prop="urlRemark">
+          <template slot-scope="scope">
+            <p v-if="scope.row.urlRemark != ''">{{scope.row.urlRemark}}</p>
+            <el-input v-else v-model="scope.row.urlRemark"></el-input>
+          </template>
+        </el-table-column>
         <el-table-column align="center" label="操作">
           <template slot-scope="scope">
-            <mu-button icon color="primary">
+            <mu-button icon color="primary" v-if="scope.row.type != 'NEW'" @click="cuUrl('UPDATE',scope.row)">
               <mu-icon value="edit"></mu-icon>
             </mu-button>
-            <mu-button icon color="error">
+            <mu-button icon color="error" v-if="scope.row.type != 'NEW'" @click="deletStrategy('URL',scope.row)">
               <mu-icon value="delete"></mu-icon>
+            </mu-button>
+            <mu-button icon color="success" v-if="scope.row.type == 'NEW'" @click="saveUrl(scope.row)">
+              <mu-icon value="save"></mu-icon>
+            </mu-button>
+            <mu-button icon color="error" v-if="scope.row.type == 'NEW'" @click="cancelUrl(scope.$index)">
+              <mu-icon value="cancel"></mu-icon>
             </mu-button>
           </template>
         </el-table-column>
@@ -91,27 +121,106 @@
     <el-dialog
       :title="configurationInfo.dialog.title"
       :visible.sync="configurationInfo.dialog.dialogIsShow"
-      width="30%"
+      width="40%"
       :before-close="handleClose">
 
-      <el-form :model="cudCodeParameterForm" :label-position="configurationInfo.labelPosition"
+      <el-form :model="cudCodeParameterForm"
+               :label-position="configurationInfo.labelPosition"
                ref="cudCodeParameterForm"
-               label-width="100">
+               label-width="120px"
+               v-if="configurationInfo.dialog.type == 'PARAMETER'">
+        <el-form-item prop="parameterName" label="参数名称:">
+          <mu-text-field v-model="cudCodeParameterForm.parameterName"></mu-text-field>
+        </el-form-item>
+        <el-form-item label="参数类型:" prop="parameterType">
+          <el-select
+            v-model="cudCodeParameterForm.parameterType"
+            filterable
+            allow-create
+            default-first-option
+            placeholder="请选择参数类型">
+            <el-option
+              v-for="item in codeTypes"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="是否为常量:" prop="isFinal">
+          <el-switch v-model="cudCodeParameterForm.isFinal" active-text="Y" active-value="Y" inactive-text="N"
+                     inactive-value="N"></el-switch>
+        </el-form-item>
+        <el-form-item label="是否为引入:" prop="isAutowire">
+          <el-switch v-model="cudCodeParameterForm.isAutowire" active-text="Y" active-value="Y" inactive-text="N"
+                     inactive-value="N"></el-switch>
+        </el-form-item>
+        <el-form-item label="是否为接口:" prop="isInterface">
+          <el-switch v-model="cudCodeParameterForm.isInterface" active-text="Y" active-value="Y" inactive-text="N"
+                     inactive-value="N"></el-switch>
+        </el-form-item>
+        <el-form-item label="参数备注" prop="parameterRemark">
+          <el-input type="textarea" show-word-limit maxlength="30"
+                    v-model="cudCodeParameterForm.parameterRemark"></el-input>
+        </el-form-item>
       </el-form>
 
-      <el-form :model="cudCodeMethodForm" :label-position="configurationInfo.labelPosition" ref="cudCodeMethodForm"
-               label-width="100">
+      <el-form :model="cudCodeMethodForm"
+               :label-position="configurationInfo.labelPosition"
+               ref="cudCodeMethodForm"
+               label-width="120px"
+               v-if="configurationInfo.dialog.type == 'METHOD'">
+        <el-form-item label="方法名称:" prop="methodName">
+          <mu-text-field v-model="cudCodeMethodForm.methodName"></mu-text-field>
+        </el-form-item>
+        <el-form-item label="方法返回类型:" prop="methodResult">
+          <el-select
+            v-model="cudCodeMethodForm.methodResult"
+            filterable
+            allow-create
+            default-first-option
+            placeholder="请选择返回类型">
+            <el-option
+              v-for="item in codeTypes"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="方法作用域:" prop="methodActionScope">
+          <el-radio-group v-model="cudCodeMethodForm.methodActionScope">
+            <el-radio-button label="PUBLIC">公共可用</el-radio-button>
+            <el-radio-button label="PRIVATE">本类可用</el-radio-button>
+            <el-radio-button label="PROTECTED">子类可用</el-radio-button>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="方法基础类型:" prop="methodBaseType">
+          <el-radio-group v-model="cudCodeMethodForm.methodBaseType">
+            <el-radio label="COMMON">基本</el-radio>
+            <el-radio label="STATIC">静态方法</el-radio>
+            <el-radio label="ABSTRACT">抽象方法</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="是否常用:" prop="methodCommonUse">
+          <el-switch v-model="cudCodeMethodForm.methodCommonUse" active-text="Y" active-value="Y" inactive-text="N"
+                     inactive-value="N"></el-switch>
+        </el-form-item>
+        <el-form-item label="是否为构造方法:" prop="methodIsConstruct">
+          <el-switch v-model="cudCodeMethodForm.methodIsConstruct" active-text="Y" active-value="Y" inactive-text="N"
+                     inactive-value="N"></el-switch>
+        </el-form-item>
+        <el-form-item label="是否重写:" prop="methodIsOverwrite">
+          <el-switch v-model="cudCodeMethodForm.methodIsOverwrite" active-text="Y" active-value="Y" inactive-text="N"
+                     inactive-value="N"></el-switch>
+        </el-form-item>
+        <el-form-item label="方法备注:" prop="methodUsage">
+          <el-input type="textarea" maxlength="30" show-word-limit v-model="cudCodeMethodForm.methodUsage"></el-input>
+        </el-form-item>
       </el-form>
-
-      <el-form :model="cudCodeOutSideUrlForm" :label-position="configurationInfo.labelPosition"
-               ref="cudCodeOutSideUrlForm"
-               label-width="100">
-      </el-form>
-
-
       <span slot="footer" class="dialog-footer">
-    <el-button @click="configurationInfo.dialog.dialogIsShow = false">取 消</el-button>
-    <el-button type="primary" @click="configurationInfo.dialog.dialogIsShow = false">确 定</el-button></span>
+    <el-button @click="handleClose">取 消</el-button>
+    <el-button type="primary" @click="cudForward">确 定</el-button></span>
     </el-dialog>
 
   </el-container>
@@ -125,25 +234,72 @@
         // 配置文件info
         configurationInfo: {
           dialog: {
-            dialogIsShow: true,
+            dialogIsShow: false,
             cudType: "",
-            title:"",
-            type:""
+            title: "",
+            type: ""
           },
           labelPosition: "left"
         },
         // 源码基础信息
         codeBase: {
           codeId: "",
-          codeName: "asd",
+          codeName: "",
           codeType: "",
           codeMethodInfoList: [],
-          codeParameterInfos: [{parameterId: "123", parameterName: "123", parameterType: "CLASS", remark: "12312312"}],
+          codeParameterInfos: [],
           codeOutSideUrlInfos: []
         },
-        cudCodeParameterForm: {},
-        cudCodeMethodForm: {},
-        cudCodeOutSideUrlForm: {}
+        cudCodeParameterForm: {
+          parameterName: "",
+          parameterType: "",
+          parameterRemark: "",
+          isFinal: "",
+          isAutowire: "",
+          isInterface: "",
+          fromCodeId: this.$route.query.codeId,
+          cudType: "",
+        },
+        cudCodeMethodForm: {
+          cudType: "",
+          fromCodeId: this.$route.query.codeId,
+          methodName: "",
+          methodUsage: "",
+          methodResult: "",
+          methodBaseType: "COMMON",
+          methodCommonUse: "",
+          methodIsOverwrite: "",
+          methodIsConstruct: "",
+          methodActionScope: "PUBLIC"
+        },
+        cudCodeOutSideUrlForm: {
+          cudType: "",
+          fromCodeId: this.$route.query.codeId,
+          urlPath: "",
+          urlRemark: ""
+        },
+        codeTypes: [
+          {
+            label: "Void",
+            value: "Void"
+          },
+          {
+            label: "String",
+            value: "String"
+          },
+          {
+            label: "Integer",
+            value: "Integer"
+          },
+          {
+            label: "Double",
+            value: "Double"
+          },
+          {
+            label: "Boolean",
+            value: "Boolean"
+          },
+        ],
       }
     },
     mounted() {
@@ -169,6 +325,166 @@
       },
 
       /**
+       * cud弹出框渲染
+       * */
+      cudDialogShow(cudType, type, row) {
+        this.configurationInfo.dialog.type = type;
+        this.configurationInfo.dialog.cudType = cudType;
+
+        if (cudType == "UPDATE") {
+          if (type == 'PARAMETER') {
+            this.cudCodeParameterForm = Object.assign({}, row);
+          }
+          if (type == 'METHOD') {
+            this.cudCodeMethodForm = Object.assign({}, row);
+          }
+          if (type == 'URL') {
+            this.cudCodeOutSideUrlForm = Object.assign({}, row);
+          }
+        }
+
+        if (type == 'PARAMETER') {
+          this.configurationInfo.dialog.title = '参数' + this.cudTypeChange(cudType)
+          this.configurationInfo.dialog.dialogIsShow = true;
+        }
+        if (type == 'METHOD') {
+          this.configurationInfo.dialog.title = '方法' + this.cudTypeChange(cudType)
+        }
+        if (type == 'URL') {
+          this.codeBase.codeOutSideUrlInfos.push({
+            urlPath: "",
+            urlRemark: "",
+            type: "NEW"
+          });
+        }
+      },
+
+      /**
+       * cud类型字段转换中文
+       * */
+      cudTypeChange(cudType) {
+        if (cudType == "CREATE") {
+          return "新增";
+        }
+        if (cudType == "UPDATE") {
+          return "编辑";
+        }
+      },
+
+      /**
+       * cud转发操作
+       * */
+      cudForward() {
+        if (this.configurationInfo.dialog.type == "PARAMETER") {
+          this.cudCodeParameterForm.cudType = this.configurationInfo.dialog.cudType;
+          this.cudParameter();
+        }
+        if (this.configurationInfo.dialog.type == "METHOD") {
+          this.cudCodeMethodForm.cudType = this.configurationInfo.dialog.cudType;
+          this.cudMethod();
+        }
+        if (this.configurationInfo.dialog.type == "URL") {
+          this.cudCodeOutSideUrlForm.cudType = this.configurationInfo.dialog.cudType;
+          this.cudUrl();
+        }
+      },
+
+      /**
+       * 单独转发删除
+       * */
+      deletStrategy(type, row) {
+        console.log(type)
+        if (type == "PARAMETER") {
+          this.cudCodeParameterForm = row;
+          this.cudCodeParameterForm.cudType = "DELETE";
+          this.cudParameter();
+        }
+        if (type == "METHOD") {
+          this.cudCodeMethodForm = row;
+          this.cudCodeMethodForm.cudType = "DELETE";
+          this.cudMethod();
+        }
+        if (type == "URL") {
+          this.cudCodeOutSideUrlForm = row;
+          this.cudCodeOutSideUrlForm.cudType = "DELETE";
+          this.cudUrl();
+        }
+      },
+      /**
+       * cud参数请求
+       * */
+      cudParameter() {
+        this.$axios({
+          url: this.Globel.requestUrl + "/code/codeParameterCUD",
+          data: this.cudCodeParameterForm,
+          method: "POST"
+        }).then(res => {
+          if (res.data.success) {
+            this.configurationInfo.dialog.dialogIsShow = false;
+            this.getCodeDetail();
+            this.$refs["cudCodeParameterForm"].resetFields();
+            this.$message.success("操作成功!");
+          } else {
+            this.$message.errorr(res.data.msg);
+          }
+        })
+      },
+
+      /**
+       * cud方法请求
+       * */
+      cudMethod() {
+        this.$axios({
+          url: this.Globel.requestUrl + "/code/codeMethodCUD",
+          data: this.cudCodeMethodForm,
+          method: "POST"
+        }).then(res => {
+          if (res.data.success) {
+            this.configurationInfo.dialog.dialogIsShow = false;
+            this.getCodeDetail();
+            this.$refs["cudCodeMethodForm"].resetFields();
+            this.$message.success("操作成功!");
+          } else {
+            this.$message.error(res.data.msg);
+          }
+        })
+      },
+
+      /**
+       * cud链接请求
+       * */
+      cudUrl() {
+        this.cudCodeOutSideUrlForm.urlPath = this.cudCodeOutSideUrlForm.urlPath;
+        this.$axios({
+          url: this.Globel.requestUrl + "/code/codeOutSideUrlCUD",
+          data: this.cudCodeOutSideUrlForm,
+          method: "POST"
+        }).then(res => {
+          if (res.data.success) {
+            this.configurationInfo.dialog.dialogIsShow = false;
+            this.getCodeDetail();
+            this.$refs["cudCodeOutSideUrlForm"].resetFields();
+            this.$message.success("操作成功!");
+          } else {
+            this.$message.error(res.data.msg);
+          }
+        })
+      },
+
+      /**
+       * 保存链接
+       * */
+      saveUrl(row){
+        this.$axios({
+          url:this.Globel.requestUrl+"/code",
+          method:"POST",
+          data:this.cudCodeOutSideUrlForm
+        }).then(res =>{
+
+        })
+      },
+
+      /**
        * 返回主页
        * */
       toMain() {
@@ -176,10 +492,34 @@
       },
 
       /**
+       * 返回源码列表
+       * */
+      toCodeList() {
+        thid.$router.push({push: "/projectInfo", query: {projectId: this.$route.query.projectId}})
+      },
+
+      /**
        * 弹出框关闭回调
        * */
       handleClose() {
+        console.log(this.configurationInfo.dialog.type)
+        this.configurationInfo.dialog.dialogIsShow = false;
+        if (this.configurationInfo.dialog.type == "PARAMETER") {
+          this.$refs["cudCodeParameterForm"].resetFields();
+        }
+        if (this.configurationInfo.dialog.type == "METHOD") {
+          this.$refs["cudCodeMethodForm"].resetFields();
+        }
+        if (this.configurationInfo.dialog.type == "URL") {
+          this.$refs["cudCodeOutSideUrlForm"].resetFields();
+        }
+      },
 
+      /**
+       * 删除一个链接里面的元素
+       * */
+      cancelUrl(index) {
+        this.codeBase.codeOutSideUrlInfos.splice(index, 1)
       }
 
     }
@@ -200,6 +540,5 @@
     font-size: 30px;
     font-family: "Kaiti SC";
     font-weight: 400;
-    /*margin-left: 10px;*/
   }
 </style>

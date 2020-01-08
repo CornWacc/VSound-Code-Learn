@@ -272,7 +272,7 @@
         this.$router.push(
           {
             path: "/codeInfo",
-            query: {codeId: codeId}
+            query: {codeId: codeId,projectId:this.$route.query.projectId}
           })
       }
     }
