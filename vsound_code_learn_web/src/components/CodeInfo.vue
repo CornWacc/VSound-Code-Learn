@@ -6,7 +6,7 @@
           <span>{{codeBase.codeName}}</span>
         </el-col>
         <el-col :span="2">
-          <mu-button @click="toMain" color="#82A6F5" small>源码列表</mu-button>
+          <mu-button @click="toCodeList" color="#82A6F5" small>源码列表</mu-button>
         </el-col>
         <el-col :span="1">
           <mu-button @click="toMain" color="#82A6F5" small>返回主页</mu-button>
@@ -88,20 +88,12 @@
             <el-link type="primary" :href="'http://'+scope.row.urlPath" v-if="scope.row.urlPath != ''">
               {{scope.row.urlPath}}
             </el-link>
-            <el-input style="width: 350px" v-else v-model="scope.row.urlPath">
-              <template slot="prepend">Http://</template>
-            </el-input>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="链接备注" prop="urlRemark">
-          <template slot-scope="scope">
-            <p v-if="scope.row.urlRemark != ''">{{scope.row.urlRemark}}</p>
-            <el-input v-else v-model="scope.row.urlRemark"></el-input>
-          </template>
-        </el-table-column>
+        <el-table-column align="center" label="链接备注" prop="urlRemark"></el-table-column>
         <el-table-column align="center" label="操作">
           <template slot-scope="scope">
-            <mu-button icon color="primary" v-if="scope.row.type != 'NEW'" @click="cuUrl('UPDATE',scope.row)">
+            <mu-button icon color="primary" v-if="scope.row.type != 'NEW'" @click="cudDialogShow('UPDATE','URL',scope.row)">
               <mu-icon value="edit"></mu-icon>
             </mu-button>
             <mu-button icon color="error" v-if="scope.row.type != 'NEW'" @click="deletStrategy('URL',scope.row)">
@@ -218,6 +210,20 @@
           <el-input type="textarea" maxlength="30" show-word-limit v-model="cudCodeMethodForm.methodUsage"></el-input>
         </el-form-item>
       </el-form>
+
+      <el-form :model="cudCodeOutSideUrlForm"
+               :label-position="configurationInfo.labelPosition"
+               ref="cudCodeParameterForm"
+               label-width="120px"
+               v-if="configurationInfo.dialog.type == 'URL'">
+        <el-form-item prop="urlPath" label="链接地址:">
+          <mu-text-field v-model="cudCodeOutSideUrlForm.urlPath"></mu-text-field>
+        </el-form-item>
+        <el-form-item label="链接备注" prop="urlRemark">
+          <el-input type="textarea" show-word-limit maxlength="30"
+                    v-model="cudCodeOutSideUrlForm.urlRemark"></el-input>
+        </el-form-item>
+      </el-form>
       <span slot="footer" class="dialog-footer">
     <el-button @click="handleClose">取 消</el-button>
     <el-button type="primary" @click="cudForward">确 定</el-button></span>
@@ -279,10 +285,6 @@
           urlRemark: ""
         },
         codeTypes: [
-          {
-            label: "Void",
-            value: "Void"
-          },
           {
             label: "String",
             value: "String"
@@ -349,13 +351,11 @@
         }
         if (type == 'METHOD') {
           this.configurationInfo.dialog.title = '方法' + this.cudTypeChange(cudType)
+          this.configurationInfo.dialog.dialogIsShow = true;
         }
         if (type == 'URL') {
-          this.codeBase.codeOutSideUrlInfos.push({
-            urlPath: "",
-            urlRemark: "",
-            type: "NEW"
-          });
+          this.configurationInfo.dialog.title = '链接' + this.cudTypeChange(cudType)
+          this.configurationInfo.dialog.dialogIsShow = true;
         }
       },
 
@@ -425,7 +425,7 @@
             this.$refs["cudCodeParameterForm"].resetFields();
             this.$message.success("操作成功!");
           } else {
-            this.$message.errorr(res.data.msg);
+            this.$message.error(res.data.msg);
           }
         })
       },
@@ -454,7 +454,6 @@
        * cud链接请求
        * */
       cudUrl() {
-        this.cudCodeOutSideUrlForm.urlPath = this.cudCodeOutSideUrlForm.urlPath;
         this.$axios({
           url: this.Globel.requestUrl + "/code/codeOutSideUrlCUD",
           data: this.cudCodeOutSideUrlForm,
@@ -471,18 +470,6 @@
         })
       },
 
-      /**
-       * 保存链接
-       * */
-      saveUrl(row){
-        this.$axios({
-          url:this.Globel.requestUrl+"/code",
-          method:"POST",
-          data:this.cudCodeOutSideUrlForm
-        }).then(res =>{
-
-        })
-      },
 
       /**
        * 返回主页
@@ -495,33 +482,50 @@
        * 返回源码列表
        * */
       toCodeList() {
-        thid.$router.push({push: "/projectInfo", query: {projectId: this.$route.query.projectId}})
+        this.$router.push({path: "/projectInfo", query: {projectId: this.$route.query.projectId}})
       },
 
       /**
        * 弹出框关闭回调
        * */
       handleClose() {
-        console.log(this.configurationInfo.dialog.type)
-        this.configurationInfo.dialog.dialogIsShow = false;
         if (this.configurationInfo.dialog.type == "PARAMETER") {
-          this.$refs["cudCodeParameterForm"].resetFields();
+          this.cudCodeParameterForm = {
+            parameterName: "",
+            parameterType: "",
+            parameterRemark: "",
+            isFinal: "",
+            isAutowire: "",
+            isInterface: "",
+            fromCodeId: this.$route.query.codeId,
+            cudType: "",
+          }
         }
         if (this.configurationInfo.dialog.type == "METHOD") {
-          this.$refs["cudCodeMethodForm"].resetFields();
+          this.cudCodeMethodForm = {
+            cudType: "",
+            fromCodeId: this.$route.query.codeId,
+            methodName: "",
+            methodUsage: "",
+            methodResult: "",
+            methodBaseType: "COMMON",
+            methodCommonUse: "",
+            methodIsOverwrite: "",
+            methodIsConstruct: "",
+            methodActionScope: "PUBLIC"
+          }
         }
         if (this.configurationInfo.dialog.type == "URL") {
-          this.$refs["cudCodeOutSideUrlForm"].resetFields();
+          this.cudCodeOutSideUrlForm = {
+            cudType: "",
+            fromCodeId: this.$route.query.codeId,
+            urlPath: "",
+            urlRemark: ""
+          }
         }
-      },
+        this.configurationInfo.dialog.dialogIsShow = false;
 
-      /**
-       * 删除一个链接里面的元素
-       * */
-      cancelUrl(index) {
-        this.codeBase.codeOutSideUrlInfos.splice(index, 1)
       }
-
     }
   }
 </script>
