@@ -217,7 +217,7 @@
                label-width="120px"
                v-if="configurationInfo.dialog.type == 'URL'">
         <el-form-item prop="urlPath" label="链接地址:">
-          <mu-text-field v-model="cudCodeOutSideUrlForm.urlPath"></mu-text-field>
+          <mu-text-field prefix="Http://" v-model="cudCodeOutSideUrlForm.urlPath"></mu-text-field>
         </el-form-item>
         <el-form-item label="链接备注" prop="urlRemark">
           <el-input type="textarea" show-word-limit maxlength="30"
@@ -422,7 +422,7 @@
           if (res.data.success) {
             this.configurationInfo.dialog.dialogIsShow = false;
             this.getCodeDetail();
-            this.$refs["cudCodeParameterForm"].resetFields();
+            this.resetForm();
             this.$message.success("操作成功!");
           } else {
             this.$message.error(res.data.msg);
@@ -442,7 +442,7 @@
           if (res.data.success) {
             this.configurationInfo.dialog.dialogIsShow = false;
             this.getCodeDetail();
-            this.$refs["cudCodeMethodForm"].resetFields();
+            this.resetForm();
             this.$message.success("操作成功!");
           } else {
             this.$message.error(res.data.msg);
@@ -462,7 +462,7 @@
           if (res.data.success) {
             this.configurationInfo.dialog.dialogIsShow = false;
             this.getCodeDetail();
-            this.$refs["cudCodeOutSideUrlForm"].resetFields();
+            this.resetForm();
             this.$message.success("操作成功!");
           } else {
             this.$message.error(res.data.msg);
@@ -489,6 +489,11 @@
        * 弹出框关闭回调
        * */
       handleClose() {
+        this.resetForm()
+        this.configurationInfo.dialog.dialogIsShow = false;
+      },
+
+      resetForm(){
         if (this.configurationInfo.dialog.type == "PARAMETER") {
           this.cudCodeParameterForm = {
             parameterName: "",
@@ -523,9 +528,7 @@
             urlRemark: ""
           }
         }
-        this.configurationInfo.dialog.dialogIsShow = false;
-
-      }
+      },
     }
   }
 </script>
