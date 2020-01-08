@@ -54,6 +54,17 @@
             <el-tag>{{scope.row.codeType}}</el-tag>
           </template>
         </el-table-column>
+        <el-table-column label="源码备注" prop="codeRemark" align="center">
+          <template slot-scope="scope">
+            <el-popover
+              placement="top"
+              width="300"
+              trigger="hover"
+              :content="scope.row.codeRemark == '' || scope.row.codeRemark == 'null' ? '暂无备注' : scope.row.codeRemark">
+              <el-button type="text" slot="reference">查看备注</el-button>
+            </el-popover>
+          </template>
+        </el-table-column>
         <el-table-column label="详情" align="center">
           <template slot-scope="scope">
             <el-row>

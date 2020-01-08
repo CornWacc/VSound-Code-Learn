@@ -17,11 +17,10 @@
     <el-main class="main">
       <div style="margin-bottom: 10px">
         <p style="font-size: 20px;;margin-bottom: 4px">源码参数:</p>
-        <mu-button small color="#008B8B" @click="cudDialogShow('CREATE','PARAMETER')">新增</mu-button>
+        <mu-button small color="#008B8B" @click="cudDialogShow('CREATE','PARAMETER')">新 增</mu-button>
       </div>
 
       <el-table :data="codeBase.codeParameterInfos">
-        <el-table-column align="center" label="参数id" prop="parameterId"></el-table-column>
         <el-table-column align="center" label="参数名称" prop="parameterName"></el-table-column>
         <el-table-column align="center" label="参数类型" prop="parameterType"></el-table-column>
         <el-table-column align="center" label="是否为常量" prop="isFinal"></el-table-column>
@@ -51,9 +50,9 @@
         </el-table-column>
       </el-table>
 
-      <div style="margin-bottom: 10px">
+      <div style="margin-bottom: 10px;margin-top: 30px">
         <p style="font-size: 20px;margin-bottom: 4px">源码方法:</p>
-        <mu-button small color="#008B8B" @click="cudDialogShow('CREATE','METHOD')">新增</mu-button>
+        <mu-button small color="#008B8B" @click="cudDialogShow('CREATE','METHOD')">新 增</mu-button>
       </div>
 
       <el-table :data="codeBase.codeMethodInfoList">
@@ -64,6 +63,11 @@
         <el-table-column align="center" label="是否为构造方法" prop="methodIsConstruct"></el-table-column>
         <el-table-column align="center" label="是否重写" prop="methodIsOverwrite"></el-table-column>
         <el-table-column align="center" label="方法作用域" prop="methodActionScope"></el-table-column>
+        <el-table-column align="center" label="方法入参">
+          <template slot-scope="scope">
+            <el-button type="text" @click="showMethodOrder(scope.row.methodOrder)">查看入参</el-button>
+          </template>
+        </el-table-column>
         <el-table-column align="center" label="操作">
           <template slot-scope="scope">
             <mu-button icon color="primary" @click="cudDialogShow('UPDATE','METHOD',scope.row)">
@@ -77,9 +81,9 @@
       </el-table>
 
 
-      <div style="margin-bottom: 10px">
+      <div style="margin-bottom: 10px;margin-top: 30px">
         <p style="font-size: 20px;;margin-bottom: 4px">源码解析链接:</p>
-        <mu-button small color="#008B8B" @click="cudDialogShow('CREATE','URL')">新增</mu-button>
+        <mu-button small color="#008B8B" @click="cudDialogShow('CREATE','URL')">新 增</mu-button>
       </div>
 
       <el-table :data="codeBase.codeOutSideUrlInfos">
@@ -535,7 +539,8 @@
 
 <style scoped>
   .header {
-    /*border-bottom: 1px solid aquamarine;*/
+    border-bottom: 2px solid rgba(0,0,0,0.1);
+    box-shadow: 4px 4px 4px rgba(0,0,0,0.1);
   }
 
   .header_row {
@@ -544,8 +549,8 @@
   }
 
   .header_row_project_name {
-    font-size: 30px;
+    font-size: 28px;
     font-family: "Kaiti SC";
-    font-weight: 400;
+    font-weight: 500;
   }
 </style>
