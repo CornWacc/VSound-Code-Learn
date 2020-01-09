@@ -9,13 +9,14 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 public interface CodeMethodOrderMapper {
-    int deleteByPrimaryKey(Integer id);
+
+    int deleteByPrimaryKey(String orderId);
 
     int insert(CodeMethodOrder record);
 
     int insertSelective(CodeMethodOrder record);
 
-    CodeMethodOrder selectByPrimaryKey(Integer id);
+    CodeMethodOrder selectByPrimaryKey(String orderId);
 
     int updateByPrimaryKeySelective(CodeMethodOrder record);
 

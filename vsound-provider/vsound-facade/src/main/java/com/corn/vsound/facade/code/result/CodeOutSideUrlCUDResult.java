@@ -4,7 +4,7 @@ import com.corn.boot.base.pojobase.BaseRes;
 
 /**
  * @author yyc
- * @apiNote
+ * @apiNote 源码链接CUD出参
  * @createTime 2019/12/11
  */
 public class CodeOutSideUrlCUDResult extends BaseRes {
