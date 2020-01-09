@@ -63,7 +63,7 @@
         <el-table-column align="center" label="方法作用域" prop="methodActionScope"></el-table-column>
         <el-table-column align="center" label="方法入参">
           <template slot-scope="scope">
-            <el-button type="text" @click="showMethodOrder(scope.row.methodOrder)">查看入参</el-button>
+            <el-button type="text" @click="showMethodOrder(scope.row)">查看入参</el-button>
           </template>
         </el-table-column>
         <el-table-column align="center" label="操作">
@@ -241,13 +241,13 @@
         <el-table-column label="入参名称" prop="codeMethodOrderName" align="center">
           <template slot-scope="scope">
             <p v-if="scope.row.type == 'OLD'">{{scope.row.codeMethodOrderName}}</p>
-            <el-input v-else></el-input>
+            <el-input v-model="scope.row.codeMethodOrderName" v-else></el-input>
           </template>
         </el-table-column>
         <el-table-column label="入参类型" prop="codeMethodOrderClassType" align="center">
           <template slot-scope="scope">
             <p v-if="scope.row.type == 'OLD'">{{scope.row.codeMethodOrderClassType}}</p>
-            <el-input v-else></el-input>
+            <el-input v-model="scope.row.codeMethodOrderClassType" v-else></el-input>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center">
@@ -281,7 +281,8 @@
           // 方法入参弹出框
           orderDialog:{
             dialogIsShow:false,
-            isCreate:false
+            isCreate:false,
+            codeMethodId:""
           },
           labelPosition: "left"
         },
@@ -520,6 +521,8 @@
        * 展示源码方法入参列表
        * */
       showMethodOrder(row){
+        console.log(row)
+        this.configurationInfo.orderDialog.codeMethodId = row.methodId;
         this.configurationInfo.orderDialog.dialogIsShow = true;
       },
 
@@ -546,7 +549,21 @@
        * 保存方法入参行
        * */
       saveMethodOrder(row){
-        this.configurationInfo.orderDialog.isCreate = false;
+        row.cudType = "CREATE"
+        row.codeMethodId = this.configurationInfo.orderDialog.codeMethodId
+        this.$axios({
+          url:this.Globel.requestUrl+"/code/codeMethodOrderCUD",
+          data:row,
+          method:"POST"
+        }).then(res =>{
+          if(res.data.success){
+            this.$message.success("操作成功!")
+            this.configurationInfo.orderDialog.isCreate = false;
+          }else{
+            this.$message.error(res.data.msg)
+          }
+        })
+
       },
 
       /**
