@@ -20,4 +20,6 @@ public interface CodeFacadeClient {
     CodeOutSideUrlCUDResult codeOutSideUrlCUD(CodeOutSideUrlCUDOrder order);
 
     CodeOutSideUrlListQueryResult codeOutSideUrlListQuery(CodeOutSideUrlListQueryOrder order);
+
+    CodeMethodOrderCUDResult codeMethodOrderCUD(CodeMethodOrderCUDOrder orderCUDOrder);
 }

@@ -6,10 +6,7 @@ import com.corn.boot.util.AppUtils;
 import com.corn.vsound.facade.code.order.*;
 import com.corn.vsound.facade.code.result.*;
 import com.corn.vsound.integration.code.CodeFacadeClient;
-import com.corn.vsound.web.code.ao.CodeCUDAO;
-import com.corn.vsound.web.code.ao.CodeMethodAO;
-import com.corn.vsound.web.code.ao.CodeOutSideUrlCUDAO;
-import com.corn.vsound.web.code.ao.CodeParameterAO;
+import com.corn.vsound.web.code.ao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.web.bind.annotation.*;
@@ -105,5 +102,16 @@ public class CodeController {
 
         CodeOutSideUrlListQueryResult result = codeFacadeClient.codeOutSideUrlListQuery(order);
         return new JsonResult(result);
+    }
+
+    @PostMapping("/codeMethodOrderCUD")
+    @RequestLog("源码方法入参CUD操作")
+    public JsonResult codeMethodOrderCUD(@RequestBody CodeMethodOrderCUDAO ao){
+        CodeMethodOrderCUDOrder codeMethodOrderCUDOrder = new CodeMethodOrderCUDOrder();
+        BeanCopier.create(ao.getClass(),codeMethodOrderCUDOrder.getClass(),false).copy(ao,codeMethodOrderCUDOrder,null);
+        codeMethodOrderCUDOrder.setSerialNo(AppUtils.appCode(""));
+
+        CodeMethodOrderCUDResult codeMethodOrderCUDResult = codeFacadeClient.codeMethodOrderCUD(codeMethodOrderCUDOrder);
+        return new JsonResult(codeMethodOrderCUDResult);
     }
 }

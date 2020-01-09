@@ -61,4 +61,10 @@ public class CodeFacadeClientimpl implements CodeFacadeClient {
     public CodeOutSideUrlListQueryResult codeOutSideUrlListQuery(CodeOutSideUrlListQueryOrder order) {
         return codeFacade.codeOutSideUrlListQuery(order);
     }
+
+    @Override
+    @Log(name = "源码服务",des = "源码方法入参CUD操作")
+    public CodeMethodOrderCUDResult codeMethodOrderCUD(CodeMethodOrderCUDOrder orderCUDOrder) {
+        return codeFacade.codeMethodOrderCUD(orderCUDOrder);
+    }
 }
