@@ -20,8 +20,6 @@ public class CodeMethodOrderCUDOrder extends CUDOrder {
 
     private String codeMethodOrderClassType;
 
-    private String codeMethodOrderType;
-
     private String codeMethodId;
 
     public String getCodeMethodOrderId() {
@@ -46,14 +44,6 @@ public class CodeMethodOrderCUDOrder extends CUDOrder {
 
     public void setCodeMethodOrderClassType(String codeMethodOrderClassType) {
         this.codeMethodOrderClassType = codeMethodOrderClassType;
-    }
-
-    public String getCodeMethodOrderType() {
-        return codeMethodOrderType;
-    }
-
-    public void setCodeMethodOrderType(String codeMethodOrderType) {
-        this.codeMethodOrderType = codeMethodOrderType;
     }
 
     public String getCodeMethodId() {

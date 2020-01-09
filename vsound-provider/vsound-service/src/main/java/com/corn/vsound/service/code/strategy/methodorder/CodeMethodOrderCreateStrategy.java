@@ -1,6 +1,7 @@
 package com.corn.vsound.service.code.strategy.methodorder;
 
 import com.corn.boot.base.strategy.BaseCUDInterface;
+import com.corn.boot.util.DateUtils;
 import com.corn.vsound.dao.entity.CodeMethodOrder;
 import com.corn.vsound.dao.mapper.CodeMethodOrderMapper;
 import com.corn.vsound.facade.code.order.CodeMethodOrderCUDOrder;
@@ -27,6 +28,7 @@ public class CodeMethodOrderCreateStrategy implements BaseCUDInterface<CodeMetho
         CodeMethodOrder codeMethodOrder = new CodeMethodOrder();
         BeanCopier.create(order.getClass(),codeMethodOrder.getClass(),false).copy(order,codeMethodOrder,null);
         codeMethodOrder.setCreateTime(new Date());
+        codeMethodOrder.setCodeMethodOrderId("CMO"+DateUtils.dateForMateForConnect(new Date()));
         codeMethodOrderMapper.insertSelective(codeMethodOrder);
     }
 }

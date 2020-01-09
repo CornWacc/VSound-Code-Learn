@@ -1,5 +1,7 @@
 package com.corn.vsound.dao.entity;
 
+import com.corn.vsound.facade.enums.YNEnum;
+
 import java.util.Date;
 
 public class CodeMethodOrder {
@@ -11,7 +13,7 @@ public class CodeMethodOrder {
 
     private String codeMethodOrderClassType;
 
-    private String codeMethodOrderType;
+    private YNEnum orderIsInterface;
 
     private String codeMethodId;
 
@@ -25,6 +27,15 @@ public class CodeMethodOrder {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+
+    public YNEnum getOrderIsInterface() {
+        return orderIsInterface;
+    }
+
+    public void setOrderIsInterface(YNEnum orderIsInterface) {
+        this.orderIsInterface = orderIsInterface;
     }
 
     public String getCodeMethodOrderId() {
@@ -51,13 +62,6 @@ public class CodeMethodOrder {
         this.codeMethodOrderClassType = codeMethodOrderClassType == null ? null : codeMethodOrderClassType.trim();
     }
 
-    public String getCodeMethodOrderType() {
-        return codeMethodOrderType;
-    }
-
-    public void setCodeMethodOrderType(String codeMethodOrderType) {
-        this.codeMethodOrderType = codeMethodOrderType == null ? null : codeMethodOrderType.trim();
-    }
 
     public String getCodeMethodId() {
         return codeMethodId;
