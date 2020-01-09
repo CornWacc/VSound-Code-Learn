@@ -1,15 +1,13 @@
 <template>
-  <el-container class="containers">
+  <el-container id="cont" class="containers">
     <el-header class="header">
       <el-row :gutter="24" class="header_row">
         <el-col :span="20" class="header_row_project_name">
           <span>{{codeBase.codeName}}</span>
         </el-col>
-        <el-col :span="2">
+        <el-col :span="4">
           <mu-button @click="toCodeList" color="#82A6F5" small>源码列表</mu-button>
-        </el-col>
-        <el-col :span="1">
-          <mu-button @click="toMain" color="#82A6F5" small>返回主页</mu-button>
+          <mu-button @click="toMain" color="#82A6F5" small style="margin-left: 20px">返回主页</mu-button>
         </el-col>
       </el-row>
     </el-header>
@@ -80,7 +78,6 @@
         </el-table-column>
       </el-table>
 
-
       <div style="margin-bottom: 10px;margin-top: 30px">
         <p style="font-size: 20px;;margin-bottom: 4px">源码解析链接:</p>
         <mu-button small color="#008B8B" @click="cudDialogShow('CREATE','URL')">新 增</mu-button>
@@ -97,7 +94,8 @@
         <el-table-column align="center" label="链接备注" prop="urlRemark"></el-table-column>
         <el-table-column align="center" label="操作">
           <template slot-scope="scope">
-            <mu-button icon color="primary" v-if="scope.row.type != 'NEW'" @click="cudDialogShow('UPDATE','URL',scope.row)">
+            <mu-button icon color="primary" v-if="scope.row.type != 'NEW'"
+                       @click="cudDialogShow('UPDATE','URL',scope.row)">
               <mu-icon value="edit"></mu-icon>
             </mu-button>
             <mu-button icon color="error" v-if="scope.row.type != 'NEW'" @click="deletStrategy('URL',scope.row)">
@@ -233,7 +231,38 @@
     <el-button type="primary" @click="cudForward">确 定</el-button></span>
     </el-dialog>
 
+    <el-dialog
+      title="参数列表"
+      :visible.sync="configurationInfo.orderDialog.dialogIsShow"
+      width="50%"
+      :before-close="orderDialogCancel">
+      <el-button size="small" type="primary" @click="addMethodOrderColumn">新 增</el-button>
+      <el-table :data="cudCodeMethodForm.methodOrders" >
+        <el-table-column label="入参名称" prop="codeMethodOrderName" align="center">
+          <template slot-scope="scope">
+            <p v-if="scope.row.type == 'OLD'">{{scope.row.codeMethodOrderName}}</p>
+            <el-input v-else></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="入参类型" prop="codeMethodOrderClassType" align="center">
+          <template slot-scope="scope">
+            <p v-if="scope.row.type == 'OLD'">{{scope.row.codeMethodOrderClassType}}</p>
+            <el-input v-else></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" align="center">
+          <template slot-scope="scope">
+            <mu-button small color="primary" v-if="scope.row.type == 'OLD'" @click="cudMethodOrder(scope.row)" icon><mu-icon value="edit"></mu-icon></mu-button>
+            <mu-button small color="error" v-if="scope.row.type == 'OLD'" @click="cudMethodOrder(scope.row)" icon><mu-icon value="delete"></mu-icon></mu-button>
+            <mu-button small color="success" v-if="scope.row.type == 'NEW'" @click="saveMethodOrder(scope.row)" icon><mu-icon value="save"></mu-icon></mu-button>
+            <mu-button small color="error" v-if="scope.row.type == 'NEW'" @click="cancelMethodOrder(scope.$index)" icon><mu-icon value="cancel"></mu-icon></mu-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-dialog>
+
   </el-container>
+
 </template>
 
 <script>
@@ -248,6 +277,11 @@
             cudType: "",
             title: "",
             type: ""
+          },
+          // 方法入参弹出框
+          orderDialog:{
+            dialogIsShow:false,
+            isCreate:false
           },
           labelPosition: "left"
         },
@@ -280,7 +314,14 @@
           methodCommonUse: "",
           methodIsOverwrite: "",
           methodIsConstruct: "",
-          methodActionScope: "PUBLIC"
+          methodActionScope: "PUBLIC",
+          methodOrders:[
+            {
+              codeMethodOrderName:"测试",
+              codeMethodOrderClassType:"String",
+              type:"OLD"
+            }
+          ]
         },
         cudCodeOutSideUrlForm: {
           cudType: "",
@@ -414,6 +455,7 @@
           this.cudUrl();
         }
       },
+
       /**
        * cud参数请求
        * */
@@ -474,6 +516,38 @@
         })
       },
 
+      /**
+       * 展示源码方法入参列表
+       * */
+      showMethodOrder(row){
+        this.configurationInfo.orderDialog.dialogIsShow = true;
+      },
+
+      /**
+       * 新增方法入参行
+       * */
+      addMethodOrderColumn(){
+        if(this.configurationInfo.orderDialog.isCreate){
+          return;
+        }
+        this.cudCodeMethodForm.methodOrders.push({type:"NEW"})
+        this.configurationInfo.orderDialog.isCreate = true;
+      },
+
+      /**
+       * 删除方法入参行
+       * */
+      cancelMethodOrder(index){
+        this.cudCodeMethodForm.methodOrders.splice(index,1)
+        this.configurationInfo.orderDialog.isCreate = false;
+      },
+
+      /**
+       * 保存方法入参行
+       * */
+      saveMethodOrder(row){
+        this.configurationInfo.orderDialog.isCreate = false;
+      },
 
       /**
        * 返回主页
@@ -497,7 +571,7 @@
         this.configurationInfo.dialog.dialogIsShow = false;
       },
 
-      resetForm(){
+      resetForm() {
         if (this.configurationInfo.dialog.type == "PARAMETER") {
           this.cudCodeParameterForm = {
             parameterName: "",
@@ -533,14 +607,20 @@
           }
         }
       },
+      /**
+       * 方法入参列表弹出框关闭
+       * */
+      orderDialogCancel(){
+        this.configurationInfo.orderDialog.dialogIsShow = false;
+      }
     }
   }
 </script>
 
 <style scoped>
   .header {
-    border-bottom: 2px solid rgba(0,0,0,0.1);
-    box-shadow: 4px 4px 4px rgba(0,0,0,0.1);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
   }
 
   .header_row {
@@ -553,4 +633,6 @@
     font-family: "Kaiti SC";
     font-weight: 500;
   }
+
+
 </style>

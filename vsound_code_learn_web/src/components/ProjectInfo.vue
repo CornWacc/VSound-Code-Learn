@@ -77,18 +77,12 @@
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-row :gutter="20" style="margin-left: auto;margin-right: auto;width:80%">
-              <el-col :span="12">
-                <mu-button small color="primary" @click="forwardCud('UPDATE',scope.row)">编辑
-                  <mu-icon value="edit" right></mu-icon>
-                </mu-button>
-              </el-col>
-              <el-col :span="10">
-                <mu-button small color="error" @click="forwardCud(cudType = 'DELETE',row = scope.row)">删除
-                  <mu-icon value="delete" right></mu-icon>
-                </mu-button>
-              </el-col>
-            </el-row>
+            <mu-button small color="primary" @click="forwardCud('UPDATE',scope.row)">编辑
+              <mu-icon value="edit" right></mu-icon>
+            </mu-button>
+            <mu-button small color="error" @click="forwardCud(cudType = 'DELETE',row = scope.row)">删除
+              <mu-icon value="delete" right></mu-icon>
+            </mu-button>
           </template>
         </el-table-column>
       </el-table>
@@ -283,7 +277,7 @@
         this.$router.push(
           {
             path: "/codeInfo",
-            query: {codeId: codeId,projectId:this.$route.query.projectId}
+            query: {codeId: codeId, projectId: this.$route.query.projectId}
           })
       }
     }
