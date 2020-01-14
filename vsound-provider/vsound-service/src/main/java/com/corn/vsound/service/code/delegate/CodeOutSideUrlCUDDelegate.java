@@ -3,7 +3,6 @@ package com.corn.vsound.service.code.delegate;
 import com.corn.boot.annotations.DoTranscation;
 import com.corn.boot.base.AbstractBizService;
 import com.corn.boot.base.strategy.BaseCUDInterface;
-import com.corn.boot.base.strategy.CudExecuteInterface;
 import com.corn.vsound.facade.code.order.CodeOutSideUrlCUDOrder;
 import com.corn.vsound.facade.code.result.CodeOutSideUrlCUDResult;
 import com.corn.vsound.service.code.strategy.outsideurl.CodeOutSideUrlStrategyFactory;
@@ -35,7 +34,7 @@ public class CodeOutSideUrlCUDDelegate extends AbstractBizService<CodeOutSideUrl
 
     @Override
     protected void appBiz(CodeOutSideUrlCUDOrder order, CodeOutSideUrlCUDResult result) {
-        CudExecuteInterface baseCUDInterface = codeOutSideUrlStrategyFactory.createStrategy(order);
+        BaseCUDInterface baseCUDInterface = codeOutSideUrlStrategyFactory.createStrategy(order);
         baseCUDInterface.execute(order);
     }
 }

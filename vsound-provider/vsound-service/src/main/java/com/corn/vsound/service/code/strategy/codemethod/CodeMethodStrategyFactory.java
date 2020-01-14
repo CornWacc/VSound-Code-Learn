@@ -2,7 +2,6 @@ package com.corn.vsound.service.code.strategy.codemethod;
 
 import com.corn.boot.base.factory.AbstractCUDFactory;
 import com.corn.boot.base.strategy.BaseCUDInterface;
-import com.corn.boot.base.strategy.CudExecuteInterface;
 import com.corn.boot.error.BizError;
 import com.corn.vsound.common.spring.SpringBeanUtils;
 import com.corn.vsound.facade.code.order.CodeMethodCUDOrder;
@@ -11,13 +10,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CodeMethodStrategyFactory extends AbstractCUDFactory<CudExecuteInterface, CodeMethodCUDOrder> {
+public class CodeMethodStrategyFactory extends AbstractCUDFactory<BaseCUDInterface, CodeMethodCUDOrder> {
 
     @Autowired
     private SpringBeanUtils springBeanUtils;
 
     @Override
-    public CudExecuteInterface createStrategy(CodeMethodCUDOrder order) {
+    public BaseCUDInterface createStrategy(CodeMethodCUDOrder order) {
 
         String cudType = order.getCudType().getCode();
         ApplicationContext applicationContext = springBeanUtils.getApplicationContext();

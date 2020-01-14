@@ -2,7 +2,6 @@ package com.corn.vsound.service.code.strategy.codemethod;
 
 import com.alibaba.fastjson.JSON;
 import com.corn.boot.base.strategy.BaseCUDInterface;
-import com.corn.boot.base.strategy.CudExecuteInterface;
 import com.corn.boot.error.BizError;
 import com.corn.vsound.dao.dto.CodeMethodOrderDto;
 import com.corn.vsound.dao.entity.CodeMethod;
@@ -11,7 +10,6 @@ import com.corn.vsound.dao.info.CodeMethodOrderDtoInfo;
 import com.corn.vsound.dao.mapper.CodeMethodMapper;
 import com.corn.vsound.dao.mapper.CodeMethodOrderMapper;
 import com.corn.vsound.facade.code.order.CodeMethodCUDOrder;
-import com.corn.vsound.facade.code.result.CodeMethodCUDResult;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanCopier;
@@ -23,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class CodeMethodUpdateStrategy implements CudExecuteInterface<CodeMethodCUDOrder, CodeMethodCUDResult> {
+public class CodeMethodUpdateStrategy implements BaseCUDInterface<CodeMethodCUDOrder> {
 
     @Autowired
     private CodeMethodMapper codeMethodMapper;
@@ -32,7 +30,7 @@ public class CodeMethodUpdateStrategy implements CudExecuteInterface<CodeMethodC
     private CodeMethodOrderMapper codeMethodOrderMapper;
 
     @Override
-    public CodeMethodCUDResult execute(CodeMethodCUDOrder order) {
+    public void execute(CodeMethodCUDOrder order) {
 
         CodeMethodOrderDto codeMethodOrderDto = codeMethodMapper.findCodeMethodByMethodId(order.getMethodId());
         if(ObjectUtils.isEmpty(codeMethodOrderDto)){
@@ -46,7 +44,7 @@ public class CodeMethodUpdateStrategy implements CudExecuteInterface<CodeMethodC
         List<CodeMethodOrderDtoInfo> codeMethodOrders  = codeMethodOrderDto.getOrderList();
         if (!ObjectUtils.isEmpty(codeMethodOrders)) {
 
+
         }
-        return new CodeMethodCUDResult();
     }
 }

@@ -3,7 +3,6 @@ package com.corn.vsound.service.code.strategy.code;
 
 import com.corn.boot.base.factory.AbstractCUDFactory;
 import com.corn.boot.base.strategy.BaseCUDInterface;
-import com.corn.boot.base.strategy.CudExecuteInterface;
 import com.corn.boot.error.BizError;
 import com.corn.vsound.common.spring.SpringBeanUtils;
 import com.corn.vsound.facade.code.order.CodeCUDOrder;
@@ -12,13 +11,13 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class CodeCUDFactory extends AbstractCUDFactory<CudExecuteInterface,CodeCUDOrder> {
+public class CodeCUDFactory extends AbstractCUDFactory<BaseCUDInterface, CodeCUDOrder> {
 
     @Autowired
     private SpringBeanUtils springBeanUtils;
 
     @Override
-    public CudExecuteInterface createStrategy(CodeCUDOrder order){
+    public BaseCUDInterface createStrategy(CodeCUDOrder order){
 
         String cudType = order.getCudType().getCode();
         if(CREATE_CODE.equals(cudType)){

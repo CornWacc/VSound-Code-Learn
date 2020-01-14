@@ -1,13 +1,11 @@
 package com.corn.vsound.service.project.strategy;
 
 import com.corn.boot.base.strategy.BaseCUDInterface;
-import com.corn.boot.base.strategy.CudExecuteInterface;
 import com.corn.boot.error.BizError;
 import com.corn.vsound.dao.entity.CodeBase;
 import com.corn.vsound.dao.entity.ProjectBase;
 import com.corn.vsound.dao.mapper.*;
 import com.corn.vsound.facade.project.order.ProjectCUDOrder;
-import com.corn.vsound.facade.project.result.ProjectCUDResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -16,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ProjectDelStrategy implements CudExecuteInterface<ProjectCUDOrder, ProjectCUDResult> {
+public class ProjectDelStrategy implements BaseCUDInterface<ProjectCUDOrder> {
 
     @Autowired
     private ProjectBaseMapper projectBaseMapper;
@@ -35,7 +33,7 @@ public class ProjectDelStrategy implements CudExecuteInterface<ProjectCUDOrder, 
 
 
     @Override
-    public ProjectCUDResult execute(ProjectCUDOrder order) {
+    public void execute(ProjectCUDOrder order) {
 
         ProjectBase projectBase = projectBaseMapper.findProjectBaseByProjectId(order.getProjectId());
         if(ObjectUtils.isEmpty(projectBase)){
@@ -56,6 +54,5 @@ public class ProjectDelStrategy implements CudExecuteInterface<ProjectCUDOrder, 
                 codeOutSideUrlMapper.deleteCodeOutSideUrlsByCodeIds(codeIds);
             }
         }
-        return new ProjectCUDResult();
     }
 }

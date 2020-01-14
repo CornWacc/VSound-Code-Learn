@@ -1,12 +1,10 @@
 package com.corn.vsound.service.code.strategy.methodorder;
 
 import com.corn.boot.base.strategy.BaseCUDInterface;
-import com.corn.boot.base.strategy.CudExecuteInterface;
 import com.corn.boot.error.BizError;
 import com.corn.vsound.dao.entity.CodeMethodOrder;
 import com.corn.vsound.dao.mapper.CodeMethodOrderMapper;
 import com.corn.vsound.facade.code.order.CodeMethodOrderCUDOrder;
-import com.corn.vsound.facade.code.result.CodeMethodOrderCUDResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.stereotype.Service;
@@ -18,13 +16,13 @@ import org.springframework.util.ObjectUtils;
  * @createTime 2020/1/9
  */
 @Service
-public class CodeMethodOrderUpdateStrategy implements CudExecuteInterface<CodeMethodOrderCUDOrder, CodeMethodOrderCUDResult> {
+public class CodeMethodOrderUpdateStrategy implements BaseCUDInterface<CodeMethodOrderCUDOrder> {
 
     @Autowired
     private CodeMethodOrderMapper codeMethodOrderMapper;
 
     @Override
-    public CodeMethodOrderCUDResult execute(CodeMethodOrderCUDOrder order) {
+    public void execute(CodeMethodOrderCUDOrder order) {
 
         String orderId = order.getCodeMethodOrderId();
         CodeMethodOrder codeMethodOrder = codeMethodOrderMapper.selectByPrimaryKey(orderId);
@@ -34,7 +32,5 @@ public class CodeMethodOrderUpdateStrategy implements CudExecuteInterface<CodeMe
 
         BeanCopier.create(order.getClass(),codeMethodOrder.getClass(),false).copy(order,codeMethodOrder,null);
         codeMethodOrderMapper.updateByPrimaryKeySelective(codeMethodOrder);
-
-        return new CodeMethodOrderCUDResult();
     }
 }

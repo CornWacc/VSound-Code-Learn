@@ -4,7 +4,6 @@ import com.corn.boot.annotations.DoTranscation;
 import com.corn.boot.base.AbstractBizService;
 import com.corn.boot.base.factory.AbstractCUDFactory;
 import com.corn.boot.base.strategy.BaseCUDInterface;
-import com.corn.boot.base.strategy.CudExecuteInterface;
 import com.corn.boot.error.BizError;
 import com.corn.vsound.dao.mapper.CodeMethodMapper;
 import com.corn.vsound.facade.code.order.CodeMethodCUDOrder;
@@ -39,7 +38,7 @@ public class CodeMethodCUDDelegate extends AbstractBizService<CodeMethodCUDOrder
     @Override
     protected void appBiz(CodeMethodCUDOrder order, CodeMethodCUDResult result) {
 
-        CudExecuteInterface baseCUDInterface = codeMethodStrategyFactory.createStrategy(order);
+        BaseCUDInterface baseCUDInterface = codeMethodStrategyFactory.createStrategy(order);
         baseCUDInterface.execute(order);
     }
 }

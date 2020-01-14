@@ -18,16 +18,6 @@ public class CodeInfo extends Base {
 
     private Integer outSideUrlCount;
 
-    private String codeRemark;
-
-    public String getCodeRemark() {
-        return codeRemark;
-    }
-
-    public void setCodeRemark(String codeRemark) {
-        this.codeRemark = codeRemark;
-    }
-
     public Integer getMethodCount() {
         return methodCount;
     }

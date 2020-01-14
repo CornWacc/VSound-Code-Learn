@@ -3,7 +3,6 @@ package com.corn.vsound.service.code.delegate;
 import com.corn.boot.annotations.DoTranscation;
 import com.corn.boot.base.AbstractBizService;
 import com.corn.boot.base.strategy.BaseCUDInterface;
-import com.corn.boot.base.strategy.CudExecuteInterface;
 import com.corn.vsound.facade.code.order.CodeParameterCUDOrder;
 import com.corn.vsound.facade.code.result.CodeParameterCUDResult;
 import com.corn.vsound.service.code.strategy.parameter.CodeParameterStrategyFactory;
@@ -30,7 +29,7 @@ public class CodeParameterCUDDelegate extends AbstractBizService<CodeParameterCU
 
     @Override
     protected void appBiz(CodeParameterCUDOrder order, CodeParameterCUDResult result) {
-        CudExecuteInterface baseCUDInterface = codeParameterStrategyFactory.createStrategy(order);
+        BaseCUDInterface baseCUDInterface = codeParameterStrategyFactory.createStrategy(order);
         baseCUDInterface.execute(order);
 
     }

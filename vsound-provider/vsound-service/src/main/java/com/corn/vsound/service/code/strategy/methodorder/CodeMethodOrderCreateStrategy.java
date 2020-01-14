@@ -1,19 +1,14 @@
 package com.corn.vsound.service.code.strategy.methodorder;
 
 import com.corn.boot.base.strategy.BaseCUDInterface;
-import com.corn.boot.base.strategy.CudExecuteInterface;
-import com.corn.boot.util.DateUtils;
 import com.corn.vsound.dao.entity.CodeMethodOrder;
 import com.corn.vsound.dao.mapper.CodeMethodOrderMapper;
 import com.corn.vsound.facade.code.order.CodeMethodOrderCUDOrder;
-import com.corn.vsound.facade.code.result.CodeMethodOrderCUDResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-
-import static com.corn.boot.util.DateUtils.dateForMateForConnect;
 
 /**
  * @author yyc
@@ -21,19 +16,17 @@ import static com.corn.boot.util.DateUtils.dateForMateForConnect;
  * @createTime 2020/1/9
  */
 @Service
-public class CodeMethodOrderCreateStrategy implements CudExecuteInterface<CodeMethodOrderCUDOrder, CodeMethodOrderCUDResult> {
+public class CodeMethodOrderCreateStrategy implements BaseCUDInterface<CodeMethodOrderCUDOrder> {
 
     @Autowired
     private CodeMethodOrderMapper codeMethodOrderMapper;
 
     @Override
-    public CodeMethodOrderCUDResult execute(CodeMethodOrderCUDOrder order) {
+    public void execute(CodeMethodOrderCUDOrder order) {
 
         CodeMethodOrder codeMethodOrder = new CodeMethodOrder();
         BeanCopier.create(order.getClass(),codeMethodOrder.getClass(),false).copy(order,codeMethodOrder,null);
         codeMethodOrder.setCreateTime(new Date());
-        codeMethodOrder.setCodeMethodOrderId("cmo"+dateForMateForConnect(new Date()));
         codeMethodOrderMapper.insertSelective(codeMethodOrder);
-        return new CodeMethodOrderCUDResult();
     }
 }
