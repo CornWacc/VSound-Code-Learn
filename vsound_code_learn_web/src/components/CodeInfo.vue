@@ -63,7 +63,7 @@
         <el-table-column align="center" label="方法作用域" prop="methodActionScope"></el-table-column>
         <el-table-column align="center" label="方法入参">
           <template slot-scope="scope">
-            <el-button type="text" @click="showMethodOrder(scope.row)">查看入参</el-button>
+            <el-button type="text" @click="showMethodOrder(scope.row.methodId,scope.row)">查看入参</el-button>
           </template>
         </el-table-column>
         <el-table-column align="center" label="操作">
@@ -237,7 +237,7 @@
       width="50%"
       :before-close="orderDialogCancel">
       <el-button size="small" type="primary" @click="addMethodOrderColumn">新 增</el-button>
-      <el-table :data="cudCodeMethodForm.methodOrders" >
+      <el-table :data="cudCodeMethodForm.orderList" >
         <el-table-column label="入参名称" prop="codeMethodOrderName" align="center">
           <template slot-scope="scope">
             <p v-if="scope.row.type == 'OLD'">{{scope.row.codeMethodOrderName}}</p>
@@ -252,8 +252,7 @@
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <mu-button small color="primary" v-if="scope.row.type == 'OLD'" @click="cudMethodOrder(scope.row)" icon><mu-icon value="edit"></mu-icon></mu-button>
-            <mu-button small color="error" v-if="scope.row.type == 'OLD'" @click="cudMethodOrder(scope.row)" icon><mu-icon value="delete"></mu-icon></mu-button>
+            <mu-button small color="error" v-if="scope.row.type == 'OLD'" @click="deleteMethodOrder(scope.$index,scope.row)" icon><mu-icon value="delete"></mu-icon></mu-button>
             <mu-button small color="success" v-if="scope.row.type == 'NEW'" @click="saveMethodOrder(scope.row)" icon><mu-icon value="save"></mu-icon></mu-button>
             <mu-button small color="error" v-if="scope.row.type == 'NEW'" @click="cancelMethodOrder(scope.$index)" icon><mu-icon value="cancel"></mu-icon></mu-button>
           </template>
@@ -282,7 +281,7 @@
           orderDialog:{
             dialogIsShow:false,
             isCreate:false,
-            codeMethodId:""
+            methodId:""
           },
           labelPosition: "left"
         },
@@ -316,13 +315,7 @@
           methodIsOverwrite: "",
           methodIsConstruct: "",
           methodActionScope: "PUBLIC",
-          methodOrders:[
-            {
-              codeMethodOrderName:"测试",
-              codeMethodOrderClassType:"String",
-              type:"OLD"
-            }
-          ]
+          orderList:[]
         },
         cudCodeOutSideUrlForm: {
           cudType: "",
@@ -364,7 +357,6 @@
           url: this.Globel.requestUrl + "/code/codeDetailQuery?codeId=" + this.$route.query.codeId
         }).then(res => {
           if (res.data.success) {
-            console.log(res)
             this.codeBase = res.data.data;
           } else {
             this.$message.error(res.data.msg)
@@ -439,7 +431,7 @@
        * 单独转发删除
        * */
       deletStrategy(type, row) {
-        console.log(type)
+        this.configurationInfo.dialog.type = type;
         if (type == "PARAMETER") {
           this.cudCodeParameterForm = row;
           this.cudCodeParameterForm.cudType = "DELETE";
@@ -520,10 +512,13 @@
       /**
        * 展示源码方法入参列表
        * */
-      showMethodOrder(row){
-        console.log(row)
-        this.configurationInfo.orderDialog.codeMethodId = row.methodId;
+      showMethodOrder(methodId,row){
         this.configurationInfo.orderDialog.dialogIsShow = true;
+        this.cudCodeMethodForm.orderList = row.orderList;
+        this.cudCodeMethodForm.orderList.forEach(item =>{
+          item.type = "OLD";
+        })
+        this.configurationInfo.orderDialog.methodId = methodId;
       },
 
       /**
@@ -533,15 +528,36 @@
         if(this.configurationInfo.orderDialog.isCreate){
           return;
         }
-        this.cudCodeMethodForm.methodOrders.push({type:"NEW"})
+        this.cudCodeMethodForm.orderList.push({type:"NEW",codeMethodOrderName:"",codeMethodOrderClassType:"",cudType:"CREATE",codeMethodId:""})
         this.configurationInfo.orderDialog.isCreate = true;
       },
 
       /**
-       * 删除方法入参行
+       * 去除方法入参行
        * */
       cancelMethodOrder(index){
-        this.cudCodeMethodForm.methodOrders.splice(index,1)
+        this.cudCodeMethodForm.orderList.splice(index,1)
+        this.configurationInfo.orderDialog.isCreate = false;
+      },
+
+      /**
+       * 删除指定方法入参
+       * */
+      deleteMethodOrder(index,row){
+        row.cudType = "DELETE";
+        row.codeMethodId = this.configurationInfo.orderDialog.methodId;
+        this.$axios({
+          url:this.Globel.requestUrl+"/code/codeMethodOrderCUD",
+          method:"POST",
+          data:row
+        }).then(res =>{
+          if(res.data.success){
+            this.$message.success("保存成功!");
+            this.cudCodeMethodForm.orderList.splice(index,1)
+          }else{
+            this.$message.error(res.data.msg);
+          }
+        })
         this.configurationInfo.orderDialog.isCreate = false;
       },
 
@@ -549,21 +565,21 @@
        * 保存方法入参行
        * */
       saveMethodOrder(row){
-        row.cudType = "CREATE"
-        row.codeMethodId = this.configurationInfo.orderDialog.codeMethodId
+        row.codeMethodId = this.configurationInfo.orderDialog.methodId;
         this.$axios({
           url:this.Globel.requestUrl+"/code/codeMethodOrderCUD",
-          data:row,
-          method:"POST"
+          method:"POST",
+          data:row
         }).then(res =>{
           if(res.data.success){
-            this.$message.success("操作成功!")
-            this.configurationInfo.orderDialog.isCreate = false;
+            this.$message.success("保存成功!");
+            row.type = "OLD";
+            row.codeMethodOrderId = res.data.data.codeMethodOrderId;
           }else{
-            this.$message.error(res.data.msg)
+            this.$message.error(res.data.msg);
           }
         })
-
+        this.configurationInfo.orderDialog.isCreate = false;
       },
 
       /**
@@ -594,9 +610,9 @@
             parameterName: "",
             parameterType: "",
             parameterRemark: "",
-            isFinal: "",
-            isAutowire: "",
-            isInterface: "",
+            isFinal: "N",
+            isAutowire: "N",
+            isInterface: "N",
             fromCodeId: this.$route.query.codeId,
             cudType: "",
           }
@@ -609,9 +625,9 @@
             methodUsage: "",
             methodResult: "",
             methodBaseType: "COMMON",
-            methodCommonUse: "",
-            methodIsOverwrite: "",
-            methodIsConstruct: "",
+            methodCommonUse: "N",
+            methodIsOverwrite: "N",
+            methodIsConstruct: "N",
             methodActionScope: "PUBLIC"
           }
         }
