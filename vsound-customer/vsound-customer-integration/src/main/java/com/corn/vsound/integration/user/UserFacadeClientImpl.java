@@ -1,13 +1,6 @@
 package com.corn.vsound.integration.user;
 
 
-import com.corn.boot.annotations.Log;
-import com.corn.vworld.facade.user.UserFacade;
-import com.corn.vworld.facade.user.infoquery.UserInfoQueryOrder;
-import com.corn.vworld.facade.user.infoquery.UserInfoQueryResult;
-import com.corn.vworld.facade.user.login.UserLoginOrder;
-import com.corn.vworld.facade.user.login.UserLoginResult;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**

@@ -1,13 +1,14 @@
 package com.corn.vsound.web.code.ao;
 
 import com.corn.boot.base.pojobase.Base;
+import com.corn.boot.base.strategy.CUDOrder;
 
 /**
  * @author yyc
  * @apiNote 源码方法入参CUDAO
  * @createTime 2020/1/9
  */
-public class CodeMethodOrderCUDAO extends Base {
+public class CodeMethodOrderCUDAO extends CUDOrder {
 
     private String codeMethodOrderId;
 
