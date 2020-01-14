@@ -28,7 +28,6 @@ public class CodeMethodOrderCreateStrategy implements CudExecuteInterface<CodeMe
         CodeMethodOrder codeMethodOrder = new CodeMethodOrder();
         BeanCopier.create(order.getClass(),codeMethodOrder.getClass(),false).copy(order,codeMethodOrder,null);
         codeMethodOrder.setCreateTime(new Date());
-        codeMethodOrder.setCodeMethodOrderId("CMO"+DateUtils.dateForMateForConnect(new Date()));
         codeMethodOrderMapper.insertSelective(codeMethodOrder);
 
         return new CodeMethodOrderCUDResult();
