@@ -2,14 +2,8 @@ package com.corn.vsound.web.user;
 
 
 import com.corn.boot.base.JsonResult;
-import com.corn.boot.util.AppUtils;
 import com.corn.vsound.integration.user.UserFacadeClient;
-import com.corn.vsound.web.account.AccountCache;
 import com.corn.vsound.web.user.ao.UserLoginAO;
-import com.corn.vworld.facade.enums.LoginOSEnums;
-import com.corn.vworld.facade.user.login.UserLoginOrder;
-import com.corn.vworld.facade.user.login.UserLoginResult;
-import com.fasterxml.jackson.annotation.JsonAlias;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +20,7 @@ public class UserController {
     private UserFacadeClient userFacadeClient;
 
     @Autowired
-    private AccountCache accountCache;
+//    private AccountCache accountCache;
 
     @PostMapping("/userLogin")
     public JsonResult userLogin(@RequestBody @Valid UserLoginAO userLoginAo){

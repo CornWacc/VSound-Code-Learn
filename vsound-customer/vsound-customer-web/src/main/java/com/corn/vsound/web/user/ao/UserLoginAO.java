@@ -1,8 +1,5 @@
 package com.corn.vsound.web.user.ao;
 
-import com.corn.vworld.facade.annotation.EnumConstraintValid;
-import com.corn.vworld.facade.enums.LoginOSEnums;
-
 /**
  * @author yyc
  */
@@ -12,7 +9,7 @@ public class UserLoginAO {
 
     private String userPassword;
 
-    @EnumConstraintValid(value = LoginOSEnums.class,message = "登录系统不能为空")
+//    @EnumConstraintValid(value = LoginOSEnums.class,message = "登录系统不能为空")
     private String loginOS;
 
     public String getLoginOS() {
