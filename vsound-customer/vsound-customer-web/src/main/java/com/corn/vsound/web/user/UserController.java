@@ -19,9 +19,6 @@ public class UserController {
     @Autowired
     private UserFacadeClient userFacadeClient;
 
-    @Autowired
-//    private AccountCache accountCache;
-
     @PostMapping("/userLogin")
     public JsonResult userLogin(@RequestBody @Valid UserLoginAO userLoginAo){
 

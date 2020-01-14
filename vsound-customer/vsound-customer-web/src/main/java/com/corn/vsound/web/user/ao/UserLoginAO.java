@@ -9,7 +9,6 @@ public class UserLoginAO {
 
     private String userPassword;
 
-//    @EnumConstraintValid(value = LoginOSEnums.class,message = "登录系统不能为空")
     private String loginOS;
 
     public String getLoginOS() {
