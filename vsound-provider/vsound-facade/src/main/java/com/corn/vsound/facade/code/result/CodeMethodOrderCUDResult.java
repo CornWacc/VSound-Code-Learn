@@ -11,5 +11,16 @@ public class CodeMethodOrderCUDResult extends BaseRes {
 
     private static final long serialVersionUID = -6289878846667516787L;
 
+    /**
+     * 源码方法入参id
+     * */
+    private String codeMethodOrderId;
 
+    public String getCodeMethodOrderId() {
+        return codeMethodOrderId;
+    }
+
+    public void setCodeMethodOrderId(String codeMethodOrderId) {
+        this.codeMethodOrderId = codeMethodOrderId;
+    }
 }
