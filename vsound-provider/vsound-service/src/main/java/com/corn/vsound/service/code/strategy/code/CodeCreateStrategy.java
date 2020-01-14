@@ -1,7 +1,7 @@
 package com.corn.vsound.service.code.strategy.code;
 
 
-import com.corn.boot.base.strategy.BaseCUDInterface;
+import com.corn.boot.base.strategy.CudExecuteInterface;
 import com.corn.boot.base.strategy.CudExecuteInterface;
 import com.corn.boot.util.DateUtils;
 import com.corn.vsound.dao.entity.CodeBase;

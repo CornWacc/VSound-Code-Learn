@@ -2,7 +2,7 @@ package com.corn.vsound.service.project.delegate;
 
 import com.corn.boot.annotations.DoTranscation;
 import com.corn.boot.base.AbstractBizService;
-import com.corn.boot.base.strategy.BaseCUDInterface;
+import com.corn.boot.base.strategy.CudExecuteInterface;
 import com.corn.boot.error.BizError;
 import com.corn.vsound.facade.project.order.ProjectCUDOrder;
 import com.corn.vsound.facade.project.result.ProjectCUDResult;
@@ -39,7 +39,7 @@ public class ProjectCUDDelegate extends AbstractBizService<ProjectCUDOrder, Proj
     protected void appBiz(ProjectCUDOrder order, ProjectCUDResult result) {
 
         //此处使用策略模式
-        BaseCUDInterface baseCUDInterface = projectStrategyFactory.createStrategy(order);
-        baseCUDInterface.execute(order);
+        CudExecuteInterface CudExecuteInterface = projectStrategyFactory.createStrategy(order);
+        CudExecuteInterface.execute(order);
     }
 }
