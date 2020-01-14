@@ -6,6 +6,7 @@ import com.corn.vsound.facade.code.order.CodeMethodOrderCUDOrder;
 import com.corn.vsound.facade.code.result.CodeMethodCUDResult;
 import com.corn.vsound.facade.code.result.CodeMethodOrderCUDResult;
 import com.corn.vsound.service.code.strategy.methodorder.CodeMethodOrderCUDFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,8 @@ public class CodeMethodOrderCUDDelegate extends AbstractBizService<CodeMethodOrd
     @Override
     protected void appBiz(CodeMethodOrderCUDOrder order, CodeMethodOrderCUDResult result) {
 
-        CudExecuteInterface CudExecuteInterface = codeMethodOrderCUDFactory.createStrategy(order);
-        CudExecuteInterface.execute(order);
+        CudExecuteInterface cudExecuteInterface = codeMethodOrderCUDFactory.createStrategy(order);
+        CodeMethodOrderCUDResult codeMethodOrderCUDResult = (CodeMethodOrderCUDResult) cudExecuteInterface.execute(order);
+        result.setCodeMethodOrderId(codeMethodOrderCUDResult.getCodeMethodOrderId());
     }
 }
