@@ -48,7 +48,6 @@ public class ProjectDelStrategy implements CudExecuteInterface<ProjectCUDOrder, 
             List<String> codeIds = codeBaseList.stream().map(CodeBase::getCodeId).collect(Collectors.toList());
 
             if (!ObjectUtils.isEmpty(codeIds)) {
-                //todo 还需要清除掉对应源码的扩展参数
                 codeBaseMapper.deleteCodesByCodeIds(codeIds);
                 codeMethodMapper.deleteCodeMethodsByCodeIds(codeIds);
                 codeParameterMapper.deleteCodeParametersByCodeIds(codeIds);
