@@ -2,6 +2,7 @@ package com.corn.vsound.service.code.strategy.outsideurl;
 
 import com.corn.boot.base.factory.AbstractCUDFactory;
 import com.corn.boot.base.strategy.BaseCUDInterface;
+import com.corn.boot.base.strategy.CudExecuteInterface;
 import com.corn.vsound.common.spring.SpringBeanUtils;
 import com.corn.vsound.facade.code.order.CodeOutSideUrlCUDOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,13 @@ import org.springframework.stereotype.Service;
  * @createTime 2019/12/12
  */
 @Service
-public class CodeOutSideUrlStrategyFactory extends AbstractCUDFactory<BaseCUDInterface, CodeOutSideUrlCUDOrder> {
+public class CodeOutSideUrlStrategyFactory extends AbstractCUDFactory<CudExecuteInterface, CodeOutSideUrlCUDOrder> {
 
     @Autowired
     private SpringBeanUtils springBeanUtils;
 
     @Override
-    public BaseCUDInterface createStrategy(CodeOutSideUrlCUDOrder order) {
+    public CudExecuteInterface createStrategy(CodeOutSideUrlCUDOrder order) {
 
         String cudType = order.getCudType().getCode();
 

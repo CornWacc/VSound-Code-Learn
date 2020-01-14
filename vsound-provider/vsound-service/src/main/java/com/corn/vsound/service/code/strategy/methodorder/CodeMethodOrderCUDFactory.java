@@ -2,6 +2,7 @@ package com.corn.vsound.service.code.strategy.methodorder;
 
 import com.corn.boot.base.factory.AbstractCUDFactory;
 import com.corn.boot.base.strategy.BaseCUDInterface;
+import com.corn.boot.base.strategy.CudExecuteInterface;
 import com.corn.boot.error.BizError;
 import com.corn.vsound.common.spring.SpringBeanUtils;
 import com.corn.vsound.facade.code.order.CodeMethodOrderCUDOrder;
@@ -18,13 +19,13 @@ import org.springframework.stereotype.Service;
  * @createTime 2020/1/9
  */
 @Service
-public class CodeMethodOrderCUDFactory extends AbstractCUDFactory<BaseCUDInterface,CodeMethodOrderCUDOrder> {
+public class CodeMethodOrderCUDFactory extends AbstractCUDFactory<CudExecuteInterface,CodeMethodOrderCUDOrder> {
 
     @Autowired
     private SpringBeanUtils springBeanUtils;
 
     @Override
-    public BaseCUDInterface createStrategy(CodeMethodOrderCUDOrder order) {
+    public CudExecuteInterface createStrategy(CodeMethodOrderCUDOrder order) {
 
         String cudType = order.getCudType().getCode();
         if(CREATE_CODE.equals(cudType)){

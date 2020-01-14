@@ -13,7 +13,7 @@ public class CodeMethodOrderCUDOrder extends CUDOrder {
 
     private static final long serialVersionUID = 6679573441308001313L;
 
-    @CudParamsCheck(cudTypes = {CudTypeEnum.DELETE,CudTypeEnum.UPDATE})
+    @CudParamsCheck(cudTypes = {CudTypeEnum.DELETE,CudTypeEnum.UPDATE},errorMsg = "源码方法入参Id不能为空!")
     private String codeMethodOrderId;
 
     private String codeMethodOrderName;

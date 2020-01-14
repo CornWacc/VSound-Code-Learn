@@ -3,6 +3,7 @@ package com.corn.vsound.service.code.delegate;
 import com.corn.boot.annotations.DoTranscation;
 import com.corn.boot.base.AbstractBizService;
 import com.corn.boot.base.strategy.BaseCUDInterface;
+import com.corn.boot.base.strategy.CudExecuteInterface;
 import com.corn.boot.error.BizError;
 import com.corn.vsound.facade.code.order.CodeCUDOrder;
 import com.corn.vsound.facade.code.result.CodeCUDResult;
@@ -35,7 +36,7 @@ public class CodeCUDDelegate extends AbstractBizService<CodeCUDOrder, CodeCUDRes
 
     @Override
     protected void appBiz(CodeCUDOrder order, CodeCUDResult result) {
-        BaseCUDInterface codeStrategyInterface = codeCUDFactory.createStrategy(order);
+        CudExecuteInterface codeStrategyInterface = codeCUDFactory.createStrategy(order);
         codeStrategyInterface.execute(order);
     }
 }
