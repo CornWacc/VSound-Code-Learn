@@ -23,7 +23,7 @@ public interface CodeMethodMapper {
     /**
      * 根据所属源码id查询方法列表
      * */
-    List<CodeMethod> findCodeMethodListByCodeId(@Param("codeId")String codeId);
+    List<CodeMethod> findCodeMethodListByCodeId(@Param("codeIds")List<String> codeId);
 
     /**
      * 根据方法id查询方法

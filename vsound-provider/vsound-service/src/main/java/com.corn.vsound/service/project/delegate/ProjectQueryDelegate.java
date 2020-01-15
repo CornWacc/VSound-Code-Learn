@@ -54,7 +54,9 @@ public class ProjectQueryDelegate extends AbstractBizService<ProjectQueryOrder, 
         if(!ObjectUtils.isEmpty(order.getPageParamInfo())){
             PageHelper.startPage(order.getPageParamInfo().getPageNum(),order.getPageParamInfo().getPageSize());
         }
-        List<CodeBase> codeBaseList = codeBaseMapper.pageFindCodeBaseListByProjectIdOrKeyWord(projectBase.getProjectId(),null,null);
+
+
+        List<CodeBase> codeBaseList = codeBaseMapper.pageFindCodeBaseListByProjectIdOrKeyWord(projectBase.getProjectId(),order.getKeyWord(),!ObjectUtils.isEmpty(order.getCodeType())? order.getCodeType().getCode() : null);
         if(ObjectUtils.isEmpty(codeBaseList)){
             result.setCodeInfoList(new ArrayList<>());
         }

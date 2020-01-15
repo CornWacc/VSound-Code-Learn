@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.util.Arrays;
+
 @Service
 public class CodeMethodDeleteStrategy implements CudExecuteInterface<CodeMethodCUDOrder, CodeMethodCUDResult> {
 
@@ -33,7 +35,7 @@ public class CodeMethodDeleteStrategy implements CudExecuteInterface<CodeMethodC
         codeMethodMapper.deleteByPrimaryKey(order.getMethodId());
 
         if(!ObjectUtils.isEmpty(codeMethod.getOrderList())){
-            codeMethodOrderMapper.batchDeleteMethodOrder(order.getMethodId());
+            codeMethodOrderMapper.batchDeleteMethodOrder(Arrays.asList(order.getMethodId()));
         }
         return new CodeMethodCUDResult();
     }

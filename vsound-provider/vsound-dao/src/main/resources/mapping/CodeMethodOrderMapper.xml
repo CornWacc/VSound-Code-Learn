@@ -131,7 +131,10 @@
     </foreach>
   </insert>
 
-  <update id="replaceMethodOrder">
-
-  </update>
+  <delete id="batchDeleteMethodOrder">
+    delete from code_method_order where code_method_id in
+    <foreach collection="methodIds" item="item" open="(" close=")" separator=",">
+      #{item}
+    </foreach>
+  </delete>
 </mapper>

@@ -3,6 +3,7 @@ package com.corn.vsound.service.project.strategy;
 import com.corn.boot.base.strategy.CudExecuteInterface;
 import com.corn.boot.error.BizError;
 import com.corn.vsound.dao.entity.CodeBase;
+import com.corn.vsound.dao.entity.CodeMethod;
 import com.corn.vsound.dao.entity.ProjectBase;
 import com.corn.vsound.dao.mapper.*;
 import com.corn.vsound.facade.project.order.ProjectCUDOrder;
@@ -32,6 +33,9 @@ public class ProjectDelStrategy implements CudExecuteInterface<ProjectCUDOrder, 
     @Autowired
     private CodeOutSideUrlMapper codeOutSideUrlMapper;
 
+    @Autowired
+    private CodeMethodOrderMapper codeMethodOrderMapper;
+
 
     @Override
     public ProjectCUDResult execute(ProjectCUDOrder order) {
@@ -50,6 +54,13 @@ public class ProjectDelStrategy implements CudExecuteInterface<ProjectCUDOrder, 
             if (!ObjectUtils.isEmpty(codeIds)) {
                 codeBaseMapper.deleteCodesByCodeIds(codeIds);
                 codeMethodMapper.deleteCodeMethodsByCodeIds(codeIds);
+                // 删除方法对应的所有参数
+                List<CodeMethod> codeMethods = codeMethodMapper.findCodeMethodListByCodeId(codeIds);
+                if(!ObjectUtils.isEmpty(codeMethods)){
+                    List<String> methodIds = codeMethods.stream().map(CodeMethod::getMethodId).collect(Collectors.toList());
+                    codeMethodOrderMapper.batchDeleteMethodOrder(methodIds);
+                }
+
                 codeParameterMapper.deleteCodeParametersByCodeIds(codeIds);
                 codeOutSideUrlMapper.deleteCodeOutSideUrlsByCodeIds(codeIds);
             }

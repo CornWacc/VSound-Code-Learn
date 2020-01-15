@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -75,7 +76,7 @@ public class CodeDetailQueryDelegate extends AbstractBizService<CodeDetailQueryO
      * @date 2020/1/3
      **/
     private List<CodeMethodInfo> getCodeMethodInfoList(String codeId){
-        List<CodeMethod> codeMethods = codeMethodMapper.findCodeMethodListByCodeId(codeId);
+        List<CodeMethod> codeMethods = codeMethodMapper.findCodeMethodListByCodeId(Arrays.asList(codeId));
         if(ObjectUtils.isEmpty(codeMethods)){
             return new ArrayList<>();
         }

@@ -28,8 +28,7 @@ public interface CodeMethodOrderMapper {
     @ResultMap("BaseResultMap")
     List<CodeMethodOrder> findCodeMethodOrderListByMethodId(@Param("methodId")String methodId);
 
-    int replaceMethodOrder(@Param("methodOrderList")List<CodeMethodOrder> methodOrders);
+//    int replaceMethodOrder(@Param("methodOrderList")List<CodeMethodOrder> methodOrders);
 
-    @Delete("delete from code_method_order where code_method_id = #{methodId}")
-    int batchDeleteMethodOrder(@Param("methodId")String methodId);
+    int batchDeleteMethodOrder(@Param("methodIds")List<String> methodIds);
 }

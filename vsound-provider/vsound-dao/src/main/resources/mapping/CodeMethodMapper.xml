@@ -214,7 +214,10 @@
     from
     code_method cm
     where
-    cm.from_code_id = #{codeId}
+    cm.from_code_id in
+    <foreach collection="codeIds" item="item" separator="," close=")" open="(">
+      #{item}
+    </foreach>
   </select>
 
   <select id="findCodeMethodByMethodId" resultMap="CodeMethodOrderResultMap">
@@ -271,7 +274,7 @@
 
   <delete id="deleteCodeMethodsByCodeIds">
     delete from code_method
-    where code_id in
+    where from_code_id in
     <foreach collection="codeIds" item="item" separator="," open="(" close=")">
       #{item}
     </foreach>

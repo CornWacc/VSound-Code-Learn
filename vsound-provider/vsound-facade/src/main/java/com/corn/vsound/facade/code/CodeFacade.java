@@ -22,4 +22,5 @@ public interface CodeFacade {
     CodeOutSideUrlListQueryResult codeOutSideUrlListQuery(CodeOutSideUrlListQueryOrder order);
 
     CodeMethodOrderCUDResult codeMethodOrderCUD(CodeMethodOrderCUDOrder order);
+
 }

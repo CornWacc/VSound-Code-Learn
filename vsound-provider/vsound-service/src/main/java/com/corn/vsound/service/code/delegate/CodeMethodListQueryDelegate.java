@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -40,7 +41,7 @@ public class CodeMethodListQueryDelegate extends AbstractBizService<CodeMethodLi
     @Override
     protected void appBiz(CodeMethodListQueryOrder order, CodeMethodListQueryResult result) {
 
-        List<CodeMethod> codeMethodList = codeMethodMapper.findCodeMethodListByCodeId(order.getCodeId());
+        List<CodeMethod> codeMethodList = codeMethodMapper.findCodeMethodListByCodeId(Arrays.asList(order.getCodeId()));
         if(!ObjectUtils.isEmpty(codeMethodList)){
             List<CodeMethodInfo> codeMethodInfos = new ArrayList<>();
             for(CodeMethod codeMethod : codeMethodList){
