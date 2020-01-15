@@ -41,8 +41,6 @@ public class ProjectController  {
         ProjectCUDOrder order = new ProjectCUDOrder();
         order.setSerialNo(AppUtils.appCode(""));
         BeanCopier.create(ProjectCUDAO.class,ProjectCUDOrder.class,false).copy(ao,order,null);
-//        order.setCreateUserId(accountCache.getUserCache().getUserId());
-//        order.setCreateUserName(accountCache.getUserCache().getUserName());
 
         ProjectCUDResult result = projectFacadeClient.projectCUD(order);
         return new JsonResult(result);
@@ -53,6 +51,8 @@ public class ProjectController  {
         ProjectQueryOrder order = new ProjectQueryOrder();
         order.setPageParamInfo(new PageParamInfo(1,10));
         order.setProjectId(projectQueryAO.getProjectId());
+        order.setCodeType(projectQueryAO.getCodeType());
+        order.setKeyWord(projectQueryAO.getKeyWord());
         order.setSerialNo(AppUtils.appCode(""));
 
         ProjectQueryResult result = projectFacadeClient.projectQuery(order);
