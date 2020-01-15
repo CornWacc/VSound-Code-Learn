@@ -311,9 +311,9 @@
           methodUsage: "",
           methodResult: "",
           methodBaseType: "COMMON",
-          methodCommonUse: "",
-          methodIsOverwrite: "",
-          methodIsConstruct: "",
+          methodCommonUse: "N",
+          methodIsOverwrite: "N",
+          methodIsConstruct: "N",
           methodActionScope: "PUBLIC",
           orderList:[]
         },

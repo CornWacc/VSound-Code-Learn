@@ -1,3 +1,3 @@
 module.exports = {
-  requestUrl:"http://localhost:9528"
+  requestUrl:"http://127.0.0.1:9528"
 }

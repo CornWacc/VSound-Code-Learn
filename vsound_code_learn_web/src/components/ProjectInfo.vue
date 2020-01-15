@@ -94,10 +94,10 @@
       width="30%"
       :before-close="handleClose">
       <el-form :model="codeForm" :label-position="configurationInfo.labelPosition" ref="codeForm" label-width="100">
-        <el-form-item label="源码名称:">
+        <el-form-item prop="codeName" label="源码名称:">
           <el-input v-model="codeForm.codeName" style="width: 70%" placeholder="请输入源码名称"></el-input>
         </el-form-item>
-        <el-form-item label="源码类型:">
+        <el-form-item prop="codeType" label="源码类型:">
           <el-select v-model="codeForm.codeType" placeholder="请选择源码类型" clearable>
             <el-option
               v-for="item in baseControl.codeTypes"
@@ -116,7 +116,7 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="configurationInfo.dialogIsShow = false">取 消</el-button>
+    <el-button @click="handleClose">取 消</el-button>
     <el-button type="primary" @click="cudCode">确 定</el-button></span>
     </el-dialog>
   </el-container>
@@ -203,7 +203,7 @@
        * */
       getCodeList() {
         this.$axios({
-          url: this.Globel.requestUrl + "/project/projectQuery?projectId=" + this.$route.query.projectId,
+          url: this.Globel.requestUrl + "/project/projectQuery?projectId=" + this.$route.query.projectId+"&codeType="+this.baseControl.codeType+"&keyWord="+this.baseControl.codeName,
         }).then(res => {
           if (res.data.success) {
             this.codeList = res.data.data.codeInfoList;
@@ -218,6 +218,7 @@
        * */
       handleClose() {
         this.$refs["codeForm"].resetFields();
+        this.configurationInfo.dialogIsShow = false;
       },
 
       /**
