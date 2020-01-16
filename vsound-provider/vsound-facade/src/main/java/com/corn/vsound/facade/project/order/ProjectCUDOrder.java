@@ -4,6 +4,7 @@ import com.corn.boot.annotations.CudParamsCheck;
 import com.corn.boot.base.pojobase.BaseOrder;
 import com.corn.boot.base.strategy.CUDOrder;
 import com.corn.boot.enums.CudTypeEnum;
+import com.corn.vsound.facade.enums.UsePositionEnum;
 
 /**
  * @author yyc
@@ -19,7 +20,7 @@ public class ProjectCUDOrder extends CUDOrder {
 
     private String projectType;
 
-    private String usePosition;
+    private UsePositionEnum usePosition;
 
     private String remark;
 
@@ -63,16 +64,16 @@ public class ProjectCUDOrder extends CUDOrder {
         this.projectType = projectType;
     }
 
-    public String getUsePosition() {
+    public String getRemark() {
+        return remark;
+    }
+
+    public UsePositionEnum getUsePosition() {
         return usePosition;
     }
 
-    public void setUsePosition(String usePosition) {
+    public void setUsePosition(UsePositionEnum usePosition) {
         this.usePosition = usePosition;
-    }
-
-    public String getRemark() {
-        return remark;
     }
 
     public void setRemark(String remark) {
