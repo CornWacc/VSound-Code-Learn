@@ -1,5 +1,7 @@
 package com.corn.vsound.dao.entity;
 
+import com.corn.vsound.facade.enums.UsePositionEnum;
+
 public class ProjectBase {
 
     private Integer id;
@@ -10,7 +12,7 @@ public class ProjectBase {
 
     private String projectType;
 
-    private String usePosition;
+    private UsePositionEnum usePosition;
 
     private String remark;
 
@@ -50,12 +52,12 @@ public class ProjectBase {
         this.projectType = projectType == null ? null : projectType.trim();
     }
 
-    public String getUsePosition() {
+    public UsePositionEnum getUsePosition() {
         return usePosition;
     }
 
-    public void setUsePosition(String usePosition) {
-        this.usePosition = usePosition == null ? null : usePosition.trim();
+    public void setUsePosition(UsePositionEnum usePosition) {
+        this.usePosition = usePosition;
     }
 
     public String getRemark() {
