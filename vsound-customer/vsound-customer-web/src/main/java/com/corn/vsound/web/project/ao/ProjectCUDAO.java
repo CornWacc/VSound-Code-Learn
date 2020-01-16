@@ -17,10 +17,6 @@ public class ProjectCUDAO {
 
     private String remark;
 
-//    private String createUserId;
-//
-//    private String createUserName;
-
 
     public CudTypeEnum getCudType() {
         return cudType;
