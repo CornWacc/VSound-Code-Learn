@@ -91,12 +91,7 @@
         hideRequiredAsterisk: true,
         searchInput: "",
         disableDialog: false,
-        projectList: [
-          {
-            projectName:"测试",
-            projectType:"JAVA"
-          }
-        ],
+        projectList: [],
         addProjectForm: {
           projectName: "",
           projectType:"",

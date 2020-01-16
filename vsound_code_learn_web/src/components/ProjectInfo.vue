@@ -143,7 +143,7 @@
         //项目基本信息
         projectBase: {
           projectId: "",
-          projectName: "测试"
+          projectName: ""
         },
 
         // 源码列表信息
@@ -206,6 +206,7 @@
           url: this.Globel.requestUrl + "/project/projectQuery?projectId=" + this.$route.query.projectId+"&codeType="+this.baseControl.codeType+"&keyWord="+this.baseControl.codeName,
         }).then(res => {
           if (res.data.success) {
+            this.projectBase = res.data.data;
             this.codeList = res.data.data.codeInfoList;
           } else {
             this.$message.error(res.data.msg)
