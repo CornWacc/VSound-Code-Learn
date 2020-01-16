@@ -49,7 +49,6 @@ public class ProjectListQueryDelegate extends AbstractBizService<ProjectListQuer
             for(ProjectBase projectBase : projectInfoList){
                 ProjectInfo projectInfo = new ProjectInfo();
                 copier.copy(projectBase,projectInfo,null);
-                projectInfo.setUsePosition(projectBase.getUsePosition().getMsg());
                 infos.add(projectInfo);
             }
             result.setProjectInfoList(infos);
