@@ -26,7 +26,7 @@
                       @click="goInfo(item.projectId)">{{item.projectName}}</span>
                 </el-col>
                 <el-col :span="4" :offset="3">
-                  <el-tag class="project_header_type" v-if="item.projectType != null">{{item.projectType}} ｜ {{item.usePosition}}</el-tag>
+                  <el-tag class="project_header_type" v-if="item.projectType != null">{{item.projectType}} ｜ {{item.usePositionCN}}</el-tag>
                 </el-col>
                 <el-col :span="2" :offset="1">
                   <el-button @click="deleteProject(item)" type="danger" icon="el-icon-delete" size="mini"
@@ -104,10 +104,6 @@
             label:"Java",
             value:"JAVA"
           },
-          {
-            label:"Python",
-            value:"PYTHON"
-          }
         ],
         usePosition: [
           {

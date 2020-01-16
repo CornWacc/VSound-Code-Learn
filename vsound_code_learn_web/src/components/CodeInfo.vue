@@ -61,6 +61,17 @@
         <el-table-column align="center" label="是否为构造方法" prop="methodIsConstruct"></el-table-column>
         <el-table-column align="center" label="是否重写" prop="methodIsOverwrite"></el-table-column>
         <el-table-column align="center" label="方法作用域" prop="methodActionScope"></el-table-column>
+        <el-table-column align="center" label="方法备注" prop="methodUsage">
+          <template slot-scope="scope">
+            <el-popover
+              placement="top"
+              width="300"
+              trigger="hover"
+              :content="scope.row.methodUsage == '' || scope.row.methodUsage == 'null' ? '暂无备注' : scope.row.methodUsage">
+              <el-button type="text" slot="reference">查看备注</el-button>
+            </el-popover>
+          </template>
+        </el-table-column>
         <el-table-column align="center" label="方法入参">
           <template slot-scope="scope">
             <el-button type="text" @click="showMethodOrder(scope.row.methodId,scope.row)">查看入参</el-button>
@@ -175,7 +186,7 @@
             default-first-option
             placeholder="请选择返回类型">
             <el-option
-              v-for="item in codeTypes"
+              v-for="item in resultTypes"
               :key="item.value"
               :label="item.label"
               :value="item.value">
@@ -248,6 +259,20 @@
           <template slot-scope="scope">
             <p v-if="scope.row.type == 'OLD'">{{scope.row.codeMethodOrderClassType}}</p>
             <el-input v-model="scope.row.codeMethodOrderClassType" v-else></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column label="入参备注" prop="codeMethodOrderRemark" align="center">
+          <template slot-scope="scope">
+            <p v-if="scope.row.type == 'OLD'">
+              <el-popover
+                placement="top"
+                width="300"
+                trigger="hover"
+                :content="scope.row.codeMethodOrderRemark == '' || scope.row.codeMethodOrderRemark == 'null' ? '暂无备注' : scope.row.codeMethodOrderRemark">
+                <el-button type="text" slot="reference">查看备注</el-button>
+              </el-popover>
+            </p>
+            <el-input v-model="scope.row.codeMethodOrderRemark" v-else></el-input>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center">
@@ -340,7 +365,45 @@
             label: "Boolean",
             value: "Boolean"
           },
+          {
+            label: "Long",
+            value: "Long"
+          },
+          {
+            label: "Char",
+            value: "Char"
+          },
         ],
+        resultTypes:[
+          {
+            label: "Void",
+            value: "Void"
+          },
+          {
+            label: "String",
+            value: "String"
+          },
+          {
+            label: "Integer",
+            value: "Integer"
+          },
+          {
+            label: "Double",
+            value: "Double"
+          },
+          {
+            label: "Boolean",
+            value: "Boolean"
+          },
+          {
+            label: "Long",
+            value: "Long"
+          },
+          {
+            label: "Char",
+            value: "Char"
+          }
+        ]
       }
     },
     mounted() {
@@ -528,7 +591,7 @@
         if(this.configurationInfo.orderDialog.isCreate){
           return;
         }
-        this.cudCodeMethodForm.orderList.push({type:"NEW",codeMethodOrderName:"",codeMethodOrderClassType:"",cudType:"CREATE",codeMethodId:""})
+        this.cudCodeMethodForm.orderList.push({type:"NEW",codeMethodOrderName:"",codeMethodOrderClassType:"",cudType:"CREATE",codeMethodId:"",codeMethodOrderRemark:""})
         this.configurationInfo.orderDialog.isCreate = true;
       },
 
