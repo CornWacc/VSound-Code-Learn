@@ -1,6 +1,7 @@
 package com.corn.vsound.web.project.ao;
 
 import com.corn.boot.enums.CudTypeEnum;
+import com.corn.vsound.facade.enums.UsePositionEnum;
 
 public class ProjectCUDAO {
 
@@ -10,11 +11,9 @@ public class ProjectCUDAO {
 
     private String projectName;
 
-    private String projectAffiliation;
-
     private String projectType;
 
-    private String usePosition;
+    private UsePositionEnum usePosition;
 
     private String remark;
 
@@ -47,14 +46,6 @@ public class ProjectCUDAO {
         this.projectName = projectName;
     }
 
-    public String getProjectAffiliation() {
-        return projectAffiliation;
-    }
-
-    public void setProjectAffiliation(String projectAffiliation) {
-        this.projectAffiliation = projectAffiliation;
-    }
-
     public String getProjectType() {
         return projectType;
     }
@@ -63,11 +54,11 @@ public class ProjectCUDAO {
         this.projectType = projectType;
     }
 
-    public String getUsePosition() {
+    public UsePositionEnum getUsePosition() {
         return usePosition;
     }
 
-    public void setUsePosition(String usePosition) {
+    public void setUsePosition(UsePositionEnum usePosition) {
         this.usePosition = usePosition;
     }
 
