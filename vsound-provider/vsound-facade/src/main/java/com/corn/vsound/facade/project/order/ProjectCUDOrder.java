@@ -16,8 +16,6 @@ public class ProjectCUDOrder extends CUDOrder {
 
     private String projectName;
 
-    private String projectAffiliation;
-
     private String projectType;
 
     private UsePositionEnum usePosition;
@@ -46,14 +44,6 @@ public class ProjectCUDOrder extends CUDOrder {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
-    }
-
-    public String getProjectAffiliation() {
-        return projectAffiliation;
-    }
-
-    public void setProjectAffiliation(String projectAffiliation) {
-        this.projectAffiliation = projectAffiliation;
     }
 
     public String getProjectType() {

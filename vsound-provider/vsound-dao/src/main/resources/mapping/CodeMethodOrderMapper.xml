@@ -7,12 +7,13 @@
     <result column="code_method_order_name" property="codeMethodOrderName" jdbcType="VARCHAR" />
     <result column="code_method_order_class_type" property="codeMethodOrderClassType" jdbcType="VARCHAR" />
     <result column="code_method_id" property="codeMethodId" jdbcType="VARCHAR" />
+    <result column="code_method_order_remark" property="codeMethodOrderRemark" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, code_method_order_id, code_method_order_name, code_method_order_class_type,
-    code_method_id, create_time, update_time
+    code_method_id,code_method_order_remark, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -52,11 +53,11 @@
       <if test="codeMethodId != null" >
         code_method_id,
       </if>
-      <if test="createTime != null" >
-        create_time,
+      <if test="codeMethodOrderRemark != null and codeMethodOrderRemark != ''">
+        code_method_order_remark,
       </if>
-      <if test="updateTime != null" >
-        update_time,
+      <if test="createTime != null" >
+        create_time
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -75,11 +76,11 @@
       <if test="codeMethodId != null" >
         #{codeMethodId,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+      <if test="codeMethodOrderRemark != null and codeMethodOrderRemark != ''">
+        #{codeMethodOrderRemark,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP}
       </if>
     </trim>
   </insert>
@@ -121,12 +122,13 @@
   <insert id="batchInsert">
     insert into code_method_order
     (code_method_order_id, code_method_order_name, code_method_order_class_type,
-    code_method_id, create_time)
+    code_method_id,code_method_order_remark create_time)
     <foreach collection="orderList" item="item" open="values(" close=")" separator=",">
       #{item.codeMethodOrderId},
       #{item.codeMethodOrderName},
       #{item.codeMethodOrderClassType},
       #{item.codeMethodId},
+      #{item.codeMethodOrderRemark},
       #{item.createTime}
     </foreach>
   </insert>

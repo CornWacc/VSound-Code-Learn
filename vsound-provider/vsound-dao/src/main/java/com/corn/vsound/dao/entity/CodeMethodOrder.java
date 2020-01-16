@@ -17,6 +17,8 @@ public class CodeMethodOrder {
 
     private String codeMethodId;
 
+    private String codeMethodOrderRemark;
+
     private Date createTime;
 
     private Date updateTime;
@@ -85,5 +87,13 @@ public class CodeMethodOrder {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getCodeMethodOrderRemark() {
+        return codeMethodOrderRemark;
+    }
+
+    public void setCodeMethodOrderRemark(String codeMethodOrderRemark) {
+        this.codeMethodOrderRemark = codeMethodOrderRemark;
     }
 }

@@ -35,6 +35,7 @@
       <result column="code_method_order_class_type" property="codeMethodOrderClassType" jdbcType="VARCHAR"></result>
       <result column="code_method_order_type" property="codeMethodOrderType" jdbcType="VARCHAR"></result>
       <result column="code_method_id" property="codeMethodId" jdbcType="VARCHAR"></result>
+      <result column="code_method_order_remark" property="codeMethodOrderRemark" jdbcType="VARCHAR"></result>
     </collection>
     </resultMap>
 
@@ -259,7 +260,8 @@
     cmo.code_method_id,
     cmo.code_method_order_class_type,
     cmo.code_method_order_id,
-    cmo.code_method_order_name
+    cmo.code_method_order_name,
+    cmo.code_method_order_remark
     from
     code_method cm
     left join

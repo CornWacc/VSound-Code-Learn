@@ -33,7 +33,20 @@ public class CodeMethodOrderInfo extends Base {
      * */
     private String codeMethodId;
 
+    /**
+     * 方法入参备注
+     * */
+    private String codeMethodOrderRemark;
+
     private Date createTime;
+
+    public String getCodeMethodOrderRemark() {
+        return codeMethodOrderRemark;
+    }
+
+    public void setCodeMethodOrderRemark(String codeMethodOrderRemark) {
+        this.codeMethodOrderRemark = codeMethodOrderRemark;
+    }
 
     public Date getCreateTime() {
         return createTime;

@@ -82,7 +82,6 @@ public class CodeDetailQueryDelegate extends AbstractBizService<CodeDetailQueryO
         }
 
         List<CodeMethodOrderDto> dtos = codeMethodMapper.findCodeMethodByMethodIds(codeMethods);
-        System.out.println(new Gson().toJson(dtos));
         List<CodeMethodInfo> codeMethodInfos = new ArrayList<>();
         for(CodeMethodOrderDto codeMethod : dtos){
             CodeMethodInfo codeMethodInfo = new CodeMethodInfo();

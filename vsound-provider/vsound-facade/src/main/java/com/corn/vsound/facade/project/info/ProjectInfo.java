@@ -1,6 +1,7 @@
 package com.corn.vsound.facade.project.info;
 
 import com.corn.boot.base.pojobase.Base;
+import com.corn.vsound.facade.enums.UsePositionEnum;
 
 /**
  * @author yyc
@@ -13,21 +14,13 @@ public class ProjectInfo extends Base {
 
     private String projectId;
 
-    private String projectAffiliation;
-
     private String projectType;
 
-    private String usePosition;
+    private UsePositionEnum usePosition;
+
+    private String usePositionCN;
 
     private String remark;
-
-    private Integer gatherClassCount;
-
-    private Integer gatherInterfaceCount;
-
-    private String createUserId;
-
-    private String createUserName;
 
     public String getProjectName() {
         return projectName;
@@ -45,28 +38,12 @@ public class ProjectInfo extends Base {
         this.projectId = projectId;
     }
 
-    public String getProjectAffiliation() {
-        return projectAffiliation;
-    }
-
-    public void setProjectAffiliation(String projectAffiliation) {
-        this.projectAffiliation = projectAffiliation;
-    }
-
     public String getProjectType() {
         return projectType;
     }
 
     public void setProjectType(String projectType) {
         this.projectType = projectType;
-    }
-
-    public String getUsePosition() {
-        return usePosition;
-    }
-
-    public void setUsePosition(String usePosition) {
-        this.usePosition = usePosition;
     }
 
     public String getRemark() {
@@ -77,35 +54,19 @@ public class ProjectInfo extends Base {
         this.remark = remark;
     }
 
-    public Integer getGatherClassCount() {
-        return gatherClassCount;
+    public UsePositionEnum getUsePosition() {
+        return usePosition;
     }
 
-    public void setGatherClassCount(Integer gatherClassCount) {
-        this.gatherClassCount = gatherClassCount;
+    public void setUsePosition(UsePositionEnum usePosition) {
+        this.usePosition = usePosition;
     }
 
-    public Integer getGatherInterfaceCount() {
-        return gatherInterfaceCount;
+    public String getUsePositionCN() {
+        return usePositionCN;
     }
 
-    public void setGatherInterfaceCount(Integer gatherInterfaceCount) {
-        this.gatherInterfaceCount = gatherInterfaceCount;
-    }
-
-    public String getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(String createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public String getCreateUserName() {
-        return createUserName;
-    }
-
-    public void setCreateUserName(String createUserName) {
-        this.createUserName = createUserName;
+    public void setUsePositionCN(String usePositionCN) {
+        this.usePositionCN = usePositionCN;
     }
 }

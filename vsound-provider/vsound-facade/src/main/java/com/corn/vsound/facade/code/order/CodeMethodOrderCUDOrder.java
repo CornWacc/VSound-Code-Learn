@@ -22,6 +22,16 @@ public class CodeMethodOrderCUDOrder extends CUDOrder {
 
     private String codeMethodId;
 
+    private String codeMethodOrderRemark;
+
+    public String getCodeMethodOrderRemark() {
+        return codeMethodOrderRemark;
+    }
+
+    public void setCodeMethodOrderRemark(String codeMethodOrderRemark) {
+        this.codeMethodOrderRemark = codeMethodOrderRemark;
+    }
+
     public String getCodeMethodOrderId() {
         return codeMethodOrderId;
     }
